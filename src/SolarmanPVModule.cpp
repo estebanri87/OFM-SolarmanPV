@@ -21,8 +21,17 @@ const std::string SolarmanPVModule::version()
 void SolarmanPVModule::setup()
 {
     const char* ip = (const char*)ParamSPV_LoggerIp;
-    const uint32_t serial = ParamSPV_LoggerSerial;
     _pollIntervalS = ParamSPV_PollInterval;
+
+    // Seriennummer als Text: sie ist zehnstellig und kann groesser als 2^31-1 sein
+    // (Testgeraet 3912915352), was ETS als Zahlenfeld nicht zuverlaessig darstellt.
+    uint32_t serial = 0;
+    if (ParamSPV_SerialMode == 1) // manuell eintragen
+    {
+        const char* text = (const char*)ParamSPV_LoggerSerialText;
+        if (text != nullptr && text[0] != 0)
+            serial = (uint32_t)strtoul(text, nullptr, 10);
+    }
 
     _client.configure(ip, (uint16_t)ParamSPV_LoggerPort, serial, (uint8_t)ParamSPV_SlaveId);
     _serialKnown = (serial != 0);
