@@ -15,5 +15,9 @@
 - Request- und Response-Payload sind **asymmetrisch** (15 bzw. 14 Byte vor dem RTU-Frame).
 - UDP-Discovery auf Port 48899 existiert bei diesem Logger nicht; die Seriennummer wird
   stattdessen aus dem Antwort-Header gelesen.
-- `transact()` ist noch **synchron** und blockiert bis Timeout — muss vor dem produktiven
-  Einsatz in eine Zustandsmaschine überführt werden.
+- Der Client ist als **nicht-blockierende Zustandsmaschine** auf rohen lwIP-Sockets
+  (`O_NONBLOCK`, `EINPROGRESS` + `select()` mit Timeout 0) umgesetzt. `poll()` kehrt immer
+  sofort zurück, damit der KNX-Stack sein Timing behält — ohne zusätzliche Abhängigkeit.
+- Nur IPv4-Literale, keine Hostnamen (Namensauflösung würde blockieren).
+- Noch **nicht kompiliert**: Das Modul ist noch nicht in `lib/` eingehängt, es gibt bisher
+  keinen OpenKNX-Modulrumpf, der die Übersetzungseinheit in den Build zieht.

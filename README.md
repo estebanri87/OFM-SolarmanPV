@@ -13,7 +13,7 @@ Solarman-V5-Rahmen) — **keine Cloud**, keine Rate-Limits, Sekunden-Aktualität
 |---|---|
 | Solarman-V5-Framing, Modbus RTU, CRC-16 | ✅ implementiert, am Gerät verifiziert |
 | Logger-Seriennummer automatisch ermitteln | ✅ implementiert |
-| Nicht-blockierende Zustandsmaschine | ⬜ offen (aktuell synchron) |
+| Nicht-blockierende Zustandsmaschine | ✅ implementiert (noch nicht kompiliert) |
 | ETS-Applikation (Geräte + Messwertkanäle) | ⬜ offen |
 | Geräteprofile (Registertabellen) | ⬜ offen |
 
@@ -48,11 +48,29 @@ Antwort-Bytes 7…10 lesen.
 
 Eine UDP-Discovery auf Port 48899 gibt es **nicht** (am Gerät geprüft: Port geschlossen).
 
-## Bekannte Einschränkung
+## Nicht-blockierend
 
-`SolarmanV5Client::transact()` ist derzeit **synchron** und blockiert bis zum Timeout
-(1 s verbinden, 1 s lesen). Für den produktiven Einsatz im OpenKNX-Loop muss das in eine
-Zustandsmaschine überführt werden, sonst reißt der KNX-Stack sein Timing.
+Der Client ist eine Zustandsmaschine (`Idle → Connecting → Sending → Receiving → Complete`)
+auf rohen lwIP-Sockets mit `O_NONBLOCK`. `poll()` kehrt **immer sofort** zurück:
+
+- `connect()` läuft über `EINPROGRESS`, der Fortschritt wird per `select()` mit Timeout `0` geprüft
+- `send()`/`recv()` behandeln `EWOULDBLOCK` als „später weiter", nie als Fehler
+- ein Gesamtbudget von 4 s je Transaktion wird nur über `millis()` geprüft, nie abgewartet
+
+Damit behält der KNX-Stack sein Timing. Bewusst **keine** zusätzliche Abhängigkeit (kein
+AsyncTCP, kein eModbus).
+
+Verwendung:
+
+```cpp
+client.configure("192.168.30.201", 8899, serial, 1);
+client.beginRead(3, 0x003B, 16);
+// in jedem loop():
+client.poll();
+if (client.finished()) { /* client.result(), client.registers() */ client.clear(); }
+```
+
+**Einschränkung:** Nur IPv4-Literale, keine Hostnamen — eine Namensauflösung würde blockieren.
 
 ## Hardware-Unterstützung
 

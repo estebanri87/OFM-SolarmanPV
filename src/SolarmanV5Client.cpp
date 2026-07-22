@@ -1,8 +1,11 @@
 // KNX-frei halten: hier darf kein OpenKNX-/knx-Header hinein.
 #include "SolarmanV5Client.h"
 #include <Arduino.h>
-#include <WiFiClient.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <lwip/sockets.h>
 #include <string.h>
+#include <unistd.h> // close()
 
 namespace
 {
@@ -17,8 +20,8 @@ constexpr size_t V5_RESP_PREFIX = 14; // Frametyp(1) + Status(1)   + 3x4 Byte Ze
 constexpr size_t V5_TRAILER_LEN = 2;  // Pruefsumme + Ende
 constexpr size_t RTU_MIN_LEN = 5;     // Addr + FC + ByteCount + CRC
 
-constexpr uint32_t CONNECT_TIMEOUT_MS = 1000;
-constexpr uint32_t READ_TIMEOUT_MS = 1000;
+// Gesamtbudget je Transaktion. Wird nur ueber millis() geprueft, nie gewartet.
+constexpr uint32_t TRANSACTION_TIMEOUT_MS = 4000;
 } // namespace
 
 uint16_t SolarmanV5Client::crc16(const uint8_t* data, size_t len)
@@ -94,135 +97,284 @@ size_t SolarmanV5Client::buildRequest(uint32_t serial, uint8_t functionCode,
     return i;
 }
 
-SolarmanV5Client::Result SolarmanV5Client::transact(const uint8_t* request, size_t requestLen,
-                                                    uint8_t* response, size_t responseCap,
-                                                    size_t& responseLen)
+bool SolarmanV5Client::openSocket()
 {
-    // Verbindung bewusst kurz halten: verbinden, lesen, trennen. Viele Logger werfen bei
-    // Dauerverbindung nach Inaktivitaet raus.
-    WiFiClient client;
-    if (!client.connect(_host, _port, CONNECT_TIMEOUT_MS))
-        return ErrConnect;
+    _sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (_sock < 0)
+        return false;
 
-    if (client.write(request, requestLen) != requestLen)
+    // Non-Blocking: connect() kehrt sofort mit EINPROGRESS zurueck.
+    const int flags = fcntl(_sock, F_GETFL, 0);
+    if (flags < 0 || fcntl(_sock, F_SETFL, flags | O_NONBLOCK) < 0)
     {
-        client.stop();
-        return ErrConnect;
+        closeSocket();
+        return false;
     }
 
-    responseLen = 0;
-    const uint32_t deadline = millis() + READ_TIMEOUT_MS;
-    while ((int32_t)(millis() - deadline) < 0 && responseLen < responseCap)
+    struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(_port);
+    if (inet_pton(AF_INET, _host, &addr.sin_addr) != 1)
     {
-        const int avail = client.available();
-        if (avail <= 0)
-        {
-            if (!client.connected())
-                break;
-            delay(2);
-            continue;
-        }
-        size_t room = responseCap - responseLen;
-        size_t want = ((size_t)avail < room) ? (size_t)avail : room;
-        int got = client.read(response + responseLen, want);
-        if (got > 0)
-            responseLen += (size_t)got;
-
-        // Vollstaendig, sobald die im Header angekuendigte Laenge erreicht ist.
-        if (responseLen >= 3)
-        {
-            const size_t expected = V5_HEADER_LEN + (size_t)(response[1] | (response[2] << 8)) + V5_TRAILER_LEN;
-            if (responseLen >= expected)
-                break;
-        }
+        closeSocket();
+        return false; // nur IPv4-Literale, Namensaufloesung wuerde blockieren
     }
-    client.stop();
 
-    return (responseLen == 0) ? ErrTimeout : Ok;
+    const int rc = connect(_sock, (struct sockaddr*)&addr, sizeof(addr));
+    if (rc == 0 || errno == EINPROGRESS || errno == EALREADY)
+        return true;
+
+    closeSocket();
+    return false;
 }
 
-bool SolarmanV5Client::discoverSerial(uint32_t& serialOut)
+void SolarmanV5Client::closeSocket()
 {
+    if (_sock >= 0)
+    {
+        close(_sock);
+        _sock = -1;
+    }
+}
+
+void SolarmanV5Client::fail(Result reason)
+{
+    closeSocket();
+    _result = reason;
+    _state = Complete;
+}
+
+bool SolarmanV5Client::beginTransaction(uint32_t serial, uint8_t functionCode, uint16_t startReg,
+                                        uint16_t count, bool discoverOnly)
+{
+    if (busy())
+        return false;
     if (!configured())
+    {
+        _result = ErrNotConfigured;
+        _state = Complete;
         return false;
+    }
 
-    uint8_t request[64];
-    // Absichtlich Seriennummer 0: der Logger lehnt die Anfrage ab, verraet aber im
-    // Antwort-Header seine echte Seriennummer.
-    const size_t requestLen = buildRequest(0, 3, 0x0003, 1, request);
+    _discoverOnly = discoverOnly;
+    _expectCount = count;
+    _expectFc = functionCode;
+    _regCount = 0;
+    _received = 0;
+    _sent = 0;
+    _result = Pending;
 
-    uint8_t response[64];
-    size_t responseLen = 0;
-    if (transact(request, requestLen, response, sizeof(response), responseLen) != Ok)
+    _requestLen = buildRequest(serial, functionCode, startReg, count, _request);
+
+    if (!openSocket())
+    {
+        _result = ErrSocket;
+        _state = Complete;
         return false;
-    if (responseLen < V5_HEADER_LEN || response[0] != V5_START)
-        return false;
+    }
 
-    serialOut = (uint32_t)response[7] | ((uint32_t)response[8] << 8) |
-                ((uint32_t)response[9] << 16) | ((uint32_t)response[10] << 24);
-    return serialOut != 0;
+    _deadline = millis() + TRANSACTION_TIMEOUT_MS;
+    _state = Connecting;
+    return true;
 }
 
-SolarmanV5Client::Result SolarmanV5Client::readRegisters(uint8_t functionCode, uint16_t start,
-                                                         uint16_t count, uint16_t* out)
+bool SolarmanV5Client::beginRead(uint8_t functionCode, uint16_t startReg, uint16_t count)
 {
     if (count == 0 || count > MAX_REGISTERS)
-        return ErrTooMany;
-    if (!configured())
-        return ErrNotConfigured;
+    {
+        _result = ErrTooMany;
+        _state = Complete;
+        return false;
+    }
+    return beginTransaction(_serial, functionCode, startReg, count, false);
+}
 
-    uint8_t request[64];
-    const size_t requestLen = buildRequest(_serial, functionCode, start, count, request);
+bool SolarmanV5Client::beginDiscoverSerial()
+{
+    // Absichtlich Seriennummer 0 - der Logger lehnt ab, verraet die echte SN aber im Header.
+    return beginTransaction(0, 3, 0x0003, 1, true);
+}
 
-    uint8_t response[V5_HEADER_LEN + V5_RESP_PREFIX + RTU_MIN_LEN + 2 * MAX_REGISTERS + V5_TRAILER_LEN];
-    size_t responseLen = 0;
-    const Result transactResult = transact(request, requestLen, response, sizeof(response), responseLen);
-    if (transactResult != Ok)
-        return transactResult;
+void SolarmanV5Client::poll()
+{
+    if (_state == Idle || _state == Complete)
+        return;
+
+    if ((int32_t)(millis() - _deadline) >= 0)
+    {
+        fail(ErrTimeout);
+        return;
+    }
+
+    switch (_state)
+    {
+        case Connecting:
+        {
+            fd_set wfds;
+            FD_ZERO(&wfds);
+            FD_SET(_sock, &wfds);
+            struct timeval tv = {0, 0}; // nie warten
+            const int rc = select(_sock + 1, nullptr, &wfds, nullptr, &tv);
+            if (rc < 0)
+            {
+                fail(ErrSocket);
+                return;
+            }
+            if (rc == 0 || !FD_ISSET(_sock, &wfds))
+                return; // noch nicht verbunden, naechster loop()
+
+            int soErr = 0;
+            socklen_t len = sizeof(soErr);
+            if (getsockopt(_sock, SOL_SOCKET, SO_ERROR, &soErr, &len) < 0 || soErr != 0)
+            {
+                fail(ErrConnect);
+                return;
+            }
+            _state = Sending;
+            return;
+        }
+
+        case Sending:
+        {
+            const int n = send(_sock, _request + _sent, _requestLen - _sent, 0);
+            if (n > 0)
+                _sent += (size_t)n;
+            else if (n < 0 && errno != EWOULDBLOCK && errno != EAGAIN)
+            {
+                fail(ErrSocket);
+                return;
+            }
+            if (_sent >= _requestLen)
+                _state = Receiving;
+            return;
+        }
+
+        case Receiving:
+        {
+            const int n = recv(_sock, _response + _received, sizeof(_response) - _received, 0);
+            if (n > 0)
+            {
+                _received += (size_t)n;
+            }
+            else if (n == 0)
+            {
+                // Gegenstelle hat geschlossen - auswerten, was da ist.
+                parseResponse();
+                return;
+            }
+            else if (errno != EWOULDBLOCK && errno != EAGAIN)
+            {
+                fail(ErrSocket);
+                return;
+            }
+
+            // Vollstaendig, sobald die im Header angekuendigte Laenge erreicht ist.
+            if (_received >= 3)
+            {
+                const size_t expected =
+                    V5_HEADER_LEN + (size_t)(_response[1] | (_response[2] << 8)) + V5_TRAILER_LEN;
+                if (_received >= expected)
+                    parseResponse();
+            }
+            return;
+        }
+
+        default:
+            return;
+    }
+}
+
+void SolarmanV5Client::parseResponse()
+{
+    closeSocket();
+    _state = Complete;
 
     // --- V5-Rahmen pruefen ---
-    if (responseLen < V5_HEADER_LEN + V5_TRAILER_LEN || response[0] != V5_START ||
-        response[responseLen - 1] != V5_END)
-        return ErrFrame;
+    if (_received < V5_HEADER_LEN + V5_TRAILER_LEN || _response[0] != V5_START)
+    {
+        _result = ErrFrame;
+        return;
+    }
 
-    const size_t payloadLen = (size_t)(response[1] | (response[2] << 8));
-    if (responseLen != V5_HEADER_LEN + payloadLen + V5_TRAILER_LEN)
-        return ErrFrame;
+    const size_t payloadLen = (size_t)(_response[1] | (_response[2] << 8));
+    if (_received != V5_HEADER_LEN + payloadLen + V5_TRAILER_LEN ||
+        _response[_received - 1] != V5_END)
+    {
+        _result = ErrFrame;
+        return;
+    }
 
-    const uint16_t control = (uint16_t)(response[3] | (response[4] << 8));
+    const uint16_t control = (uint16_t)(_response[3] | (_response[4] << 8));
     if (control != V5_CTRL_RESPONSE)
-        return ErrFrame;
+    {
+        _result = ErrFrame;
+        return;
+    }
 
     uint8_t sum = 0;
-    for (size_t k = 1; k < responseLen - 2; k++)
-        sum = (uint8_t)(sum + response[k]);
-    if (sum != response[responseLen - 2])
-        return ErrChecksum;
+    for (size_t k = 1; k < _received - 2; k++)
+        sum = (uint8_t)(sum + _response[k]);
+    if (sum != _response[_received - 2])
+    {
+        _result = ErrChecksum;
+        return;
+    }
+
+    // Die Logger-Seriennummer steht in JEDER Antwort - auch im Fehlerrahmen.
+    _serial = (uint32_t)_response[7] | ((uint32_t)_response[8] << 8) |
+              ((uint32_t)_response[9] << 16) | ((uint32_t)_response[10] << 24);
+
+    if (_discoverOnly)
+    {
+        _result = (_serial != 0) ? Ok : ErrRejected;
+        return;
+    }
 
     // --- Modbus-RTU-Frame auswerten (Response-Prefix ist 14, nicht 15) ---
     if (payloadLen < V5_RESP_PREFIX + RTU_MIN_LEN)
-        return ErrRejected; // z.B. Fehlerrahmen bei falscher Logger-Seriennummer
+    {
+        _result = ErrRejected; // z.B. Fehlerrahmen bei falscher Logger-Seriennummer
+        return;
+    }
 
-    const uint8_t* rtu = response + V5_HEADER_LEN + V5_RESP_PREFIX;
+    const uint8_t* rtu = _response + V5_HEADER_LEN + V5_RESP_PREFIX;
     const size_t rtuLen = payloadLen - V5_RESP_PREFIX;
 
     if (rtu[1] & 0x80)
-        return ErrModbus; // Exception-Response
+    {
+        _result = ErrModbus; // Exception-Response
+        return;
+    }
 
     const uint8_t byteCount = rtu[2];
-    if (byteCount != (uint8_t)(count * 2) || rtuLen < (size_t)(3 + byteCount + 2))
-        return ErrRejected;
+    if (byteCount != (uint8_t)(_expectCount * 2) || rtuLen < (size_t)(3 + byteCount + 2))
+    {
+        _result = ErrRejected;
+        return;
+    }
 
     const uint16_t crcCalc = crc16(rtu, (size_t)(3 + byteCount));
     const uint16_t crcRecv = (uint16_t)(rtu[3 + byteCount] | (rtu[4 + byteCount] << 8));
     if (crcCalc != crcRecv)
-        return ErrCrc;
+    {
+        _result = ErrCrc;
+        return;
+    }
 
     // Registerwerte sind Big Endian.
-    for (uint16_t i = 0; i < count; i++)
-        out[i] = (uint16_t)((rtu[3 + 2 * i] << 8) | rtu[4 + 2 * i]);
+    for (uint16_t i = 0; i < _expectCount; i++)
+        _regs[i] = (uint16_t)((rtu[3 + 2 * i] << 8) | rtu[4 + 2 * i]);
+    _regCount = _expectCount;
+    _result = Ok;
+}
 
-    return Ok;
+void SolarmanV5Client::clear()
+{
+    closeSocket();
+    _state = Idle;
+    _received = 0;
+    _sent = 0;
 }
 
 const char* SolarmanV5Client::resultText(Result result)
@@ -230,8 +382,11 @@ const char* SolarmanV5Client::resultText(Result result)
     switch (result)
     {
         case Ok: return "OK";
+        case Pending: return "laeuft";
         case ErrNotConfigured: return "nicht konfiguriert";
-        case ErrConnect: return "Verbindung fehlgeschlagen";
+        case ErrBusy: return "bereits aktiv";
+        case ErrSocket: return "Socket-Fehler";
+        case ErrConnect: return "Verbindung abgelehnt";
         case ErrTimeout: return "Zeitueberschreitung";
         case ErrFrame: return "ungueltiger V5-Rahmen";
         case ErrChecksum: return "V5-Pruefsumme falsch";
