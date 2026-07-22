@@ -1,5 +1,6 @@
 #pragma once
 #include "OpenKNX.h"
+#include "Profiles/DeyeMicro.h"
 #include "SolarmanV5Client.h"
 
 // Lokale Anbindung eines Wechselrichters mit Solarman-Logger (V5 ueber TCP, Port 8899).
@@ -41,9 +42,27 @@ class SolarmanPVModule : public OpenKNX::Module
     uint16_t _diagCount = 0;
     uint8_t _diagFc = 3;
 
+    // Rohregister der drei Leseblöcke aus dem Profil.
+    static const uint8_t MAX_BLOCK_WORDS = 16;
+    uint16_t _raw[DeyeMicro::BLOCK_COUNT][MAX_BLOCK_WORDS];
+    bool _blockOk[DeyeMicro::BLOCK_COUNT] = {false};
+    static const uint8_t BLOCK_IDLE = 0xFF;
+    uint8_t _blockPhase = BLOCK_IDLE; // welcher Block gerade gelesen wird
+
+    // Sendeverhalten je Wert (zyklisch und/oder bei Aenderung).
+    float _lastSent[DeyeMicro::Count] = {0.0f};
+    bool _sentOnce[DeyeMicro::Count] = {false};
+    uint32_t _lastCyclicMs = 0;
+
     void startNextRequest();
     void handleFinished();
     void updateStatusKo();
+
+    bool rawWord(uint16_t reg, uint16_t& out) const;
+    bool valueOf(uint8_t index, float& out) const;
+    bool valueEnabled(uint8_t index) const;
+    void sendValue(uint8_t index, float value);
+    void publishValues();
 };
 
 extern SolarmanPVModule openknxSolarmanPVModule;

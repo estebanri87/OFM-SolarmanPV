@@ -59,8 +59,20 @@ class SolarmanV5Client
 
     static const uint16_t MAX_REGISTERS = 125;
 
+    // Transport. Von aussen nicht unterscheidbar - beide Geraete laufen auf Port 8899, und
+    // Home Assistant zeigt fuer beide "TCP". Der Unterschied ist nur die Verpackung des
+    // identischen Modbus-RTU-Frames:
+    //   V5      : Solarman-Rahmen mit Logger-Seriennummer (Deye SUN-M80G3)
+    //   ModbusTcp: 7-Byte-MBAP-Header, keine Seriennummer (Pylontech Force H3)
+    enum Transport : uint8_t
+    {
+        V5 = 0,
+        ModbusTcp = 1,
+    };
+
     // Nur IPv4-Adressen, keine Hostnamen: Namensaufloesung wuerde blockieren.
-    void configure(const char* host, uint16_t port, uint32_t loggerSerial, uint8_t slaveId);
+    void configure(const char* host, uint16_t port, uint32_t loggerSerial, uint8_t slaveId,
+                   Transport transport = V5);
 
     // Startet eine Leseanfrage (functionCode 3 = Holding, 4 = Input).
     bool beginRead(uint8_t functionCode, uint16_t startReg, uint16_t count);
@@ -108,6 +120,7 @@ class SolarmanV5Client
     uint32_t _serial = 0;
     uint8_t _slaveId = 1;
     uint16_t _sequence = 0;
+    Transport _transport = V5;
 
     State _state = Idle;
     Result _result = Ok;
@@ -134,5 +147,9 @@ class SolarmanV5Client
     void parseResponse();
 
     size_t buildRequest(uint32_t serial, uint8_t functionCode, uint16_t start, uint16_t count, uint8_t* out);
+    size_t buildModbusTcp(uint8_t functionCode, uint16_t start, uint16_t count, uint8_t* out);
+    size_t expectedLength() const; // 0 = noch unbekannt
+    void parseV5();
+    void parseModbusTcp();
     static uint16_t crc16(const uint8_t* data, size_t len);
 };

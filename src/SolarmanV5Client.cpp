@@ -36,7 +36,8 @@ uint16_t SolarmanV5Client::crc16(const uint8_t* data, size_t len)
     return crc;
 }
 
-void SolarmanV5Client::configure(const char* host, uint16_t port, uint32_t loggerSerial, uint8_t slaveId)
+void SolarmanV5Client::configure(const char* host, uint16_t port, uint32_t loggerSerial,
+                                 uint8_t slaveId, Transport transport)
 {
     if (host != nullptr)
     {
@@ -47,6 +48,28 @@ void SolarmanV5Client::configure(const char* host, uint16_t port, uint32_t logge
         _port = port;
     _serial = loggerSerial;
     _slaveId = (slaveId == 0) ? 1 : slaveId;
+    _transport = transport;
+}
+
+size_t SolarmanV5Client::buildModbusTcp(uint8_t functionCode, uint16_t start, uint16_t count, uint8_t* out)
+{
+    // MBAP-Header: Transaction-ID, Protokoll 0, Laenge, Unit-ID. Danach die reine PDU -
+    // ohne CRC, das uebernimmt hier TCP.
+    _sequence++;
+    size_t i = 0;
+    out[i++] = (uint8_t)(_sequence >> 8); // MBAP ist Big Endian
+    out[i++] = (uint8_t)(_sequence & 0xFF);
+    out[i++] = 0x00; // Protokoll-ID
+    out[i++] = 0x00;
+    out[i++] = 0x00; // Laenge = Unit + PDU = 6
+    out[i++] = 0x06;
+    out[i++] = _slaveId;
+    out[i++] = functionCode;
+    out[i++] = (uint8_t)(start >> 8);
+    out[i++] = (uint8_t)(start & 0xFF);
+    out[i++] = (uint8_t)(count >> 8);
+    out[i++] = (uint8_t)(count & 0xFF);
+    return i;
 }
 
 size_t SolarmanV5Client::buildRequest(uint32_t serial, uint8_t functionCode,
@@ -165,7 +188,9 @@ bool SolarmanV5Client::beginTransaction(uint32_t serial, uint8_t functionCode, u
     _sent = 0;
     _result = Pending;
 
-    _requestLen = buildRequest(serial, functionCode, startReg, count, _request);
+    _requestLen = (_transport == ModbusTcp)
+                      ? buildModbusTcp(functionCode, startReg, count, _request)
+                      : buildRequest(serial, functionCode, startReg, count, _request);
 
     if (!openSocket())
     {
@@ -192,7 +217,16 @@ bool SolarmanV5Client::beginRead(uint8_t functionCode, uint16_t startReg, uint16
 
 bool SolarmanV5Client::beginDiscoverSerial()
 {
+    // Nur bei V5 sinnvoll: der MBAP-Rahmen kennt keine Seriennummer.
+    if (_transport == ModbusTcp)
+    {
+        _result = ErrNotConfigured;
+        _state = Complete;
+        return false;
+    }
     // Absichtlich Seriennummer 0 - der Logger lehnt ab, verraet die echte SN aber im Header.
+    // ACHTUNG: geraeteabhaengig. Der Pylontech verwirft solche Frames stillschweigend, dort
+    // muss die Seriennummer manuell hinterlegt werden.
     return beginTransaction(0, 3, 0x0003, 1, true);
 }
 
@@ -270,13 +304,9 @@ void SolarmanV5Client::poll()
             }
 
             // Vollstaendig, sobald die im Header angekuendigte Laenge erreicht ist.
-            if (_received >= 3)
-            {
-                const size_t expected =
-                    V5_HEADER_LEN + (size_t)(_response[1] | (_response[2] << 8)) + V5_TRAILER_LEN;
-                if (_received >= expected)
-                    parseResponse();
-            }
+            const size_t expected = expectedLength();
+            if (expected != 0 && _received >= expected)
+                parseResponse();
             return;
         }
 
@@ -285,11 +315,70 @@ void SolarmanV5Client::poll()
     }
 }
 
+size_t SolarmanV5Client::expectedLength() const
+{
+    if (_transport == ModbusTcp)
+    {
+        // MBAP: Laengenfeld (Byte 4-5, Big Endian) zaehlt ab Unit-ID.
+        if (_received < 6)
+            return 0;
+        return 6 + (size_t)((_response[4] << 8) | _response[5]);
+    }
+    if (_received < 3)
+        return 0;
+    return V5_HEADER_LEN + (size_t)(_response[1] | (_response[2] << 8)) + V5_TRAILER_LEN;
+}
+
 void SolarmanV5Client::parseResponse()
 {
     closeSocket();
     _state = Complete;
 
+    if (_transport == ModbusTcp)
+        parseModbusTcp();
+    else
+        parseV5();
+}
+
+void SolarmanV5Client::parseModbusTcp()
+{
+    // MBAP: TID(2) Proto(2) Len(2) Unit(1) | FC(1) ByteCount(1) Daten... - kein CRC.
+    if (_received < 9)
+    {
+        _result = ErrFrame;
+        return;
+    }
+    const uint16_t proto = (uint16_t)((_response[2] << 8) | _response[3]);
+    if (proto != 0)
+    {
+        _result = ErrFrame;
+        return;
+    }
+
+    const uint8_t fc = _response[7];
+    if (fc & 0x80)
+    {
+        _result = ErrModbus; // Exception-Response
+        return;
+    }
+
+    const uint8_t byteCount = _response[8];
+    if (byteCount != (uint8_t)(_expectCount * 2) || _received < (size_t)(9 + byteCount))
+    {
+        // Der Pylontech liefert gelegentlich mehr Register als angefragt bzw. Frames, die
+        // nicht zur Anfrage gehoeren. Solche Antworten sind nicht zuzuordnen -> verwerfen.
+        _result = ErrRejected;
+        return;
+    }
+
+    for (uint16_t i = 0; i < _expectCount; i++)
+        _regs[i] = (uint16_t)((_response[9 + 2 * i] << 8) | _response[10 + 2 * i]);
+    _regCount = _expectCount;
+    _result = Ok;
+}
+
+void SolarmanV5Client::parseV5()
+{
     // --- V5-Rahmen pruefen ---
     if (_received < V5_HEADER_LEN + V5_TRAILER_LEN || _response[0] != V5_START)
     {

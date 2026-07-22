@@ -1,6 +1,7 @@
 #include "SolarmanPVModule.h"
 #include "NetworkModule.h"
 #include "knxprod.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -90,6 +91,14 @@ void SolarmanPVModule::startNextRequest()
         return;
     }
 
+    // Laufenden Lesezyklus fortsetzen: die Bloecke des Profils nacheinander.
+    if (_blockPhase != BLOCK_IDLE && _blockPhase < DeyeMicro::BLOCK_COUNT)
+    {
+        const Spv::Block& b = DeyeMicro::BLOCKS[_blockPhase];
+        _client.beginRead(3, b.start, b.count);
+        return;
+    }
+
     if (_pollIntervalS == 0)
         return;
     const uint32_t now = millis();
@@ -97,9 +106,67 @@ void SolarmanPVModule::startNextRequest()
         return;
     _lastPollMs = now;
 
-    // Phase 1: ein fester Erreichbarkeits-Ping. Die eigentlichen Messwertbloecke kommen mit
-    // den Profilen.
-    _client.beginRead(3, 0x003B, 1);
+    // Neuen Zyklus starten.
+    _blockPhase = 0;
+    const Spv::Block& b = DeyeMicro::BLOCKS[0];
+    _client.beginRead(3, b.start, b.count);
+}
+
+bool SolarmanPVModule::rawWord(uint16_t reg, uint16_t& out) const
+{
+    for (uint8_t b = 0; b < DeyeMicro::BLOCK_COUNT; b++)
+    {
+        if (!_blockOk[b])
+            continue;
+        const Spv::Block& blk = DeyeMicro::BLOCKS[b];
+        if (reg >= blk.start && reg < (uint16_t)(blk.start + blk.count))
+        {
+            out = _raw[b][reg - blk.start];
+            return true;
+        }
+    }
+    return false;
+}
+
+bool SolarmanPVModule::valueOf(uint8_t index, float& out) const
+{
+    const Spv::Def& def = DeyeMicro::DEFS[index];
+
+    // Berechnete Werte: die PV-Leistungen liefert das Geraet nicht, sie ergeben sich aus U*I
+    // (so macht es auch die Solarman-Integration).
+    if (def.words == 0)
+    {
+        float u = 0.0f, i = 0.0f;
+        const bool first = (index == DeyeMicro::Pv1Power);
+        if (!valueOf(first ? DeyeMicro::Pv1Voltage : DeyeMicro::Pv2Voltage, u) ||
+            !valueOf(first ? DeyeMicro::Pv1Current : DeyeMicro::Pv2Current, i))
+            return false;
+        out = u * i;
+        return true;
+    }
+
+    uint16_t low = 0;
+    if (!rawWord(def.reg, low))
+        return false;
+
+    uint32_t raw = low;
+    if (def.words == 1 && def.isSigned)
+    {
+        // 16 Bit vorzeichenbehaftet (Batteriestrom, Temperatur): Vorzeichen erweitern.
+        out = (float)(int16_t)low * def.scale - def.offset;
+        return true;
+    }
+    if (def.words == 2)
+    {
+        // 32 Bit, LOW-WORD ZUERST - am Geraet bestaetigt (High-Word steht dahinter).
+        uint16_t high = 0;
+        if (!rawWord((uint16_t)(def.reg + 1), high))
+            return false;
+        raw |= ((uint32_t)high) << 16;
+    }
+
+    out = (float)raw * def.scale - def.offset;
+    return true;
 }
 
 void SolarmanPVModule::handleFinished()
@@ -149,8 +216,123 @@ void SolarmanPVModule::handleFinished()
         return;
     }
 
+    // Laufender Lesezyklus: Block ablegen und zum naechsten weitergehen.
+    if (_blockPhase != BLOCK_IDLE && _blockPhase < DeyeMicro::BLOCK_COUNT)
+    {
+        const uint8_t phase = _blockPhase;
+        if (ok && _client.registerCount() <= MAX_BLOCK_WORDS)
+        {
+            for (uint16_t i = 0; i < _client.registerCount(); i++)
+                _raw[phase][i] = _client.registers()[i];
+            _blockOk[phase] = true;
+        }
+        else
+        {
+            _blockOk[phase] = false;
+            logDebugP("SolarmanPV: Block %d fehlgeschlagen (%s)", (int)phase,
+                      SolarmanV5Client::resultText(result));
+        }
+
+        _blockPhase = (uint8_t)(phase + 1);
+        if (_blockPhase >= DeyeMicro::BLOCK_COUNT)
+        {
+            _blockPhase = BLOCK_IDLE;
+            publishValues();
+        }
+        return;
+    }
+
     if (!ok)
         logDebugP("SolarmanPV: Abfrage fehlgeschlagen (%s)", SolarmanV5Client::resultText(result));
+}
+
+bool SolarmanPVModule::valueEnabled(uint8_t index) const
+{
+    switch (index)
+    {
+        case DeyeMicro::Power:         return (bool)ParamSPV_EnPower;
+        case DeyeMicro::Today:         return (bool)ParamSPV_EnToday;
+        case DeyeMicro::Total:         return (bool)ParamSPV_EnTotal;
+        case DeyeMicro::GridVoltage:   return (bool)ParamSPV_EnGridVoltage;
+        case DeyeMicro::GridCurrent:   return (bool)ParamSPV_EnGridCurrent;
+        case DeyeMicro::GridFrequency: return (bool)ParamSPV_EnGridFrequency;
+        case DeyeMicro::Temperature:   return (bool)ParamSPV_EnTemperature;
+        case DeyeMicro::Pv1Voltage:    return (bool)ParamSPV_EnPv1Voltage;
+        case DeyeMicro::Pv1Current:    return (bool)ParamSPV_EnPv1Current;
+        case DeyeMicro::Pv1Power:      return (bool)ParamSPV_EnPv1Power;
+        case DeyeMicro::Pv2Voltage:    return (bool)ParamSPV_EnPv2Voltage;
+        case DeyeMicro::Pv2Current:    return (bool)ParamSPV_EnPv2Current;
+        case DeyeMicro::Pv2Power:      return (bool)ParamSPV_EnPv2Power;
+        case DeyeMicro::Today1:        return (bool)ParamSPV_EnToday1;
+        case DeyeMicro::Today2:        return (bool)ParamSPV_EnToday2;
+        case DeyeMicro::Total1:        return (bool)ParamSPV_EnTotal1;
+        case DeyeMicro::Total2:        return (bool)ParamSPV_EnTotal2;
+        default:                       return false;
+    }
+}
+
+void SolarmanPVModule::sendValue(uint8_t index, float value)
+{
+    // Energie kommt aus dem Profil in kWh, geht aber als DPT 13.010 in Wh auf den Bus -
+    // sonst gingen die 0,1 kWh Aufloesung des Tagesertrags verloren.
+    const int32_t wh = (int32_t)lroundf(value * 1000.0f);
+
+    switch (index)
+    {
+        case DeyeMicro::Power:         KoSPV_Power.value(value, DPT_Value_Power); break;
+        case DeyeMicro::Today:         KoSPV_Today.value(wh, DPT_ActiveEnergy); break;
+        case DeyeMicro::Total:         KoSPV_Total.value(wh, DPT_ActiveEnergy); break;
+        case DeyeMicro::GridVoltage:   KoSPV_GridVoltage.value(value, DPT_Value_Electric_Potential); break;
+        case DeyeMicro::GridCurrent:   KoSPV_GridCurrent.value(value, DPT_Value_Electric_Current); break;
+        case DeyeMicro::GridFrequency: KoSPV_GridFrequency.value(value, DPT_Value_Frequency); break;
+        case DeyeMicro::Temperature:   KoSPV_Temperature.value(value, DPT_Value_Temp); break;
+        case DeyeMicro::Pv1Voltage:    KoSPV_Pv1Voltage.value(value, DPT_Value_Electric_Potential); break;
+        case DeyeMicro::Pv1Current:    KoSPV_Pv1Current.value(value, DPT_Value_Electric_Current); break;
+        case DeyeMicro::Pv1Power:      KoSPV_Pv1Power.value(value, DPT_Value_Power); break;
+        case DeyeMicro::Pv2Voltage:    KoSPV_Pv2Voltage.value(value, DPT_Value_Electric_Potential); break;
+        case DeyeMicro::Pv2Current:    KoSPV_Pv2Current.value(value, DPT_Value_Electric_Current); break;
+        case DeyeMicro::Pv2Power:      KoSPV_Pv2Power.value(value, DPT_Value_Power); break;
+        case DeyeMicro::Today1:        KoSPV_Today1.value(wh, DPT_ActiveEnergy); break;
+        case DeyeMicro::Today2:        KoSPV_Today2.value(wh, DPT_ActiveEnergy); break;
+        case DeyeMicro::Total1:        KoSPV_Total1.value(wh, DPT_ActiveEnergy); break;
+        case DeyeMicro::Total2:        KoSPV_Total2.value(wh, DPT_ActiveEnergy); break;
+        default: break;
+    }
+}
+
+void SolarmanPVModule::publishValues()
+{
+    const uint32_t cyclicMs = ParamSPV_SendDelayTimeMS;
+    const uint8_t changePercent = ParamSPV_SendChangePercent;
+    const bool cyclicDue = (cyclicMs != 0) && delayCheck(_lastCyclicMs, cyclicMs);
+
+    for (uint8_t i = 0; i < DeyeMicro::Count; i++)
+    {
+        if (!valueEnabled(i))
+            continue;
+        float value = 0.0f;
+        if (!valueOf(i, value))
+            continue;
+
+        bool send = !_sentOnce[i] || cyclicDue;
+        if (!send && changePercent != 0)
+        {
+            const float reference = fabsf(_lastSent[i]);
+            const float delta = fabsf(value - _lastSent[i]);
+            // Bezugsgroesse 0 -> jede Aenderung zaehlt, sonst gaebe es keine Prozentbasis.
+            send = (reference < 0.001f) ? (delta > 0.0f) : ((delta / reference * 100.0f) >= changePercent);
+        }
+
+        if (send)
+        {
+            sendValue(i, value);
+            _lastSent[i] = value;
+            _sentOnce[i] = true;
+        }
+    }
+
+    if (cyclicDue)
+        _lastCyclicMs = millis();
 }
 
 void SolarmanPVModule::updateStatusKo()
