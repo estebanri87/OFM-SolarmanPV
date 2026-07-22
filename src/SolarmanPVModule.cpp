@@ -68,20 +68,25 @@ void SolarmanPVModule::startNextRequest()
     if (!openknxNetwork.established())
         return;
 
-    // Diagnoseanfrage von der Konsole hat Vorrang.
-    if (_diagPending)
-    {
-        _diagPending = false;
-        if (!_client.beginRead(_diagFc, _diagStart, _diagCount))
-            logInfoP("spvread: Anfrage abgelehnt (%s)", SolarmanV5Client::resultText(_client.result()));
-        return;
-    }
-
     // Ohne Seriennummer geht nichts: der Logger weist Anfragen mit falscher SN ab. Sie steht
-    // aber im Header JEDER Antwort - auch im Fehlerrahmen.
+    // aber im Header JEDER Antwort - auch im Fehlerrahmen. Das muss VOR der Diagnoseanfrage
+    // passieren, sonst liefe deren Antwort ins Leere.
     if (!_serialKnown)
     {
         _client.beginDiscoverSerial();
+        return;
+    }
+
+    // Diagnoseanfrage von der Konsole hat Vorrang vor der zyklischen Abfrage.
+    if (_diagPending)
+    {
+        _diagPending = false;
+        _diagInFlight = true;
+        if (!_client.beginRead(_diagFc, _diagStart, _diagCount))
+        {
+            _diagInFlight = false;
+            logInfoP("spvread: Anfrage abgelehnt (%s)", SolarmanV5Client::resultText(_client.result()));
+        }
         return;
     }
 
@@ -103,24 +108,11 @@ void SolarmanPVModule::handleFinished()
     const bool ok = (result == SolarmanV5Client::Ok);
     _reachable = ok;
 
-    if (!_serialKnown)
+    // Zuerst die Diagnoseanfrage: das Flag gehoert immer zurueckgesetzt, sonst wuerde eine
+    // spaetere zyklische Antwort faelschlich als Registerdump ausgegeben.
+    if (_diagInFlight)
     {
-        if (ok && _client.loggerSerial() != 0)
-        {
-            _serialKnown = true;
-            _client.setLoggerSerial(_client.loggerSerial());
-            logInfoP("SolarmanPV: Logger-Seriennummer ermittelt: %u", (unsigned)_client.loggerSerial());
-        }
-        else
-        {
-            logDebugP("SolarmanPV: Seriennummer noch nicht ermittelt (%s)",
-                      SolarmanV5Client::resultText(result));
-        }
-        return;
-    }
-
-    if (_diagCount > 0)
-    {
+        _diagInFlight = false;
         if (ok)
         {
             logInfoP("spvread: %d Register ab 0x%04X (FC %d)", (int)_client.registerCount(),
@@ -138,7 +130,22 @@ void SolarmanPVModule::handleFinished()
         {
             logInfoP("spvread: fehlgeschlagen (%s)", SolarmanV5Client::resultText(result));
         }
-        _diagCount = 0;
+        return;
+    }
+
+    if (!_serialKnown)
+    {
+        if (ok && _client.loggerSerial() != 0)
+        {
+            _serialKnown = true;
+            _client.setLoggerSerial(_client.loggerSerial());
+            logInfoP("SolarmanPV: Logger-Seriennummer ermittelt: %u", (unsigned)_client.loggerSerial());
+        }
+        else
+        {
+            logDebugP("SolarmanPV: Seriennummer noch nicht ermittelt (%s)",
+                      SolarmanV5Client::resultText(result));
+        }
         return;
     }
 
@@ -178,6 +185,15 @@ bool SolarmanPVModule::processCommand(const std::string cmd, bool diagnoseKo)
     // die Registertabelle fuer das Profil.
     if (cmd.rfind("spvread", 0) == 0)
     {
+        // Nur eine Anfrage gleichzeitig: es gibt einen Diagnose-Slot. Ein zweiter Befehl
+        // wuerde Startadresse und Anzahl ueberschreiben, waehrend die erste Antwort noch
+        // unterwegs ist - die Ausgabe traege dann falsche Registeradressen.
+        if (_diagPending || _diagInFlight)
+        {
+            logInfoP("spvread: laeuft bereits, bitte Ergebnis abwarten");
+            return true;
+        }
+
         unsigned start = 0, count = 1;
         const int parsed = sscanf(cmd.c_str(), "spvread %x %x", &start, &count);
         if (parsed < 1)

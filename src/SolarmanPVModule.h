@@ -33,7 +33,10 @@ class SolarmanPVModule : public OpenKNX::Module
     bool _statusSent = false;
 
     // Diagnose: von der Konsole angestossene Leseanfrage.
+    // _diagPending = angefordert, _diagInFlight = laeuft gerade. Ohne das zweite Flag wuerde
+    // eine spaetere zyklische Antwort faelschlich als Registerdump ausgegeben.
     bool _diagPending = false;
+    bool _diagInFlight = false;
     uint16_t _diagStart = 0;
     uint16_t _diagCount = 0;
     uint8_t _diagFc = 3;
