@@ -293,16 +293,16 @@ void SolarmanChannel::sendValue(uint8_t index, float value)
     GroupObject* ko = nullptr;
     switch (index)
     {
-        case 0:  ko = &KoSPV_CHValue01; break;
-        case 1:  ko = &KoSPV_CHValue02; break;
-        case 2:  ko = &KoSPV_CHValue03; break;
-        case 3:  ko = &KoSPV_CHValue04; break;
-        case 4:  ko = &KoSPV_CHValue05; break;
-        case 5:  ko = &KoSPV_CHValue06; break;
-        case 6:  ko = &KoSPV_CHValue07; break;
-        case 7:  ko = &KoSPV_CHValue08; break;
-        case 8:  ko = &KoSPV_CHValue09; break;
-        case 9:  ko = &KoSPV_CHValue10; break;
+        case  0: ko = &KoSPV_CHValue01; break;
+        case  1: ko = &KoSPV_CHValue02; break;
+        case  2: ko = &KoSPV_CHValue03; break;
+        case  3: ko = &KoSPV_CHValue04; break;
+        case  4: ko = &KoSPV_CHValue05; break;
+        case  5: ko = &KoSPV_CHValue06; break;
+        case  6: ko = &KoSPV_CHValue07; break;
+        case  7: ko = &KoSPV_CHValue08; break;
+        case  8: ko = &KoSPV_CHValue09; break;
+        case  9: ko = &KoSPV_CHValue10; break;
         case 10: ko = &KoSPV_CHValue11; break;
         case 11: ko = &KoSPV_CHValue12; break;
         case 12: ko = &KoSPV_CHValue13; break;
@@ -310,6 +310,13 @@ void SolarmanChannel::sendValue(uint8_t index, float value)
         case 14: ko = &KoSPV_CHValue15; break;
         case 15: ko = &KoSPV_CHValue16; break;
         case 16: ko = &KoSPV_CHValue17; break;
+        case 17: ko = &KoSPV_CHValue18; break;
+        case 18: ko = &KoSPV_CHValue19; break;
+        case 19: ko = &KoSPV_CHValue20; break;
+        case 20: ko = &KoSPV_CHValue21; break;
+        case 21: ko = &KoSPV_CHValue22; break;
+        case 22: ko = &KoSPV_CHValue23; break;
+        case 23: ko = &KoSPV_CHValue24; break;
         default: return;
     }
 

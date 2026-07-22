@@ -7,7 +7,7 @@
         <ApplicationProgram>
           <Static>
             <Parameters>
-              <!-- Ein Kanal = ein Geraet (Wechselrichter oder Batterie). -->
+              <!-- Ein Kanal = ein Geraet (Wechselrichter oder Batteriespeicher). -->
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Device%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
               <!-- Nur IPv4-Literale: eine Namensaufloesung wuerde blockieren (Byte 0-31). -->
               <Union SizeInBit="256">
@@ -42,49 +42,50 @@
                 <Memory CodeSegment="%MID%" Offset="40" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%008" Name="CH%C%LoggerSerialText" ParameterType="%AID%_PT-SPVString16" Offset="0" BitOffset="0" Text="Seriennummer" Value="" />
               </Union>
-              <!-- Messwert-Auswahl (Byte 56-59). Jedes Profil bekommt eigene Bits: das kostet
-                   4 statt 3 Byte je Kanal, vermeidet aber Ueberlappungswarnungen im Producer.
-                   BitOffset zaehlt innerhalb des Bytes und muss 0..7 sein. -->
-              <Union SizeInBit="32">
+              <!-- Messwert-Auswahl, Byte 56-85: 10 Profile a 24 Bit, fest reserviert.
+                   Jedes Profil hat seinen eigenen Bereich, damit ein neues Profil weder
+                   Parameteradressen noch KO-Nummern verschiebt. BitOffset zaehlt innerhalb
+                   des Bytes und muss 0..7 sein. -->
+              <Union SizeInBit="240">
                 <Memory CodeSegment="%MID%" Offset="56" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%EnDPower" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Wirkleistung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%EnDToday" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Tagesertrag" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%EnDTotal" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="2" Text="Gesamtertrag" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%EnDGridVoltage" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Netzspannung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%014" Name="CH%C%EnDGridCurrent" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="4" Text="Netzstrom" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%015" Name="CH%C%EnDGridFrequency" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="5" Text="Netzfrequenz" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%016" Name="CH%C%EnDTemperature" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="6" Text="Temperatur" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%017" Name="CH%C%EnDPv1Voltage" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="7" Text="PV1 Spannung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%018" Name="CH%C%EnDPv1Current" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="0" Text="PV1 Strom" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%019" Name="CH%C%EnDPv1Power" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="1" Text="PV1 Leistung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%020" Name="CH%C%EnDPv2Voltage" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="2" Text="PV2 Spannung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%021" Name="CH%C%EnDPv2Current" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="3" Text="PV2 Strom" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%022" Name="CH%C%EnDPv2Power" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="PV2 Leistung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%023" Name="CH%C%EnDToday1" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="5" Text="Tagesertrag String 1" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%024" Name="CH%C%EnDToday2" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="6" Text="Tagesertrag String 2" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%025" Name="CH%C%EnDTotal1" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="7" Text="Gesamtertrag String 1" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%026" Name="CH%C%EnDTotal2" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="0" Text="Gesamtertrag String 2" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%030" Name="CH%C%EnPSoc" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="1" Text="Ladezustand" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%031" Name="CH%C%EnPVoltage" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="2" Text="Batteriespannung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%032" Name="CH%C%EnPCurrent" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="3" Text="Batteriestrom" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%033" Name="CH%C%EnPPower" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="4" Text="Batterieleistung" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%034" Name="CH%C%EnPTemperature" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="5" Text="Batterietemperatur" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%035" Name="CH%C%EnPSoh" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="6" Text="Alterungszustand" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%036" Name="CH%C%EnPRemainingCapacity" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="7" Text="Restkapazitaet" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%037" Name="CH%C%EnPCycleTimes" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="0" Text="Ladezyklen" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%038" Name="CH%C%EnPTodayCharge" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="1" Text="Heute geladen" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%039" Name="CH%C%EnPTodayDischarge" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="2" Text="Heute entladen" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%040" Name="CH%C%EnPTotalCharge" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="3" Text="Gesamt geladen" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%041" Name="CH%C%EnPTotalDischarge" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="4" Text="Gesamt entladen" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%100" Name="CH%C%EnDPower" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="Wirkleistung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%101" Name="CH%C%EnDToday" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="Tagesertrag" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%102" Name="CH%C%EnDTotal" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="2" Text="Gesamtertrag" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%103" Name="CH%C%EnDGridVoltage" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="3" Text="Netzspannung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%104" Name="CH%C%EnDGridCurrent" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="4" Text="Netzstrom" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%105" Name="CH%C%EnDGridFrequency" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="5" Text="Netzfrequenz" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%106" Name="CH%C%EnDTemperature" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="6" Text="Temperatur" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%107" Name="CH%C%EnDPv1Voltage" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="7" Text="PV1 Spannung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%108" Name="CH%C%EnDPv1Current" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="0" Text="PV1 Strom" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%109" Name="CH%C%EnDPv1Power" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="1" Text="PV1 Leistung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%110" Name="CH%C%EnDPv2Voltage" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="2" Text="PV2 Spannung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%111" Name="CH%C%EnDPv2Current" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="3" Text="PV2 Strom" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%112" Name="CH%C%EnDPv2Power" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="4" Text="PV2 Leistung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%113" Name="CH%C%EnDToday1" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="5" Text="Tagesertrag String 1" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%114" Name="CH%C%EnDToday2" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="6" Text="Tagesertrag String 2" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%115" Name="CH%C%EnDTotal1" ParameterType="%AID%_PT-CheckBox" Offset="1" BitOffset="7" Text="Gesamtertrag String 1" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%116" Name="CH%C%EnDTotal2" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="0" Text="Gesamtertrag String 2" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%124" Name="CH%C%EnPSoc" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="0" Text="Ladezustand" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%125" Name="CH%C%EnPVoltage" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="1" Text="Batteriespannung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%126" Name="CH%C%EnPCurrent" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="2" Text="Batteriestrom" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%127" Name="CH%C%EnPPower" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="3" Text="Batterieleistung" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%128" Name="CH%C%EnPTemperature" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="4" Text="Batterietemperatur" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%129" Name="CH%C%EnPSoh" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="5" Text="Alterungszustand" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%130" Name="CH%C%EnPRemainingCapacity" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="6" Text="Restkapazitaet" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%131" Name="CH%C%EnPCycleTimes" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="7" Text="Ladezyklen" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%132" Name="CH%C%EnPTodayCharge" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="0" Text="Heute geladen" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%133" Name="CH%C%EnPTodayDischarge" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="1" Text="Heute entladen" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%134" Name="CH%C%EnPTotalCharge" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="2" Text="Gesamt geladen" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%135" Name="CH%C%EnPTotalDischarge" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="3" Text="Gesamt entladen" Value="1" />
               </Union>
-              <!-- Sendeverhalten (Byte 60-62) -->
+              <!-- Sendeverhalten (Byte 86-88) -->
               <Union SizeInBit="16">
-                <Memory CodeSegment="%MID%" Offset="60" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="86" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%050" Name="CH%C%SendDelayBase" ParameterType="%AID%_PT-DelayBase" Offset="0" BitOffset="0" Text="Zeitbasis" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%051" Name="CH%C%SendDelayTime" ParameterType="%AID%_PT-DelayTime" Offset="0" BitOffset="2" Text="zyklisch senden alle (0 = aus)" Value="5" />
               </Union>
               <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="62" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="88" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%052" Name="CH%C%SendChangePercent" ParameterType="%AID%_PT-SPVPercent" Offset="0" BitOffset="0" Text="zusaetzlich bei Aenderung um (0 = aus)" SuffixText=" %" Value="5" />
               </Union>
             </Parameters>
@@ -98,43 +99,43 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_UP-%TT%%CC%006" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_UP-%TT%%CC%007" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_UP-%TT%%CC%008" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_UP-%TT%%CC%010" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_UP-%TT%%CC%011" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_UP-%TT%%CC%014" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_UP-%TT%%CC%015" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_UP-%TT%%CC%016" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_UP-%TT%%CC%017" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_UP-%TT%%CC%019" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_UP-%TT%%CC%020" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_UP-%TT%%CC%021" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_UP-%TT%%CC%022" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_UP-%TT%%CC%023" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_UP-%TT%%CC%024" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_UP-%TT%%CC%025" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_UP-%TT%%CC%026" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03001" RefId="%AID%_UP-%TT%%CC%030" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" RefId="%AID%_UP-%TT%%CC%031" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" RefId="%AID%_UP-%TT%%CC%032" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" RefId="%AID%_UP-%TT%%CC%033" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" RefId="%AID%_UP-%TT%%CC%034" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" RefId="%AID%_UP-%TT%%CC%035" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" RefId="%AID%_UP-%TT%%CC%036" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" RefId="%AID%_UP-%TT%%CC%037" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" RefId="%AID%_UP-%TT%%CC%038" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" RefId="%AID%_UP-%TT%%CC%039" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" RefId="%AID%_UP-%TT%%CC%040" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" RefId="%AID%_UP-%TT%%CC%041" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_UP-%TT%%CC%051" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" RefId="%AID%_UP-%TT%%CC%052" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" RefId="%AID%_UP-%TT%%CC%100" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" RefId="%AID%_UP-%TT%%CC%101" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" RefId="%AID%_UP-%TT%%CC%102" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301" RefId="%AID%_UP-%TT%%CC%103" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%104_R-%TT%%CC%10401" RefId="%AID%_UP-%TT%%CC%104" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%105_R-%TT%%CC%10501" RefId="%AID%_UP-%TT%%CC%105" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%106_R-%TT%%CC%10601" RefId="%AID%_UP-%TT%%CC%106" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%107_R-%TT%%CC%10701" RefId="%AID%_UP-%TT%%CC%107" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%108_R-%TT%%CC%10801" RefId="%AID%_UP-%TT%%CC%108" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%109_R-%TT%%CC%10901" RefId="%AID%_UP-%TT%%CC%109" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%110_R-%TT%%CC%11001" RefId="%AID%_UP-%TT%%CC%110" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%111_R-%TT%%CC%11101" RefId="%AID%_UP-%TT%%CC%111" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%112_R-%TT%%CC%11201" RefId="%AID%_UP-%TT%%CC%112" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%113_R-%TT%%CC%11301" RefId="%AID%_UP-%TT%%CC%113" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%114_R-%TT%%CC%11401" RefId="%AID%_UP-%TT%%CC%114" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%115_R-%TT%%CC%11501" RefId="%AID%_UP-%TT%%CC%115" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%116_R-%TT%%CC%11601" RefId="%AID%_UP-%TT%%CC%116" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%124_R-%TT%%CC%12401" RefId="%AID%_UP-%TT%%CC%124" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%125_R-%TT%%CC%12501" RefId="%AID%_UP-%TT%%CC%125" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%126_R-%TT%%CC%12601" RefId="%AID%_UP-%TT%%CC%126" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%127_R-%TT%%CC%12701" RefId="%AID%_UP-%TT%%CC%127" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%128_R-%TT%%CC%12801" RefId="%AID%_UP-%TT%%CC%128" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%129_R-%TT%%CC%12901" RefId="%AID%_UP-%TT%%CC%129" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" RefId="%AID%_UP-%TT%%CC%130" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%131_R-%TT%%CC%13101" RefId="%AID%_UP-%TT%%CC%131" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%132_R-%TT%%CC%13201" RefId="%AID%_UP-%TT%%CC%132" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%133_R-%TT%%CC%13301" RefId="%AID%_UP-%TT%%CC%133" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" RefId="%AID%_UP-%TT%%CC%134" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" RefId="%AID%_UP-%TT%%CC%135" />
             </ParameterRefs>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%" Name="CH%C%Reachable" Text="" FunctionText="" ObjectSize="1 Bit" DatapointType="DPST-1-11" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <!-- 17 Messwert-Slots. Bedeutung, Groesse und DPT kommen aus dem Profil:
-                   die ComObjectRefs ueberschreiben ObjectSize und DatapointType. -->
+              <!-- 24 Messwert-Slots als Ausbaureserve. Bedeutung, Groesse und DPT kommen aus
+                   dem Profil: die ComObjectRefs ueberschreiben ObjectSize und DatapointType. -->
               <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%" Name="CH%C%Value01" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%002" Number="%K2%" Name="CH%C%Value02" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%" Name="CH%C%Value03" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
@@ -152,6 +153,13 @@
               <ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" Name="CH%C%Value15" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" Name="CH%C%Value16" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%017" Number="%K17%" Name="CH%C%Value17" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%018" Number="%K18%" Name="CH%C%Value18" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" Name="CH%C%Value19" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" Name="CH%C%Value20" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" Name="CH%C%Value21" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" Name="CH%C%Value22" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" Name="CH%C%Value23" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" Name="CH%C%Value24" Text="" FunctionText="" ObjectSize="4 Bytes" DatapointType="DPST-14-56" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
             </ComObjectTable>
             <ComObjectRefs>
               <ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" Text="{{0:Geraet %C%}}: erreichbar" FunctionText="Geraet %C%: Status" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
@@ -190,23 +198,23 @@
             <ChannelIndependentBlock>
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SPV" Text="Geraet %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="white-balance-sunny" ShowInComObjectTree="true">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SPV" Text="Geraet %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="white-balance-sunny" ShowInComObjectTree="true" HelpContext="SPV-Geraeteprofil">
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Geraet %C%" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="SPV-Geraeteprofil" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Verbindung" UIHint="Headline" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="SPV-Verbindung" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="SPV-Verbindung" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="SPV-Transportprotokoll" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" HelpContext="SPV-Verbindung" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                       <when test="=0">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Seriennummer wird bei Solarman V5 normalerweise automatisch ermittelt. Manuell nur eintragen, wenn das fehlschlaegt - manche Logger antworten auf Anfragen mit falscher Seriennummer gar nicht." UIHint="Information" />
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" />
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" HelpContext="SPV-Logger-Seriennummer" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501">
                           <when test="=1">
-                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" />
+                            <ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" HelpContext="SPV-Logger-Seriennummer" />
                           </when>
                         </choose>
                       </when>
@@ -216,189 +224,189 @@
                     </choose>
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Erweitert" UIHint="Headline" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" HelpContext="SPV-Modbus-Slave-ID" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Sendeverhalten" UIHint="Headline" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" />
-                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" HelpContext="SPV-Sendeverhalten" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" HelpContext="SPV-Sendeverhalten" />
+                    <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%052_R-%TT%%CC%05201" HelpContext="SPV-Sendeverhalten" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Messwerte" UIHint="Headline" />
                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
                     <choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
                       <when test="=0">
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%100_R-%TT%%CC%10001">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%101_R-%TT%%CC%10101">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%102_R-%TT%%CC%10201">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%103_R-%TT%%CC%10301">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%104_R-%TT%%CC%10401" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%104_R-%TT%%CC%10401">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%105_R-%TT%%CC%10501" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%105_R-%TT%%CC%10501">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%106_R-%TT%%CC%10601" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%106_R-%TT%%CC%10601">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%107_R-%TT%%CC%10701" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%107_R-%TT%%CC%10701">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%108_R-%TT%%CC%10801" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%108_R-%TT%%CC%10801">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%109_R-%TT%%CC%10901" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%109_R-%TT%%CC%10901">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%110_R-%TT%%CC%11001" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%110_R-%TT%%CC%11001">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%111_R-%TT%%CC%11101" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%111_R-%TT%%CC%11101">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%112_R-%TT%%CC%11201" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%112_R-%TT%%CC%11201">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%113_R-%TT%%CC%11301" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%113_R-%TT%%CC%11301">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%114_R-%TT%%CC%11401" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%114_R-%TT%%CC%11401">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%115_R-%TT%%CC%11501" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%115_R-%TT%%CC%11501">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%116_R-%TT%%CC%11601" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%116_R-%TT%%CC%11601">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
                           </when>
                         </choose>
                       </when>
                       <when test="=1">
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03001" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03001">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%124_R-%TT%%CC%12401" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%124_R-%TT%%CC%12401">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00102" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%125_R-%TT%%CC%12501" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%125_R-%TT%%CC%12501">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00202" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%126_R-%TT%%CC%12601" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%126_R-%TT%%CC%12601">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00302" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%127_R-%TT%%CC%12701" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%127_R-%TT%%CC%12701">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00402" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%128_R-%TT%%CC%12801" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%128_R-%TT%%CC%12801">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00502" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%129_R-%TT%%CC%12901" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%129_R-%TT%%CC%12901">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00602" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%130_R-%TT%%CC%13001">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00702" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%131_R-%TT%%CC%13101" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%131_R-%TT%%CC%13101">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00802" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%132_R-%TT%%CC%13201" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%132_R-%TT%%CC%13201">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00902" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%133_R-%TT%%CC%13301" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%133_R-%TT%%CC%13301">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01002" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%134_R-%TT%%CC%13401">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01102" />
                           </when>
                         </choose>
-                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" />
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101">
+                        <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501" HelpContext="SPV-Messwerte" />
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%135_R-%TT%%CC%13501">
                           <when test="=1">
                             <ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01202" />
                           </when>

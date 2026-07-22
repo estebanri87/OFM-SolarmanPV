@@ -28,6 +28,10 @@ namespace Spv
 
     // Groesster Block ueber alle Profile - bestimmt den Puffer im Kanal.
     static const uint8_t MAX_BLOCK_WORDS = 16;
-    // Groesste Werteanzahl ueber alle Profile - muss zur Zahl der KO-Slots passen.
-    static const uint8_t MAX_VALUES = 17;
+    // Ausbaureserve, muss mit SLOTS im Template-Generator uebereinstimmen: so viele
+    // Messwert-KOs hat jeder Kanal. Ein Profil darf hoechstens so viele Werte haben.
+    static const uint8_t MAX_VALUES = 24;
+    // Reservierte Profilplaetze (Enable-Bits im Parameterspeicher). Profile bis zu dieser
+    // Zahl lassen sich ergaenzen, ohne Parameteradressen oder KO-Nummern zu verschieben.
+    static const uint8_t MAX_PROFILES = 10;
 } // namespace Spv

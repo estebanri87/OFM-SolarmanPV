@@ -38,3 +38,14 @@
 ### Added
 - Profil **Pylontech Force H3** (12 Werte, Register ab 5120), am Gerät verifiziert.
 - Transport **Modbus TCP** (MBAP-Header) neben Solarman V5.
+
+### Added (Doku und Ausbaureserve)
+- Applikationsbeschreibung mit 12 Hilfetexten, `createDoc.ps1` und `HelpContext`-Verweisen.
+  Die Verweise stehen im Template-Generator, damit sie eine Neugenerierung überleben.
+- Geräteprofil und Transportprotokoll werden als **Dropdown** dargestellt (`UIHint="DropDown"`),
+  da die Profilliste mit jedem unterstützten Gerät wächst.
+- **Ausbaureserve:** 24 Messwert-Slots je Kanal (statt 17) und fest reservierte Enable-Bits
+  für 10 Geräteprofile (Byte 56–85). Ein neues Profil verschiebt dadurch weder
+  Parameteradressen noch KO-Nummern — es braucht nur eine Registertabelle, einen Eintrag in
+  `profileFor()`, einen in der Generator-Profilliste und eine Enum-Zeile.
+  KO-Block je Kanal jetzt 25 (1 Status + 24 Messwerte), Obergrenze 958.

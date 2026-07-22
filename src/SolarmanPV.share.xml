@@ -24,13 +24,15 @@
                    Home Assistant zeigt fuer beide "TCP". Am Geraet ermittelt:
                    Deye SUN-M80G3 -> Solarman V5, Pylontech Force H3 -> reines Modbus TCP. -->
               <ParameterType Id="%AID%_PT-SPVTransport" Name="SPVTransport">
-                <TypeRestriction Base="Value" SizeInBit="8">
+                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
                   <Enumeration Text="Solarman V5" Value="0" Id="%AID%_PT-SPVTransport_EN-0" />
                   <Enumeration Text="Modbus TCP"  Value="1" Id="%AID%_PT-SPVTransport_EN-1" />
                 </TypeRestriction>
               </ParameterType>
+              <!-- DropDown statt Radiobuttons: die Profilliste waechst mit jedem unterstuetzten
+                   Geraet, Radiobuttons wuerden die Seite schnell unbrauchbar machen. -->
               <ParameterType Id="%AID%_PT-SPVProfile" Name="SPVProfile">
-                <TypeRestriction Base="Value" SizeInBit="8">
+                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
                   <Enumeration Text="Deye Mikrowechselrichter" Value="0" Id="%AID%_PT-SPVProfile_EN-0" />
                   <Enumeration Text="Pylontech Force"          Value="1" Id="%AID%_PT-SPVProfile_EN-1" />
                 </TypeRestriction>
@@ -69,14 +71,14 @@
           </Static>
           <Dynamic>
             <Channel Name="MainChannel%TT%" Text="SolarmanPV" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="white-balance-sunny">
-              <ParameterBlock Id="%AID%_PB-nnn" Name="SPVSettings" Text="Allgemein" Icon="cog-outline">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="SPVSettings" Text="Allgemein" Icon="cog-outline" HelpContext="SPV-Allgemein">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="SolarmanPV" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Solarman-Logger verträgt nur einen Client. Läuft parallel eine andere Abfrage (etwa Home Assistant), liefert das Gerät unvollständige oder fremde Antworten." UIHint="Information" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Geräteauswahl" UIHint="Headline" />
-                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="SPV-Geraeteauswahl" />
               </ParameterBlock>
               <op:include href="SolarmanPV.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SPV" IsInner="true" />
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
@@ -91,6 +93,11 @@
           </Dynamic>
         </ApplicationProgram>
       </ApplicationPrograms>
+      <Baggages>
+        <Baggage TargetPath="" Name="Help_de.zip" Id="%FILE-HELP-de%">
+          <FileInfo TimeInfo="%DATETIME%" />
+        </Baggage>
+      </Baggages>
     </Manufacturer>
   </ManufacturerData>
 </KNX>
