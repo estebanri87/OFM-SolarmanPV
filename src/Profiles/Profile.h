@@ -9,7 +9,20 @@
 
 namespace Spv
 {
-    // words == 0 -> berechneter Wert (kein Register), z.B. Leistung aus U*I.
+    // Wie der Wert auf den Bus geht. Die konkrete 14.x-Unterart (Leistung/Spannung/Strom/
+    // Frequenz) steht nur in der ETS-Deklaration - auf dem Bus sind alle identisch codiert.
+    enum KnxType : uint8_t
+    {
+        Float32,   // DPT 14.x, 4 Byte
+        EnergyWh,  // DPT 13.010, 4 Byte - Profil liefert kWh, gesendet wird Wh
+        Percent,   // DPT 5.001, 1 Byte
+        Temp2,     // DPT 9.001, 2 Byte
+        Counter16, // DPT 7.001, 2 Byte
+    };
+
+    // words == 0 -> BERECHNETER Wert. Konvention: das Produkt der beiden VORANGEHENDEN
+    // Eintraege (Spannung * Strom). Gilt bei beiden Profilen - Deye Pv1Power/Pv2Power und
+    // Pylontech Power sind so definiert.
     // Bei words == 2 gilt LOW-WORD ZUERST: das High-Word steht im Register dahinter.
     // Diese Konvention ist bei beiden vermessenen Geraeten bestaetigt.
     struct Def
@@ -18,7 +31,8 @@ namespace Spv
         uint8_t words;
         bool isSigned; // 16 Bit vorzeichenbehaftet (z.B. Batteriestrom, Temperatur)
         float scale;
-        float offset; // wird NACH der Skalierung abgezogen
+        float offset;  // wird NACH der Skalierung abgezogen
+        KnxType knx;
     };
 
     struct Block

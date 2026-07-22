@@ -4,8 +4,8 @@ OpenKNX-Modul zur **lokalen** Anbindung von Wechselrichtern und Batteriespeicher
 Solarman-Logger an den KNX-Bus. Kommunikation über TCP zum Logger (Port 8899, Modbus RTU im
 Solarman-V5-Rahmen) — **keine Cloud**, keine Rate-Limits, Sekunden-Aktualität.
 
-> **Status: in Entwicklung.** Aktuell ist der Protokoll-Client implementiert und am realen
-> Gerät verifiziert. Die ETS-Applikation und die Geräteprofile folgen.
+> **Status: Beta.** Protokoll, Kanalmodell und zwei Geräteprofile sind implementiert und am
+> realen Gerät verifiziert. Noch offen: Hilfetexte und der Praxistest über längere Zeit.
 
 ## Stand
 
@@ -14,18 +14,19 @@ Solarman-V5-Rahmen) — **keine Cloud**, keine Rate-Limits, Sekunden-Aktualität
 | Solarman-V5-Framing, Modbus RTU, CRC-16 | ✅ implementiert, am Gerät verifiziert |
 | Logger-Seriennummer automatisch ermitteln | ✅ implementiert |
 | Nicht-blockierende Zustandsmaschine | ✅ implementiert und kompiliert |
-| Modulrumpf, ETS-Grundkonfiguration, Status-KO | ✅ Phase 1 |
+| Transport Solarman V5 **und** Modbus TCP | ✅ beide am Gerät verifiziert |
+| Kanalmodell: 6 Geräte, Transport + Profil je Gerät | ✅ |
+| Profil Deye Mikrowechselrichter (17 Werte) | ✅ am Gerät vermessen |
+| Profil Pylontech Force (12 Werte) | ✅ am Gerät verifiziert |
 | Diagnose `spv` / `spvread` | ✅ Registerdump am echten Gerät |
-| Messwertkanäle in der ETS | ⬜ offen |
-| Geräteprofile (Registertabellen) | ⬜ offen |
 
 ## Diagnose
 
 Über die serielle Konsole:
 
 ```
-spv                → Verbindungsstatus, ermittelte Logger-Seriennummer
-spvread 3b 10      → liest 16 Register ab 0x003B (Start und Anzahl hexadezimal)
+spv                → Status aller Geräte
+spvread 1 3b 10    → Gerät 1: 16 Register ab 0x003B (Start und Anzahl hexadezimal)
 ```
 
 `spvread` gibt jedes Register dezimal, hexadezimal **und** vorzeichenbehaftet aus — die

@@ -38,18 +38,18 @@ namespace PylontechForce
     };
 
     static const Spv::Def DEFS[Count] = {
-        /* Soc               */ {5127, 1, false, 1.0f, 0.0f},
-        /* Voltage           */ {5123, 1, false, 0.1f, 0.0f},
-        /* Current           */ {5125, 1, true, 0.01f, 0.0f},
-        /* Power             */ {0, 0, false, 0.0f, 0.0f},
-        /* Temperature       */ {5126, 1, true, 0.1f, 0.0f},
-        /* Soh               */ {5152, 1, false, 1.0f, 0.0f},
-        /* RemainingCapacity */ {5154, 2, false, 0.001f, 0.0f},
-        /* CycleTimes        */ {5128, 1, false, 1.0f, 0.0f},
-        /* TodayCharge       */ {5160, 2, false, 0.001f, 0.0f},
-        /* TodayDischarge    */ {5162, 2, false, 0.001f, 0.0f},
-        /* TotalCharge       */ {5164, 2, false, 1.0f, 0.0f},
-        /* TotalDischarge    */ {5166, 2, false, 1.0f, 0.0f},
+        /* Soc               */ {5127, 1, false, 1.0f, 0.0f, Spv::Percent},
+        /* Voltage           */ {5123, 1, false, 0.1f, 0.0f, Spv::Float32},
+        /* Current           */ {5125, 1, true, 0.01f, 0.0f, Spv::Float32},
+        /* Power             */ {0, 0, false, 0.0f, 0.0f, Spv::Float32},
+        /* Temperature       */ {5126, 1, true, 0.1f, 0.0f, Spv::Temp2},
+        /* Soh               */ {5152, 1, false, 1.0f, 0.0f, Spv::Percent},
+        /* RemainingCapacity */ {5154, 2, false, 0.001f, 0.0f, Spv::EnergyWh},
+        /* CycleTimes        */ {5128, 1, false, 1.0f, 0.0f, Spv::Counter16},
+        /* TodayCharge       */ {5160, 2, false, 0.001f, 0.0f, Spv::EnergyWh},
+        /* TodayDischarge    */ {5162, 2, false, 0.001f, 0.0f, Spv::EnergyWh},
+        /* TotalCharge       */ {5164, 2, false, 1.0f, 0.0f, Spv::EnergyWh},
+        /* TotalDischarge    */ {5166, 2, false, 1.0f, 0.0f, Spv::EnergyWh},
     };
 
     static const Spv::Block BLOCKS[] = {

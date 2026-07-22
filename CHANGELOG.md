@@ -24,3 +24,17 @@
   Diagnosebefehlen `spv` und `spvread`.
 - In OAM-NetworkService eingebunden: `ModuleType 28`, `KoSingleOffset 809`,
   `openknx.addModule(11, …)`. Kompiliert für `release_REG1_LAN_TP_BASE`.
+
+### Changed (Kanalmodell)
+- Umbau auf ein **Kanalmodell**: ein Kanal = ein Gerät, 6 Kanäle. Transport (Solarman V5 /
+  Modbus TCP) und Geräteprofil werden je Kanal gewählt; die Gerätekonfiguration ist von der
+  `share.xml` in eine Kanalvorlage gewandert. **Verschiebt alle KO-Nummern** (jetzt 809–916,
+  18 KOs je Kanal).
+- Die 17 Messwert-KOs je Kanal sind profilabhängig belegt: `ComObjectRef` überschreibt Name,
+  `ObjectSize` und `DatapointType`, sodass Slot 1 beim Deye „Wirkleistung" (DPT 14.056) und
+  beim Pylontech „Ladezustand" (DPT 5.001) ist — ohne zusätzliche KO-Nummern.
+- `spvread` erwartet jetzt zusätzlich die Gerätenummer: `spvread <Gerät> <StartHex> [AnzahlHex]`.
+
+### Added
+- Profil **Pylontech Force H3** (12 Werte, Register ab 5120), am Gerät verifiziert.
+- Transport **Modbus TCP** (MBAP-Header) neben Solarman V5.
