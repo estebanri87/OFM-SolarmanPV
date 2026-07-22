@@ -13,9 +13,23 @@ Solarman-V5-Rahmen) — **keine Cloud**, keine Rate-Limits, Sekunden-Aktualität
 |---|---|
 | Solarman-V5-Framing, Modbus RTU, CRC-16 | ✅ implementiert, am Gerät verifiziert |
 | Logger-Seriennummer automatisch ermitteln | ✅ implementiert |
-| Nicht-blockierende Zustandsmaschine | ✅ implementiert (noch nicht kompiliert) |
-| ETS-Applikation (Geräte + Messwertkanäle) | ⬜ offen |
+| Nicht-blockierende Zustandsmaschine | ✅ implementiert und kompiliert |
+| Modulrumpf, ETS-Grundkonfiguration, Status-KO | ✅ Phase 1 |
+| Diagnose `spv` / `spvread` | ✅ Registerdump am echten Gerät |
+| Messwertkanäle in der ETS | ⬜ offen |
 | Geräteprofile (Registertabellen) | ⬜ offen |
+
+## Diagnose
+
+Über die serielle Konsole:
+
+```
+spv                → Verbindungsstatus, ermittelte Logger-Seriennummer
+spvread 3b 10      → liest 16 Register ab 0x003B (Start und Anzahl hexadezimal)
+```
+
+`spvread` gibt jedes Register dezimal, hexadezimal **und** vorzeichenbehaftet aus — die
+Darstellung, die man braucht, um eine Registertabelle gegen bekannte Anzeigewerte abzugleichen.
 
 ## Protokoll
 

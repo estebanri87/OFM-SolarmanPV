@@ -19,5 +19,8 @@
   (`O_NONBLOCK`, `EINPROGRESS` + `select()` mit Timeout 0) umgesetzt. `poll()` kehrt immer
   sofort zurück, damit der KNX-Stack sein Timing behält — ohne zusätzliche Abhängigkeit.
 - Nur IPv4-Literale, keine Hostnamen (Namensauflösung würde blockieren).
-- Noch **nicht kompiliert**: Das Modul ist noch nicht in `lib/` eingehängt, es gibt bisher
-  keinen OpenKNX-Modulrumpf, der die Übersetzungseinheit in den Build zieht.
+- `SolarmanPVModule` (Phase 1): Modulrumpf mit ETS-Grundkonfiguration (IP, Port, Slave-ID,
+  Abfrageintervall, optionale Seriennummer), Status-KO „Wechselrichter erreichbar" und den
+  Diagnosebefehlen `spv` und `spvread`.
+- In OAM-NetworkService eingebunden: `ModuleType 28`, `KoSingleOffset 809`,
+  `openknx.addModule(11, …)`. Kompiliert für `release_REG1_LAN_TP_BASE`.
