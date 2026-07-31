@@ -1,6 +1,6 @@
 {
     "name": "OFM-SolarmanPV",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "description": "Local Solarman V5 / Modbus TCP client exposing inverter and battery values on the KNX bus",
     "homepage": "https://openknx.de",
     "authors": {

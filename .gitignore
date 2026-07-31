@@ -3,3 +3,5 @@
 *.knxprod
 include/knxprod.h
 include/versions.h
+doc/Assistent-Umbau.md
+tools/__pycache__/

@@ -16,9 +16,57 @@ Solarman-V5-Rahmen) — **keine Cloud**, keine Rate-Limits, Sekunden-Aktualität
 | Nicht-blockierende Zustandsmaschine | ✅ implementiert und kompiliert |
 | Transport Solarman V5 **und** Modbus TCP | ✅ beide am Gerät verifiziert |
 | Kanalmodell: 6 Geräte, Transport + Profil je Gerät | ✅ |
-| Profil Deye Mikrowechselrichter (17 Werte) | ✅ am Gerät vermessen |
-| Profil Pylontech Force (12 Werte) | ✅ am Gerät verifiziert |
+| Messwerttabelle in der ETS statt Profile in der Firmware | ✅ 64 Zeilen je Gerät |
+| Profil Deye SUN-M80G3 (17 Werte) | ✅ am Gerät vermessen |
+| Profil Pylontech Force H1/H2/H3 (12 Werte) | ✅ am Gerät verifiziert |
 | Diagnose `spv` / `spvread` | ✅ Registerdump am echten Gerät |
+| Assistent: Gerät einmessen aus der ETS heraus | ✅ implementiert, am Gerät noch ungetestet |
+| 27 weitere Profile aus der ha-solarman-Sammlung | ✅ übernommen, ungeprüft |
+
+## Ein neues Gerät einbinden
+
+Die Firmware kennt **keine Geräte**. Was gelesen und wie es umgerechnet wird, steht
+vollständig in den ETS-Parametern: 64 Messwertzeilen je Gerät mit Register, Datentyp,
+Skalierung und Offset. Ein unbekannter Wechselrichter ist damit **ohne Firmware-Änderung**
+einbindbar.
+
+- **Passendes Profil vorhanden**: Profil wählen, *Profil in Tabelle übernehmen* drücken —
+  fertig. Das Profil trägt auch Transport und Port ein, die von außen nicht erkennbar sind.
+- **Kein Profil**: Tabelle im *Erweiterten Modus* von Hand füllen. Die
+  Registerwerte liefert `spvread` über die Konsole.
+
+Ein neues Profil kostet einen Eintrag in `tools/profiles.py` und einen Producer-Lauf — **kein
+Flashen**, denn Profile leben ausschließlich in der ETS.
+
+## Generierte Quellen
+
+Vier Dateien werden erzeugt und dürfen nicht von Hand bearbeitet werden:
+
+```
+python tools/generate.py
+```
+
+| Quelle | erzeugt |
+|---|---|
+| `tools/slots.py` | `src/SolarmanPV.templ.xml`, `src/SlotCatalog.h`, `src/SolarmanPV.assistant.parts.xml` |
+| `tools/profiles.py` | `src/SolarmanPV.profiles.parts.xml` |
+| `tools/profiles.py` + `tools/script.template.js` | `src/SolarmanPV.script.js` |
+
+`tools/profiles_yaml.py` ist ebenfalls erzeugt — aus den Gerätedefinitionen von
+[ha-solarman](https://github.com/davidrapan/ha-solarman) (MIT):
+
+```
+python tools/yaml2profile.py <verzeichnis-mit-yaml> > tools/profiles_yaml.py
+```
+
+Der Konverter übernimmt nur, was sich verlustfrei abbilden lässt, und **verwirft** Einträge mit
+Aufzählung, Bitmaske, Division oder mehreren Quellen (`sensors`) — letztere lesen das
+angegebene Register gar nicht und ergäben eine plausible, aber falsche Zahl. Jeder verworfene
+Eintrag wird gemeldet.
+
+`tools/slots.py` ist der Katalog der 64 Messwert-Bedeutungen und **eine Schnittstelle**: Die
+Reihenfolge legt die KO-Nummern fest. Einträge dürfen hinten angehängt oder umbenannt, aber
+nicht verschoben oder gelöscht werden — das würde bestehende ETS-Projekte verschieben.
 
 ## Diagnose
 
