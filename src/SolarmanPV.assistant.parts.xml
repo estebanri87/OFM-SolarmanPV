@@ -1,0 +1,1669 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!-- ERZEUGT von tools/gen_assistant.py - nicht von Hand bearbeiten. -->
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer>
+      <ApplicationPrograms>
+        <ApplicationProgram>
+          <Static>
+            <ParameterTypes>
+              <!-- Bedeutung einer Messzeile: leer = Zeile wird beim Übernehmen übergangen.
+                   Anders als in der Gerätetabelle ist die Bedeutung hier ein echter
+                   Parameter - sie erzeugt kein KO, sondern sagt nur, in welche Zeile des
+                   Zielgeraets der gemessene Wert wandert. -->
+              <ParameterType Id="%AID%_PT-SPVMeaning" Name="SPVMeaning">
+                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                  <Enumeration Text="(nicht zuordnen)" Value="0" Id="%AID%_PT-SPVMeaning_EN-0" />
+                  <Enumeration Text="Wirkleistung" Value="1" Id="%AID%_PT-SPVMeaning_EN-1" />
+                  <Enumeration Text="Scheinleistung" Value="2" Id="%AID%_PT-SPVMeaning_EN-2" />
+                  <Enumeration Text="Netzspannung" Value="3" Id="%AID%_PT-SPVMeaning_EN-3" />
+                  <Enumeration Text="Netzspannung L2" Value="4" Id="%AID%_PT-SPVMeaning_EN-4" />
+                  <Enumeration Text="Netzspannung L3" Value="5" Id="%AID%_PT-SPVMeaning_EN-5" />
+                  <Enumeration Text="Netzstrom" Value="6" Id="%AID%_PT-SPVMeaning_EN-6" />
+                  <Enumeration Text="Netzfrequenz" Value="7" Id="%AID%_PT-SPVMeaning_EN-7" />
+                  <Enumeration Text="Betriebszustand" Value="8" Id="%AID%_PT-SPVMeaning_EN-8" />
+                  <Enumeration Text="Tagesertrag" Value="9" Id="%AID%_PT-SPVMeaning_EN-9" />
+                  <Enumeration Text="Gesamtertrag" Value="10" Id="%AID%_PT-SPVMeaning_EN-10" />
+                  <Enumeration Text="Monatsertrag" Value="11" Id="%AID%_PT-SPVMeaning_EN-11" />
+                  <Enumeration Text="Jahresertrag" Value="12" Id="%AID%_PT-SPVMeaning_EN-12" />
+                  <Enumeration Text="Tagesertrag String 1" Value="13" Id="%AID%_PT-SPVMeaning_EN-13" />
+                  <Enumeration Text="Tagesertrag String 2" Value="14" Id="%AID%_PT-SPVMeaning_EN-14" />
+                  <Enumeration Text="Gesamtertrag String 1" Value="15" Id="%AID%_PT-SPVMeaning_EN-15" />
+                  <Enumeration Text="Gesamtertrag String 2" Value="16" Id="%AID%_PT-SPVMeaning_EN-16" />
+                  <Enumeration Text="PV1 Spannung" Value="17" Id="%AID%_PT-SPVMeaning_EN-17" />
+                  <Enumeration Text="PV1 Strom" Value="18" Id="%AID%_PT-SPVMeaning_EN-18" />
+                  <Enumeration Text="PV1 Leistung" Value="19" Id="%AID%_PT-SPVMeaning_EN-19" />
+                  <Enumeration Text="PV1 Tagesertrag" Value="20" Id="%AID%_PT-SPVMeaning_EN-20" />
+                  <Enumeration Text="PV2 Spannung" Value="21" Id="%AID%_PT-SPVMeaning_EN-21" />
+                  <Enumeration Text="PV2 Strom" Value="22" Id="%AID%_PT-SPVMeaning_EN-22" />
+                  <Enumeration Text="PV2 Leistung" Value="23" Id="%AID%_PT-SPVMeaning_EN-23" />
+                  <Enumeration Text="PV2 Tagesertrag" Value="24" Id="%AID%_PT-SPVMeaning_EN-24" />
+                  <Enumeration Text="PV3 Spannung" Value="25" Id="%AID%_PT-SPVMeaning_EN-25" />
+                  <Enumeration Text="PV3 Strom" Value="26" Id="%AID%_PT-SPVMeaning_EN-26" />
+                  <Enumeration Text="PV3 Leistung" Value="27" Id="%AID%_PT-SPVMeaning_EN-27" />
+                  <Enumeration Text="PV3 Tagesertrag" Value="28" Id="%AID%_PT-SPVMeaning_EN-28" />
+                  <Enumeration Text="PV4 Spannung" Value="29" Id="%AID%_PT-SPVMeaning_EN-29" />
+                  <Enumeration Text="PV4 Strom" Value="30" Id="%AID%_PT-SPVMeaning_EN-30" />
+                  <Enumeration Text="PV4 Leistung" Value="31" Id="%AID%_PT-SPVMeaning_EN-31" />
+                  <Enumeration Text="PV4 Tagesertrag" Value="32" Id="%AID%_PT-SPVMeaning_EN-32" />
+                  <Enumeration Text="Batterie Ladezustand" Value="33" Id="%AID%_PT-SPVMeaning_EN-33" />
+                  <Enumeration Text="Batterie Alterungszustand" Value="34" Id="%AID%_PT-SPVMeaning_EN-34" />
+                  <Enumeration Text="Batteriespannung" Value="35" Id="%AID%_PT-SPVMeaning_EN-35" />
+                  <Enumeration Text="Batteriestrom" Value="36" Id="%AID%_PT-SPVMeaning_EN-36" />
+                  <Enumeration Text="Batterieleistung" Value="37" Id="%AID%_PT-SPVMeaning_EN-37" />
+                  <Enumeration Text="Batterietemperatur" Value="38" Id="%AID%_PT-SPVMeaning_EN-38" />
+                  <Enumeration Text="Ladezyklen" Value="39" Id="%AID%_PT-SPVMeaning_EN-39" />
+                  <Enumeration Text="Restkapazität" Value="40" Id="%AID%_PT-SPVMeaning_EN-40" />
+                  <Enumeration Text="Heute geladen" Value="41" Id="%AID%_PT-SPVMeaning_EN-41" />
+                  <Enumeration Text="Heute entladen" Value="42" Id="%AID%_PT-SPVMeaning_EN-42" />
+                  <Enumeration Text="Gesamt geladen" Value="43" Id="%AID%_PT-SPVMeaning_EN-43" />
+                  <Enumeration Text="Gesamt entladen" Value="44" Id="%AID%_PT-SPVMeaning_EN-44" />
+                  <Enumeration Text="Zellspannung maximal" Value="45" Id="%AID%_PT-SPVMeaning_EN-45" />
+                  <Enumeration Text="Zellspannung minimal" Value="46" Id="%AID%_PT-SPVMeaning_EN-46" />
+                  <Enumeration Text="Zelltemperatur maximal" Value="47" Id="%AID%_PT-SPVMeaning_EN-47" />
+                  <Enumeration Text="Zelltemperatur minimal" Value="48" Id="%AID%_PT-SPVMeaning_EN-48" />
+                  <Enumeration Text="Hausverbrauch" Value="49" Id="%AID%_PT-SPVMeaning_EN-49" />
+                  <Enumeration Text="Netzbezug Leistung" Value="50" Id="%AID%_PT-SPVMeaning_EN-50" />
+                  <Enumeration Text="Einspeisung Leistung" Value="51" Id="%AID%_PT-SPVMeaning_EN-51" />
+                  <Enumeration Text="Netzbezug gesamt" Value="52" Id="%AID%_PT-SPVMeaning_EN-52" />
+                  <Enumeration Text="Einspeisung gesamt" Value="53" Id="%AID%_PT-SPVMeaning_EN-53" />
+                  <Enumeration Text="Hausverbrauch heute" Value="54" Id="%AID%_PT-SPVMeaning_EN-54" />
+                  <Enumeration Text="Netzbezug heute" Value="55" Id="%AID%_PT-SPVMeaning_EN-55" />
+                  <Enumeration Text="Einspeisung heute" Value="56" Id="%AID%_PT-SPVMeaning_EN-56" />
+                  <Enumeration Text="Gerätetemperatur" Value="57" Id="%AID%_PT-SPVMeaning_EN-57" />
+                  <Enumeration Text="Kühlkörpertemperatur" Value="58" Id="%AID%_PT-SPVMeaning_EN-58" />
+                  <Enumeration Text="Fehlercode" Value="59" Id="%AID%_PT-SPVMeaning_EN-59" />
+                  <Enumeration Text="Betriebsstunden" Value="60" Id="%AID%_PT-SPVMeaning_EN-60" />
+                  <Enumeration Text="Freier Wert 1" Value="61" Id="%AID%_PT-SPVMeaning_EN-61" />
+                  <Enumeration Text="Freier Wert 2" Value="62" Id="%AID%_PT-SPVMeaning_EN-62" />
+                  <Enumeration Text="Freier Wert 3" Value="63" Id="%AID%_PT-SPVMeaning_EN-63" />
+                  <Enumeration Text="Freier Wert 4" Value="64" Id="%AID%_PT-SPVMeaning_EN-64" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Der am Gerät abgelesene Wert. Aus ihm werden Datentyp, Skalierung und
+                   Offset berechnet - ohne ihn bleibt nur Raten. -->
+              <ParameterType Id="%AID%_PT-SPVReference" Name="SPVReference">
+                <TypeFloat Encoding="IEEE-754 Single" minInclusive="-1000000" maxInclusive="1000000" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SPVRawValue" Name="SPVRawValue">
+                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="65535" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SPVRowCount" Name="SPVRowCount">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="64" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SPVReadCount" Name="SPVReadCount">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="64" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SPVTargetChannel" Name="SPVTargetChannel">
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="%N%" />
+              </ParameterType>
+            </ParameterTypes>
+            <Parameters>
+              <Union SizeInBit="256">
+                <Memory CodeSegment="%MID%" Offset="4" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00001" Name="AsstIp" ParameterType="%AID%_PT-SPVString32" Offset="0" BitOffset="0" Text="IP-Adresse" Value="" />
+              </Union>
+              <Union SizeInBit="16">
+                <Memory CodeSegment="%MID%" Offset="36" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00002" Name="AsstPort" ParameterType="%AID%_PT-SPVPort" Offset="0" BitOffset="0" Text="Port" Value="8899" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="38" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00003" Name="AsstSlaveId" ParameterType="%AID%_PT-SPVSlaveId" Offset="0" BitOffset="0" Text="Modbus-Slave-ID" Value="1" />
+              </Union>
+              <Union SizeInBit="16">
+                <Memory CodeSegment="%MID%" Offset="40" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00004" Name="AsstStartReg" ParameterType="%AID%_PT-SPVRegister" Offset="0" BitOffset="0" Text="ab Register" Value="0" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="42" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00005" Name="AsstReadCount" ParameterType="%AID%_PT-SPVReadCount" Offset="0" BitOffset="0" Text="Anzahl Register" Value="16" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="43" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00006" Name="AsstTransport" ParameterType="%AID%_PT-SPVTransport" Offset="0" BitOffset="0" Text="erkannter Transport" Value="0" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="45" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00008" Name="AsstTargetChannel" ParameterType="%AID%_PT-SPVTargetChannel" Offset="0" BitOffset="0" Text="Zielgerät" Value="1" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="46" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00009" Name="AsstRowCount" ParameterType="%AID%_PT-SPVRowCount" Offset="0" BitOffset="0" Text="gelesene Zeilen" Value="0" />
+              </Union>
+              <Union SizeInBit="128">
+                <Memory CodeSegment="%MID%" Offset="48" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00010" Name="AsstSerial" ParameterType="%AID%_PT-SPVString16" Offset="0" BitOffset="0" Text="Seriennummer" Value="" />
+              </Union>
+              <Union SizeInBit="384">
+                <Memory CodeSegment="%MID%" Offset="64" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00007" Name="AsstResultText" ParameterType="%AID%_PT-SPVString48" Offset="0" BitOffset="0" Text="Ergebnis" Value="" />
+              </Union>
+              <!-- Messtabelle, Byte 112-879: 64 Zeilen a 12 Byte. Existiert nur EINMAL -->
+              <Union SizeInBit="6144">
+                <Memory CodeSegment="%MID%" Offset="112" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%00300" Name="AsstReg00" ParameterType="%AID%_PT-SPVRegister" Offset="0" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00301" Name="AsstRaw00" ParameterType="%AID%_PT-SPVRawValue" Offset="2" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00302" Name="AsstMeaning00" ParameterType="%AID%_PT-SPVMeaning" Offset="4" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00303" Name="AsstType00" ParameterType="%AID%_PT-SPVDataType" Offset="5" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00304" Name="AsstScale00" ParameterType="%AID%_PT-SPVScale" Offset="5" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00305" Name="AsstOffset00" ParameterType="%AID%_PT-SPVOffset" Offset="6" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00306" Name="AsstRef00" ParameterType="%AID%_PT-SPVReference" Offset="8" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00307" Name="AsstReg01" ParameterType="%AID%_PT-SPVRegister" Offset="12" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00308" Name="AsstRaw01" ParameterType="%AID%_PT-SPVRawValue" Offset="14" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00309" Name="AsstMeaning01" ParameterType="%AID%_PT-SPVMeaning" Offset="16" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00310" Name="AsstType01" ParameterType="%AID%_PT-SPVDataType" Offset="17" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00311" Name="AsstScale01" ParameterType="%AID%_PT-SPVScale" Offset="17" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00312" Name="AsstOffset01" ParameterType="%AID%_PT-SPVOffset" Offset="18" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00313" Name="AsstRef01" ParameterType="%AID%_PT-SPVReference" Offset="20" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00314" Name="AsstReg02" ParameterType="%AID%_PT-SPVRegister" Offset="24" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00315" Name="AsstRaw02" ParameterType="%AID%_PT-SPVRawValue" Offset="26" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00316" Name="AsstMeaning02" ParameterType="%AID%_PT-SPVMeaning" Offset="28" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00317" Name="AsstType02" ParameterType="%AID%_PT-SPVDataType" Offset="29" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00318" Name="AsstScale02" ParameterType="%AID%_PT-SPVScale" Offset="29" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00319" Name="AsstOffset02" ParameterType="%AID%_PT-SPVOffset" Offset="30" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00320" Name="AsstRef02" ParameterType="%AID%_PT-SPVReference" Offset="32" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00321" Name="AsstReg03" ParameterType="%AID%_PT-SPVRegister" Offset="36" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00322" Name="AsstRaw03" ParameterType="%AID%_PT-SPVRawValue" Offset="38" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00323" Name="AsstMeaning03" ParameterType="%AID%_PT-SPVMeaning" Offset="40" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00324" Name="AsstType03" ParameterType="%AID%_PT-SPVDataType" Offset="41" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00325" Name="AsstScale03" ParameterType="%AID%_PT-SPVScale" Offset="41" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00326" Name="AsstOffset03" ParameterType="%AID%_PT-SPVOffset" Offset="42" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00327" Name="AsstRef03" ParameterType="%AID%_PT-SPVReference" Offset="44" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00328" Name="AsstReg04" ParameterType="%AID%_PT-SPVRegister" Offset="48" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00329" Name="AsstRaw04" ParameterType="%AID%_PT-SPVRawValue" Offset="50" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00330" Name="AsstMeaning04" ParameterType="%AID%_PT-SPVMeaning" Offset="52" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00331" Name="AsstType04" ParameterType="%AID%_PT-SPVDataType" Offset="53" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00332" Name="AsstScale04" ParameterType="%AID%_PT-SPVScale" Offset="53" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00333" Name="AsstOffset04" ParameterType="%AID%_PT-SPVOffset" Offset="54" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00334" Name="AsstRef04" ParameterType="%AID%_PT-SPVReference" Offset="56" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00335" Name="AsstReg05" ParameterType="%AID%_PT-SPVRegister" Offset="60" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00336" Name="AsstRaw05" ParameterType="%AID%_PT-SPVRawValue" Offset="62" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00337" Name="AsstMeaning05" ParameterType="%AID%_PT-SPVMeaning" Offset="64" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00338" Name="AsstType05" ParameterType="%AID%_PT-SPVDataType" Offset="65" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00339" Name="AsstScale05" ParameterType="%AID%_PT-SPVScale" Offset="65" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00340" Name="AsstOffset05" ParameterType="%AID%_PT-SPVOffset" Offset="66" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00341" Name="AsstRef05" ParameterType="%AID%_PT-SPVReference" Offset="68" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00342" Name="AsstReg06" ParameterType="%AID%_PT-SPVRegister" Offset="72" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00343" Name="AsstRaw06" ParameterType="%AID%_PT-SPVRawValue" Offset="74" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00344" Name="AsstMeaning06" ParameterType="%AID%_PT-SPVMeaning" Offset="76" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00345" Name="AsstType06" ParameterType="%AID%_PT-SPVDataType" Offset="77" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00346" Name="AsstScale06" ParameterType="%AID%_PT-SPVScale" Offset="77" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00347" Name="AsstOffset06" ParameterType="%AID%_PT-SPVOffset" Offset="78" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00348" Name="AsstRef06" ParameterType="%AID%_PT-SPVReference" Offset="80" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00349" Name="AsstReg07" ParameterType="%AID%_PT-SPVRegister" Offset="84" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00350" Name="AsstRaw07" ParameterType="%AID%_PT-SPVRawValue" Offset="86" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00351" Name="AsstMeaning07" ParameterType="%AID%_PT-SPVMeaning" Offset="88" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00352" Name="AsstType07" ParameterType="%AID%_PT-SPVDataType" Offset="89" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00353" Name="AsstScale07" ParameterType="%AID%_PT-SPVScale" Offset="89" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00354" Name="AsstOffset07" ParameterType="%AID%_PT-SPVOffset" Offset="90" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00355" Name="AsstRef07" ParameterType="%AID%_PT-SPVReference" Offset="92" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00356" Name="AsstReg08" ParameterType="%AID%_PT-SPVRegister" Offset="96" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00357" Name="AsstRaw08" ParameterType="%AID%_PT-SPVRawValue" Offset="98" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00358" Name="AsstMeaning08" ParameterType="%AID%_PT-SPVMeaning" Offset="100" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00359" Name="AsstType08" ParameterType="%AID%_PT-SPVDataType" Offset="101" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00360" Name="AsstScale08" ParameterType="%AID%_PT-SPVScale" Offset="101" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00361" Name="AsstOffset08" ParameterType="%AID%_PT-SPVOffset" Offset="102" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00362" Name="AsstRef08" ParameterType="%AID%_PT-SPVReference" Offset="104" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00363" Name="AsstReg09" ParameterType="%AID%_PT-SPVRegister" Offset="108" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00364" Name="AsstRaw09" ParameterType="%AID%_PT-SPVRawValue" Offset="110" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00365" Name="AsstMeaning09" ParameterType="%AID%_PT-SPVMeaning" Offset="112" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00366" Name="AsstType09" ParameterType="%AID%_PT-SPVDataType" Offset="113" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00367" Name="AsstScale09" ParameterType="%AID%_PT-SPVScale" Offset="113" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00368" Name="AsstOffset09" ParameterType="%AID%_PT-SPVOffset" Offset="114" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00369" Name="AsstRef09" ParameterType="%AID%_PT-SPVReference" Offset="116" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00370" Name="AsstReg10" ParameterType="%AID%_PT-SPVRegister" Offset="120" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00371" Name="AsstRaw10" ParameterType="%AID%_PT-SPVRawValue" Offset="122" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00372" Name="AsstMeaning10" ParameterType="%AID%_PT-SPVMeaning" Offset="124" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00373" Name="AsstType10" ParameterType="%AID%_PT-SPVDataType" Offset="125" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00374" Name="AsstScale10" ParameterType="%AID%_PT-SPVScale" Offset="125" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00375" Name="AsstOffset10" ParameterType="%AID%_PT-SPVOffset" Offset="126" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00376" Name="AsstRef10" ParameterType="%AID%_PT-SPVReference" Offset="128" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00377" Name="AsstReg11" ParameterType="%AID%_PT-SPVRegister" Offset="132" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00378" Name="AsstRaw11" ParameterType="%AID%_PT-SPVRawValue" Offset="134" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00379" Name="AsstMeaning11" ParameterType="%AID%_PT-SPVMeaning" Offset="136" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00380" Name="AsstType11" ParameterType="%AID%_PT-SPVDataType" Offset="137" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00381" Name="AsstScale11" ParameterType="%AID%_PT-SPVScale" Offset="137" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00382" Name="AsstOffset11" ParameterType="%AID%_PT-SPVOffset" Offset="138" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00383" Name="AsstRef11" ParameterType="%AID%_PT-SPVReference" Offset="140" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00384" Name="AsstReg12" ParameterType="%AID%_PT-SPVRegister" Offset="144" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00385" Name="AsstRaw12" ParameterType="%AID%_PT-SPVRawValue" Offset="146" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00386" Name="AsstMeaning12" ParameterType="%AID%_PT-SPVMeaning" Offset="148" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00387" Name="AsstType12" ParameterType="%AID%_PT-SPVDataType" Offset="149" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00388" Name="AsstScale12" ParameterType="%AID%_PT-SPVScale" Offset="149" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00389" Name="AsstOffset12" ParameterType="%AID%_PT-SPVOffset" Offset="150" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00390" Name="AsstRef12" ParameterType="%AID%_PT-SPVReference" Offset="152" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00391" Name="AsstReg13" ParameterType="%AID%_PT-SPVRegister" Offset="156" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00392" Name="AsstRaw13" ParameterType="%AID%_PT-SPVRawValue" Offset="158" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00393" Name="AsstMeaning13" ParameterType="%AID%_PT-SPVMeaning" Offset="160" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00394" Name="AsstType13" ParameterType="%AID%_PT-SPVDataType" Offset="161" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00395" Name="AsstScale13" ParameterType="%AID%_PT-SPVScale" Offset="161" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00396" Name="AsstOffset13" ParameterType="%AID%_PT-SPVOffset" Offset="162" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00397" Name="AsstRef13" ParameterType="%AID%_PT-SPVReference" Offset="164" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00398" Name="AsstReg14" ParameterType="%AID%_PT-SPVRegister" Offset="168" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00399" Name="AsstRaw14" ParameterType="%AID%_PT-SPVRawValue" Offset="170" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00400" Name="AsstMeaning14" ParameterType="%AID%_PT-SPVMeaning" Offset="172" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00401" Name="AsstType14" ParameterType="%AID%_PT-SPVDataType" Offset="173" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00402" Name="AsstScale14" ParameterType="%AID%_PT-SPVScale" Offset="173" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00403" Name="AsstOffset14" ParameterType="%AID%_PT-SPVOffset" Offset="174" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00404" Name="AsstRef14" ParameterType="%AID%_PT-SPVReference" Offset="176" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00405" Name="AsstReg15" ParameterType="%AID%_PT-SPVRegister" Offset="180" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00406" Name="AsstRaw15" ParameterType="%AID%_PT-SPVRawValue" Offset="182" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00407" Name="AsstMeaning15" ParameterType="%AID%_PT-SPVMeaning" Offset="184" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00408" Name="AsstType15" ParameterType="%AID%_PT-SPVDataType" Offset="185" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00409" Name="AsstScale15" ParameterType="%AID%_PT-SPVScale" Offset="185" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00410" Name="AsstOffset15" ParameterType="%AID%_PT-SPVOffset" Offset="186" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00411" Name="AsstRef15" ParameterType="%AID%_PT-SPVReference" Offset="188" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00412" Name="AsstReg16" ParameterType="%AID%_PT-SPVRegister" Offset="192" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00413" Name="AsstRaw16" ParameterType="%AID%_PT-SPVRawValue" Offset="194" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00414" Name="AsstMeaning16" ParameterType="%AID%_PT-SPVMeaning" Offset="196" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00415" Name="AsstType16" ParameterType="%AID%_PT-SPVDataType" Offset="197" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00416" Name="AsstScale16" ParameterType="%AID%_PT-SPVScale" Offset="197" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00417" Name="AsstOffset16" ParameterType="%AID%_PT-SPVOffset" Offset="198" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00418" Name="AsstRef16" ParameterType="%AID%_PT-SPVReference" Offset="200" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00419" Name="AsstReg17" ParameterType="%AID%_PT-SPVRegister" Offset="204" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00420" Name="AsstRaw17" ParameterType="%AID%_PT-SPVRawValue" Offset="206" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00421" Name="AsstMeaning17" ParameterType="%AID%_PT-SPVMeaning" Offset="208" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00422" Name="AsstType17" ParameterType="%AID%_PT-SPVDataType" Offset="209" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00423" Name="AsstScale17" ParameterType="%AID%_PT-SPVScale" Offset="209" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00424" Name="AsstOffset17" ParameterType="%AID%_PT-SPVOffset" Offset="210" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00425" Name="AsstRef17" ParameterType="%AID%_PT-SPVReference" Offset="212" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00426" Name="AsstReg18" ParameterType="%AID%_PT-SPVRegister" Offset="216" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00427" Name="AsstRaw18" ParameterType="%AID%_PT-SPVRawValue" Offset="218" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00428" Name="AsstMeaning18" ParameterType="%AID%_PT-SPVMeaning" Offset="220" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00429" Name="AsstType18" ParameterType="%AID%_PT-SPVDataType" Offset="221" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00430" Name="AsstScale18" ParameterType="%AID%_PT-SPVScale" Offset="221" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00431" Name="AsstOffset18" ParameterType="%AID%_PT-SPVOffset" Offset="222" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00432" Name="AsstRef18" ParameterType="%AID%_PT-SPVReference" Offset="224" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00433" Name="AsstReg19" ParameterType="%AID%_PT-SPVRegister" Offset="228" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00434" Name="AsstRaw19" ParameterType="%AID%_PT-SPVRawValue" Offset="230" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00435" Name="AsstMeaning19" ParameterType="%AID%_PT-SPVMeaning" Offset="232" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00436" Name="AsstType19" ParameterType="%AID%_PT-SPVDataType" Offset="233" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00437" Name="AsstScale19" ParameterType="%AID%_PT-SPVScale" Offset="233" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00438" Name="AsstOffset19" ParameterType="%AID%_PT-SPVOffset" Offset="234" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00439" Name="AsstRef19" ParameterType="%AID%_PT-SPVReference" Offset="236" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00440" Name="AsstReg20" ParameterType="%AID%_PT-SPVRegister" Offset="240" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00441" Name="AsstRaw20" ParameterType="%AID%_PT-SPVRawValue" Offset="242" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00442" Name="AsstMeaning20" ParameterType="%AID%_PT-SPVMeaning" Offset="244" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00443" Name="AsstType20" ParameterType="%AID%_PT-SPVDataType" Offset="245" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00444" Name="AsstScale20" ParameterType="%AID%_PT-SPVScale" Offset="245" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00445" Name="AsstOffset20" ParameterType="%AID%_PT-SPVOffset" Offset="246" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00446" Name="AsstRef20" ParameterType="%AID%_PT-SPVReference" Offset="248" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00447" Name="AsstReg21" ParameterType="%AID%_PT-SPVRegister" Offset="252" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00448" Name="AsstRaw21" ParameterType="%AID%_PT-SPVRawValue" Offset="254" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00449" Name="AsstMeaning21" ParameterType="%AID%_PT-SPVMeaning" Offset="256" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00450" Name="AsstType21" ParameterType="%AID%_PT-SPVDataType" Offset="257" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00451" Name="AsstScale21" ParameterType="%AID%_PT-SPVScale" Offset="257" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00452" Name="AsstOffset21" ParameterType="%AID%_PT-SPVOffset" Offset="258" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00453" Name="AsstRef21" ParameterType="%AID%_PT-SPVReference" Offset="260" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00454" Name="AsstReg22" ParameterType="%AID%_PT-SPVRegister" Offset="264" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00455" Name="AsstRaw22" ParameterType="%AID%_PT-SPVRawValue" Offset="266" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00456" Name="AsstMeaning22" ParameterType="%AID%_PT-SPVMeaning" Offset="268" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00457" Name="AsstType22" ParameterType="%AID%_PT-SPVDataType" Offset="269" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00458" Name="AsstScale22" ParameterType="%AID%_PT-SPVScale" Offset="269" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00459" Name="AsstOffset22" ParameterType="%AID%_PT-SPVOffset" Offset="270" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00460" Name="AsstRef22" ParameterType="%AID%_PT-SPVReference" Offset="272" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00461" Name="AsstReg23" ParameterType="%AID%_PT-SPVRegister" Offset="276" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00462" Name="AsstRaw23" ParameterType="%AID%_PT-SPVRawValue" Offset="278" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00463" Name="AsstMeaning23" ParameterType="%AID%_PT-SPVMeaning" Offset="280" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00464" Name="AsstType23" ParameterType="%AID%_PT-SPVDataType" Offset="281" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00465" Name="AsstScale23" ParameterType="%AID%_PT-SPVScale" Offset="281" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00466" Name="AsstOffset23" ParameterType="%AID%_PT-SPVOffset" Offset="282" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00467" Name="AsstRef23" ParameterType="%AID%_PT-SPVReference" Offset="284" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00468" Name="AsstReg24" ParameterType="%AID%_PT-SPVRegister" Offset="288" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00469" Name="AsstRaw24" ParameterType="%AID%_PT-SPVRawValue" Offset="290" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00470" Name="AsstMeaning24" ParameterType="%AID%_PT-SPVMeaning" Offset="292" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00471" Name="AsstType24" ParameterType="%AID%_PT-SPVDataType" Offset="293" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00472" Name="AsstScale24" ParameterType="%AID%_PT-SPVScale" Offset="293" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00473" Name="AsstOffset24" ParameterType="%AID%_PT-SPVOffset" Offset="294" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00474" Name="AsstRef24" ParameterType="%AID%_PT-SPVReference" Offset="296" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00475" Name="AsstReg25" ParameterType="%AID%_PT-SPVRegister" Offset="300" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00476" Name="AsstRaw25" ParameterType="%AID%_PT-SPVRawValue" Offset="302" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00477" Name="AsstMeaning25" ParameterType="%AID%_PT-SPVMeaning" Offset="304" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00478" Name="AsstType25" ParameterType="%AID%_PT-SPVDataType" Offset="305" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00479" Name="AsstScale25" ParameterType="%AID%_PT-SPVScale" Offset="305" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00480" Name="AsstOffset25" ParameterType="%AID%_PT-SPVOffset" Offset="306" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00481" Name="AsstRef25" ParameterType="%AID%_PT-SPVReference" Offset="308" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00482" Name="AsstReg26" ParameterType="%AID%_PT-SPVRegister" Offset="312" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00483" Name="AsstRaw26" ParameterType="%AID%_PT-SPVRawValue" Offset="314" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00484" Name="AsstMeaning26" ParameterType="%AID%_PT-SPVMeaning" Offset="316" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00485" Name="AsstType26" ParameterType="%AID%_PT-SPVDataType" Offset="317" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00486" Name="AsstScale26" ParameterType="%AID%_PT-SPVScale" Offset="317" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00487" Name="AsstOffset26" ParameterType="%AID%_PT-SPVOffset" Offset="318" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00488" Name="AsstRef26" ParameterType="%AID%_PT-SPVReference" Offset="320" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00489" Name="AsstReg27" ParameterType="%AID%_PT-SPVRegister" Offset="324" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00490" Name="AsstRaw27" ParameterType="%AID%_PT-SPVRawValue" Offset="326" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00491" Name="AsstMeaning27" ParameterType="%AID%_PT-SPVMeaning" Offset="328" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00492" Name="AsstType27" ParameterType="%AID%_PT-SPVDataType" Offset="329" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00493" Name="AsstScale27" ParameterType="%AID%_PT-SPVScale" Offset="329" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00494" Name="AsstOffset27" ParameterType="%AID%_PT-SPVOffset" Offset="330" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00495" Name="AsstRef27" ParameterType="%AID%_PT-SPVReference" Offset="332" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00496" Name="AsstReg28" ParameterType="%AID%_PT-SPVRegister" Offset="336" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00497" Name="AsstRaw28" ParameterType="%AID%_PT-SPVRawValue" Offset="338" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00498" Name="AsstMeaning28" ParameterType="%AID%_PT-SPVMeaning" Offset="340" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00499" Name="AsstType28" ParameterType="%AID%_PT-SPVDataType" Offset="341" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00500" Name="AsstScale28" ParameterType="%AID%_PT-SPVScale" Offset="341" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00501" Name="AsstOffset28" ParameterType="%AID%_PT-SPVOffset" Offset="342" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00502" Name="AsstRef28" ParameterType="%AID%_PT-SPVReference" Offset="344" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00503" Name="AsstReg29" ParameterType="%AID%_PT-SPVRegister" Offset="348" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00504" Name="AsstRaw29" ParameterType="%AID%_PT-SPVRawValue" Offset="350" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00505" Name="AsstMeaning29" ParameterType="%AID%_PT-SPVMeaning" Offset="352" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00506" Name="AsstType29" ParameterType="%AID%_PT-SPVDataType" Offset="353" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00507" Name="AsstScale29" ParameterType="%AID%_PT-SPVScale" Offset="353" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00508" Name="AsstOffset29" ParameterType="%AID%_PT-SPVOffset" Offset="354" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00509" Name="AsstRef29" ParameterType="%AID%_PT-SPVReference" Offset="356" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00510" Name="AsstReg30" ParameterType="%AID%_PT-SPVRegister" Offset="360" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00511" Name="AsstRaw30" ParameterType="%AID%_PT-SPVRawValue" Offset="362" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00512" Name="AsstMeaning30" ParameterType="%AID%_PT-SPVMeaning" Offset="364" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00513" Name="AsstType30" ParameterType="%AID%_PT-SPVDataType" Offset="365" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00514" Name="AsstScale30" ParameterType="%AID%_PT-SPVScale" Offset="365" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00515" Name="AsstOffset30" ParameterType="%AID%_PT-SPVOffset" Offset="366" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00516" Name="AsstRef30" ParameterType="%AID%_PT-SPVReference" Offset="368" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00517" Name="AsstReg31" ParameterType="%AID%_PT-SPVRegister" Offset="372" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00518" Name="AsstRaw31" ParameterType="%AID%_PT-SPVRawValue" Offset="374" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00519" Name="AsstMeaning31" ParameterType="%AID%_PT-SPVMeaning" Offset="376" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00520" Name="AsstType31" ParameterType="%AID%_PT-SPVDataType" Offset="377" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00521" Name="AsstScale31" ParameterType="%AID%_PT-SPVScale" Offset="377" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00522" Name="AsstOffset31" ParameterType="%AID%_PT-SPVOffset" Offset="378" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00523" Name="AsstRef31" ParameterType="%AID%_PT-SPVReference" Offset="380" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00524" Name="AsstReg32" ParameterType="%AID%_PT-SPVRegister" Offset="384" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00525" Name="AsstRaw32" ParameterType="%AID%_PT-SPVRawValue" Offset="386" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00526" Name="AsstMeaning32" ParameterType="%AID%_PT-SPVMeaning" Offset="388" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00527" Name="AsstType32" ParameterType="%AID%_PT-SPVDataType" Offset="389" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00528" Name="AsstScale32" ParameterType="%AID%_PT-SPVScale" Offset="389" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00529" Name="AsstOffset32" ParameterType="%AID%_PT-SPVOffset" Offset="390" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00530" Name="AsstRef32" ParameterType="%AID%_PT-SPVReference" Offset="392" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00531" Name="AsstReg33" ParameterType="%AID%_PT-SPVRegister" Offset="396" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00532" Name="AsstRaw33" ParameterType="%AID%_PT-SPVRawValue" Offset="398" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00533" Name="AsstMeaning33" ParameterType="%AID%_PT-SPVMeaning" Offset="400" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00534" Name="AsstType33" ParameterType="%AID%_PT-SPVDataType" Offset="401" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00535" Name="AsstScale33" ParameterType="%AID%_PT-SPVScale" Offset="401" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00536" Name="AsstOffset33" ParameterType="%AID%_PT-SPVOffset" Offset="402" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00537" Name="AsstRef33" ParameterType="%AID%_PT-SPVReference" Offset="404" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00538" Name="AsstReg34" ParameterType="%AID%_PT-SPVRegister" Offset="408" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00539" Name="AsstRaw34" ParameterType="%AID%_PT-SPVRawValue" Offset="410" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00540" Name="AsstMeaning34" ParameterType="%AID%_PT-SPVMeaning" Offset="412" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00541" Name="AsstType34" ParameterType="%AID%_PT-SPVDataType" Offset="413" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00542" Name="AsstScale34" ParameterType="%AID%_PT-SPVScale" Offset="413" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00543" Name="AsstOffset34" ParameterType="%AID%_PT-SPVOffset" Offset="414" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00544" Name="AsstRef34" ParameterType="%AID%_PT-SPVReference" Offset="416" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00545" Name="AsstReg35" ParameterType="%AID%_PT-SPVRegister" Offset="420" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00546" Name="AsstRaw35" ParameterType="%AID%_PT-SPVRawValue" Offset="422" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00547" Name="AsstMeaning35" ParameterType="%AID%_PT-SPVMeaning" Offset="424" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00548" Name="AsstType35" ParameterType="%AID%_PT-SPVDataType" Offset="425" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00549" Name="AsstScale35" ParameterType="%AID%_PT-SPVScale" Offset="425" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00550" Name="AsstOffset35" ParameterType="%AID%_PT-SPVOffset" Offset="426" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00551" Name="AsstRef35" ParameterType="%AID%_PT-SPVReference" Offset="428" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00552" Name="AsstReg36" ParameterType="%AID%_PT-SPVRegister" Offset="432" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00553" Name="AsstRaw36" ParameterType="%AID%_PT-SPVRawValue" Offset="434" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00554" Name="AsstMeaning36" ParameterType="%AID%_PT-SPVMeaning" Offset="436" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00555" Name="AsstType36" ParameterType="%AID%_PT-SPVDataType" Offset="437" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00556" Name="AsstScale36" ParameterType="%AID%_PT-SPVScale" Offset="437" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00557" Name="AsstOffset36" ParameterType="%AID%_PT-SPVOffset" Offset="438" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00558" Name="AsstRef36" ParameterType="%AID%_PT-SPVReference" Offset="440" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00559" Name="AsstReg37" ParameterType="%AID%_PT-SPVRegister" Offset="444" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00560" Name="AsstRaw37" ParameterType="%AID%_PT-SPVRawValue" Offset="446" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00561" Name="AsstMeaning37" ParameterType="%AID%_PT-SPVMeaning" Offset="448" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00562" Name="AsstType37" ParameterType="%AID%_PT-SPVDataType" Offset="449" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00563" Name="AsstScale37" ParameterType="%AID%_PT-SPVScale" Offset="449" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00564" Name="AsstOffset37" ParameterType="%AID%_PT-SPVOffset" Offset="450" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00565" Name="AsstRef37" ParameterType="%AID%_PT-SPVReference" Offset="452" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00566" Name="AsstReg38" ParameterType="%AID%_PT-SPVRegister" Offset="456" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00567" Name="AsstRaw38" ParameterType="%AID%_PT-SPVRawValue" Offset="458" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00568" Name="AsstMeaning38" ParameterType="%AID%_PT-SPVMeaning" Offset="460" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00569" Name="AsstType38" ParameterType="%AID%_PT-SPVDataType" Offset="461" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00570" Name="AsstScale38" ParameterType="%AID%_PT-SPVScale" Offset="461" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00571" Name="AsstOffset38" ParameterType="%AID%_PT-SPVOffset" Offset="462" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00572" Name="AsstRef38" ParameterType="%AID%_PT-SPVReference" Offset="464" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00573" Name="AsstReg39" ParameterType="%AID%_PT-SPVRegister" Offset="468" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00574" Name="AsstRaw39" ParameterType="%AID%_PT-SPVRawValue" Offset="470" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00575" Name="AsstMeaning39" ParameterType="%AID%_PT-SPVMeaning" Offset="472" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00576" Name="AsstType39" ParameterType="%AID%_PT-SPVDataType" Offset="473" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00577" Name="AsstScale39" ParameterType="%AID%_PT-SPVScale" Offset="473" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00578" Name="AsstOffset39" ParameterType="%AID%_PT-SPVOffset" Offset="474" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00579" Name="AsstRef39" ParameterType="%AID%_PT-SPVReference" Offset="476" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00580" Name="AsstReg40" ParameterType="%AID%_PT-SPVRegister" Offset="480" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00581" Name="AsstRaw40" ParameterType="%AID%_PT-SPVRawValue" Offset="482" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00582" Name="AsstMeaning40" ParameterType="%AID%_PT-SPVMeaning" Offset="484" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00583" Name="AsstType40" ParameterType="%AID%_PT-SPVDataType" Offset="485" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00584" Name="AsstScale40" ParameterType="%AID%_PT-SPVScale" Offset="485" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00585" Name="AsstOffset40" ParameterType="%AID%_PT-SPVOffset" Offset="486" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00586" Name="AsstRef40" ParameterType="%AID%_PT-SPVReference" Offset="488" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00587" Name="AsstReg41" ParameterType="%AID%_PT-SPVRegister" Offset="492" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00588" Name="AsstRaw41" ParameterType="%AID%_PT-SPVRawValue" Offset="494" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00589" Name="AsstMeaning41" ParameterType="%AID%_PT-SPVMeaning" Offset="496" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00590" Name="AsstType41" ParameterType="%AID%_PT-SPVDataType" Offset="497" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00591" Name="AsstScale41" ParameterType="%AID%_PT-SPVScale" Offset="497" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00592" Name="AsstOffset41" ParameterType="%AID%_PT-SPVOffset" Offset="498" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00593" Name="AsstRef41" ParameterType="%AID%_PT-SPVReference" Offset="500" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00594" Name="AsstReg42" ParameterType="%AID%_PT-SPVRegister" Offset="504" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00595" Name="AsstRaw42" ParameterType="%AID%_PT-SPVRawValue" Offset="506" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00596" Name="AsstMeaning42" ParameterType="%AID%_PT-SPVMeaning" Offset="508" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00597" Name="AsstType42" ParameterType="%AID%_PT-SPVDataType" Offset="509" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00598" Name="AsstScale42" ParameterType="%AID%_PT-SPVScale" Offset="509" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00599" Name="AsstOffset42" ParameterType="%AID%_PT-SPVOffset" Offset="510" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00600" Name="AsstRef42" ParameterType="%AID%_PT-SPVReference" Offset="512" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00601" Name="AsstReg43" ParameterType="%AID%_PT-SPVRegister" Offset="516" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00602" Name="AsstRaw43" ParameterType="%AID%_PT-SPVRawValue" Offset="518" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00603" Name="AsstMeaning43" ParameterType="%AID%_PT-SPVMeaning" Offset="520" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00604" Name="AsstType43" ParameterType="%AID%_PT-SPVDataType" Offset="521" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00605" Name="AsstScale43" ParameterType="%AID%_PT-SPVScale" Offset="521" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00606" Name="AsstOffset43" ParameterType="%AID%_PT-SPVOffset" Offset="522" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00607" Name="AsstRef43" ParameterType="%AID%_PT-SPVReference" Offset="524" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00608" Name="AsstReg44" ParameterType="%AID%_PT-SPVRegister" Offset="528" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00609" Name="AsstRaw44" ParameterType="%AID%_PT-SPVRawValue" Offset="530" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00610" Name="AsstMeaning44" ParameterType="%AID%_PT-SPVMeaning" Offset="532" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00611" Name="AsstType44" ParameterType="%AID%_PT-SPVDataType" Offset="533" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00612" Name="AsstScale44" ParameterType="%AID%_PT-SPVScale" Offset="533" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00613" Name="AsstOffset44" ParameterType="%AID%_PT-SPVOffset" Offset="534" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00614" Name="AsstRef44" ParameterType="%AID%_PT-SPVReference" Offset="536" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00615" Name="AsstReg45" ParameterType="%AID%_PT-SPVRegister" Offset="540" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00616" Name="AsstRaw45" ParameterType="%AID%_PT-SPVRawValue" Offset="542" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00617" Name="AsstMeaning45" ParameterType="%AID%_PT-SPVMeaning" Offset="544" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00618" Name="AsstType45" ParameterType="%AID%_PT-SPVDataType" Offset="545" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00619" Name="AsstScale45" ParameterType="%AID%_PT-SPVScale" Offset="545" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00620" Name="AsstOffset45" ParameterType="%AID%_PT-SPVOffset" Offset="546" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00621" Name="AsstRef45" ParameterType="%AID%_PT-SPVReference" Offset="548" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00622" Name="AsstReg46" ParameterType="%AID%_PT-SPVRegister" Offset="552" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00623" Name="AsstRaw46" ParameterType="%AID%_PT-SPVRawValue" Offset="554" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00624" Name="AsstMeaning46" ParameterType="%AID%_PT-SPVMeaning" Offset="556" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00625" Name="AsstType46" ParameterType="%AID%_PT-SPVDataType" Offset="557" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00626" Name="AsstScale46" ParameterType="%AID%_PT-SPVScale" Offset="557" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00627" Name="AsstOffset46" ParameterType="%AID%_PT-SPVOffset" Offset="558" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00628" Name="AsstRef46" ParameterType="%AID%_PT-SPVReference" Offset="560" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00629" Name="AsstReg47" ParameterType="%AID%_PT-SPVRegister" Offset="564" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00630" Name="AsstRaw47" ParameterType="%AID%_PT-SPVRawValue" Offset="566" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00631" Name="AsstMeaning47" ParameterType="%AID%_PT-SPVMeaning" Offset="568" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00632" Name="AsstType47" ParameterType="%AID%_PT-SPVDataType" Offset="569" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00633" Name="AsstScale47" ParameterType="%AID%_PT-SPVScale" Offset="569" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00634" Name="AsstOffset47" ParameterType="%AID%_PT-SPVOffset" Offset="570" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00635" Name="AsstRef47" ParameterType="%AID%_PT-SPVReference" Offset="572" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00636" Name="AsstReg48" ParameterType="%AID%_PT-SPVRegister" Offset="576" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00637" Name="AsstRaw48" ParameterType="%AID%_PT-SPVRawValue" Offset="578" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00638" Name="AsstMeaning48" ParameterType="%AID%_PT-SPVMeaning" Offset="580" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00639" Name="AsstType48" ParameterType="%AID%_PT-SPVDataType" Offset="581" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00640" Name="AsstScale48" ParameterType="%AID%_PT-SPVScale" Offset="581" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00641" Name="AsstOffset48" ParameterType="%AID%_PT-SPVOffset" Offset="582" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00642" Name="AsstRef48" ParameterType="%AID%_PT-SPVReference" Offset="584" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00643" Name="AsstReg49" ParameterType="%AID%_PT-SPVRegister" Offset="588" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00644" Name="AsstRaw49" ParameterType="%AID%_PT-SPVRawValue" Offset="590" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00645" Name="AsstMeaning49" ParameterType="%AID%_PT-SPVMeaning" Offset="592" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00646" Name="AsstType49" ParameterType="%AID%_PT-SPVDataType" Offset="593" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00647" Name="AsstScale49" ParameterType="%AID%_PT-SPVScale" Offset="593" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00648" Name="AsstOffset49" ParameterType="%AID%_PT-SPVOffset" Offset="594" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00649" Name="AsstRef49" ParameterType="%AID%_PT-SPVReference" Offset="596" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00650" Name="AsstReg50" ParameterType="%AID%_PT-SPVRegister" Offset="600" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00651" Name="AsstRaw50" ParameterType="%AID%_PT-SPVRawValue" Offset="602" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00652" Name="AsstMeaning50" ParameterType="%AID%_PT-SPVMeaning" Offset="604" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00653" Name="AsstType50" ParameterType="%AID%_PT-SPVDataType" Offset="605" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00654" Name="AsstScale50" ParameterType="%AID%_PT-SPVScale" Offset="605" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00655" Name="AsstOffset50" ParameterType="%AID%_PT-SPVOffset" Offset="606" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00656" Name="AsstRef50" ParameterType="%AID%_PT-SPVReference" Offset="608" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00657" Name="AsstReg51" ParameterType="%AID%_PT-SPVRegister" Offset="612" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00658" Name="AsstRaw51" ParameterType="%AID%_PT-SPVRawValue" Offset="614" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00659" Name="AsstMeaning51" ParameterType="%AID%_PT-SPVMeaning" Offset="616" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00660" Name="AsstType51" ParameterType="%AID%_PT-SPVDataType" Offset="617" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00661" Name="AsstScale51" ParameterType="%AID%_PT-SPVScale" Offset="617" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00662" Name="AsstOffset51" ParameterType="%AID%_PT-SPVOffset" Offset="618" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00663" Name="AsstRef51" ParameterType="%AID%_PT-SPVReference" Offset="620" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00664" Name="AsstReg52" ParameterType="%AID%_PT-SPVRegister" Offset="624" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00665" Name="AsstRaw52" ParameterType="%AID%_PT-SPVRawValue" Offset="626" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00666" Name="AsstMeaning52" ParameterType="%AID%_PT-SPVMeaning" Offset="628" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00667" Name="AsstType52" ParameterType="%AID%_PT-SPVDataType" Offset="629" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00668" Name="AsstScale52" ParameterType="%AID%_PT-SPVScale" Offset="629" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00669" Name="AsstOffset52" ParameterType="%AID%_PT-SPVOffset" Offset="630" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00670" Name="AsstRef52" ParameterType="%AID%_PT-SPVReference" Offset="632" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00671" Name="AsstReg53" ParameterType="%AID%_PT-SPVRegister" Offset="636" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00672" Name="AsstRaw53" ParameterType="%AID%_PT-SPVRawValue" Offset="638" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00673" Name="AsstMeaning53" ParameterType="%AID%_PT-SPVMeaning" Offset="640" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00674" Name="AsstType53" ParameterType="%AID%_PT-SPVDataType" Offset="641" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00675" Name="AsstScale53" ParameterType="%AID%_PT-SPVScale" Offset="641" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00676" Name="AsstOffset53" ParameterType="%AID%_PT-SPVOffset" Offset="642" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00677" Name="AsstRef53" ParameterType="%AID%_PT-SPVReference" Offset="644" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00678" Name="AsstReg54" ParameterType="%AID%_PT-SPVRegister" Offset="648" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00679" Name="AsstRaw54" ParameterType="%AID%_PT-SPVRawValue" Offset="650" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00680" Name="AsstMeaning54" ParameterType="%AID%_PT-SPVMeaning" Offset="652" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00681" Name="AsstType54" ParameterType="%AID%_PT-SPVDataType" Offset="653" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00682" Name="AsstScale54" ParameterType="%AID%_PT-SPVScale" Offset="653" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00683" Name="AsstOffset54" ParameterType="%AID%_PT-SPVOffset" Offset="654" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00684" Name="AsstRef54" ParameterType="%AID%_PT-SPVReference" Offset="656" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00685" Name="AsstReg55" ParameterType="%AID%_PT-SPVRegister" Offset="660" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00686" Name="AsstRaw55" ParameterType="%AID%_PT-SPVRawValue" Offset="662" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00687" Name="AsstMeaning55" ParameterType="%AID%_PT-SPVMeaning" Offset="664" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00688" Name="AsstType55" ParameterType="%AID%_PT-SPVDataType" Offset="665" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00689" Name="AsstScale55" ParameterType="%AID%_PT-SPVScale" Offset="665" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00690" Name="AsstOffset55" ParameterType="%AID%_PT-SPVOffset" Offset="666" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00691" Name="AsstRef55" ParameterType="%AID%_PT-SPVReference" Offset="668" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00692" Name="AsstReg56" ParameterType="%AID%_PT-SPVRegister" Offset="672" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00693" Name="AsstRaw56" ParameterType="%AID%_PT-SPVRawValue" Offset="674" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00694" Name="AsstMeaning56" ParameterType="%AID%_PT-SPVMeaning" Offset="676" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00695" Name="AsstType56" ParameterType="%AID%_PT-SPVDataType" Offset="677" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00696" Name="AsstScale56" ParameterType="%AID%_PT-SPVScale" Offset="677" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00697" Name="AsstOffset56" ParameterType="%AID%_PT-SPVOffset" Offset="678" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00698" Name="AsstRef56" ParameterType="%AID%_PT-SPVReference" Offset="680" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00699" Name="AsstReg57" ParameterType="%AID%_PT-SPVRegister" Offset="684" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00700" Name="AsstRaw57" ParameterType="%AID%_PT-SPVRawValue" Offset="686" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00701" Name="AsstMeaning57" ParameterType="%AID%_PT-SPVMeaning" Offset="688" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00702" Name="AsstType57" ParameterType="%AID%_PT-SPVDataType" Offset="689" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00703" Name="AsstScale57" ParameterType="%AID%_PT-SPVScale" Offset="689" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00704" Name="AsstOffset57" ParameterType="%AID%_PT-SPVOffset" Offset="690" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00705" Name="AsstRef57" ParameterType="%AID%_PT-SPVReference" Offset="692" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00706" Name="AsstReg58" ParameterType="%AID%_PT-SPVRegister" Offset="696" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00707" Name="AsstRaw58" ParameterType="%AID%_PT-SPVRawValue" Offset="698" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00708" Name="AsstMeaning58" ParameterType="%AID%_PT-SPVMeaning" Offset="700" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00709" Name="AsstType58" ParameterType="%AID%_PT-SPVDataType" Offset="701" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00710" Name="AsstScale58" ParameterType="%AID%_PT-SPVScale" Offset="701" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00711" Name="AsstOffset58" ParameterType="%AID%_PT-SPVOffset" Offset="702" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00712" Name="AsstRef58" ParameterType="%AID%_PT-SPVReference" Offset="704" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00713" Name="AsstReg59" ParameterType="%AID%_PT-SPVRegister" Offset="708" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00714" Name="AsstRaw59" ParameterType="%AID%_PT-SPVRawValue" Offset="710" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00715" Name="AsstMeaning59" ParameterType="%AID%_PT-SPVMeaning" Offset="712" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00716" Name="AsstType59" ParameterType="%AID%_PT-SPVDataType" Offset="713" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00717" Name="AsstScale59" ParameterType="%AID%_PT-SPVScale" Offset="713" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00718" Name="AsstOffset59" ParameterType="%AID%_PT-SPVOffset" Offset="714" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00719" Name="AsstRef59" ParameterType="%AID%_PT-SPVReference" Offset="716" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00720" Name="AsstReg60" ParameterType="%AID%_PT-SPVRegister" Offset="720" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00721" Name="AsstRaw60" ParameterType="%AID%_PT-SPVRawValue" Offset="722" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00722" Name="AsstMeaning60" ParameterType="%AID%_PT-SPVMeaning" Offset="724" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00723" Name="AsstType60" ParameterType="%AID%_PT-SPVDataType" Offset="725" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00724" Name="AsstScale60" ParameterType="%AID%_PT-SPVScale" Offset="725" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00725" Name="AsstOffset60" ParameterType="%AID%_PT-SPVOffset" Offset="726" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00726" Name="AsstRef60" ParameterType="%AID%_PT-SPVReference" Offset="728" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00727" Name="AsstReg61" ParameterType="%AID%_PT-SPVRegister" Offset="732" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00728" Name="AsstRaw61" ParameterType="%AID%_PT-SPVRawValue" Offset="734" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00729" Name="AsstMeaning61" ParameterType="%AID%_PT-SPVMeaning" Offset="736" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00730" Name="AsstType61" ParameterType="%AID%_PT-SPVDataType" Offset="737" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00731" Name="AsstScale61" ParameterType="%AID%_PT-SPVScale" Offset="737" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00732" Name="AsstOffset61" ParameterType="%AID%_PT-SPVOffset" Offset="738" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00733" Name="AsstRef61" ParameterType="%AID%_PT-SPVReference" Offset="740" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00734" Name="AsstReg62" ParameterType="%AID%_PT-SPVRegister" Offset="744" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00735" Name="AsstRaw62" ParameterType="%AID%_PT-SPVRawValue" Offset="746" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00736" Name="AsstMeaning62" ParameterType="%AID%_PT-SPVMeaning" Offset="748" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00737" Name="AsstType62" ParameterType="%AID%_PT-SPVDataType" Offset="749" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00738" Name="AsstScale62" ParameterType="%AID%_PT-SPVScale" Offset="749" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00739" Name="AsstOffset62" ParameterType="%AID%_PT-SPVOffset" Offset="750" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00740" Name="AsstRef62" ParameterType="%AID%_PT-SPVReference" Offset="752" BitOffset="0" Text="abgelesener Wert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00741" Name="AsstReg63" ParameterType="%AID%_PT-SPVRegister" Offset="756" BitOffset="0" Text="Register" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00742" Name="AsstRaw63" ParameterType="%AID%_PT-SPVRawValue" Offset="758" BitOffset="0" Text="Rohwert" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00743" Name="AsstMeaning63" ParameterType="%AID%_PT-SPVMeaning" Offset="760" BitOffset="0" Text="Bedeutung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00744" Name="AsstType63" ParameterType="%AID%_PT-SPVDataType" Offset="761" BitOffset="0" Text="Datentyp" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00745" Name="AsstScale63" ParameterType="%AID%_PT-SPVScale" Offset="761" BitOffset="3" Text="Skalierung" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00746" Name="AsstOffset63" ParameterType="%AID%_PT-SPVOffset" Offset="762" BitOffset="0" Text="Offset" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00747" Name="AsstRef63" ParameterType="%AID%_PT-SPVReference" Offset="764" BitOffset="0" Text="abgelesener Wert" Value="0" />
+              </Union>
+            </Parameters>
+            <ParameterRefs>
+              <ParameterRef Id="%AID%_UP-%TT%00001_R-%TT%0000101" RefId="%AID%_UP-%TT%00001" />
+              <ParameterRef Id="%AID%_UP-%TT%00002_R-%TT%0000201" RefId="%AID%_UP-%TT%00002" />
+              <ParameterRef Id="%AID%_UP-%TT%00003_R-%TT%0000301" RefId="%AID%_UP-%TT%00003" />
+              <ParameterRef Id="%AID%_UP-%TT%00004_R-%TT%0000401" RefId="%AID%_UP-%TT%00004" />
+              <ParameterRef Id="%AID%_UP-%TT%00005_R-%TT%0000501" RefId="%AID%_UP-%TT%00005" />
+              <ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000601" RefId="%AID%_UP-%TT%00006" />
+              <ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000701" RefId="%AID%_UP-%TT%00007" />
+              <ParameterRef Id="%AID%_UP-%TT%00008_R-%TT%0000801" RefId="%AID%_UP-%TT%00008" />
+              <ParameterRef Id="%AID%_UP-%TT%00009_R-%TT%0000901" RefId="%AID%_UP-%TT%00009" />
+              <ParameterRef Id="%AID%_UP-%TT%00010_R-%TT%0001001" RefId="%AID%_UP-%TT%00010" />
+              <ParameterRef Id="%AID%_UP-%TT%00300_R-%TT%0030001" RefId="%AID%_UP-%TT%00300" />
+              <ParameterRef Id="%AID%_UP-%TT%00301_R-%TT%0030101" RefId="%AID%_UP-%TT%00301" />
+              <ParameterRef Id="%AID%_UP-%TT%00302_R-%TT%0030201" RefId="%AID%_UP-%TT%00302" />
+              <ParameterRef Id="%AID%_UP-%TT%00303_R-%TT%0030301" RefId="%AID%_UP-%TT%00303" />
+              <ParameterRef Id="%AID%_UP-%TT%00304_R-%TT%0030401" RefId="%AID%_UP-%TT%00304" />
+              <ParameterRef Id="%AID%_UP-%TT%00305_R-%TT%0030501" RefId="%AID%_UP-%TT%00305" />
+              <ParameterRef Id="%AID%_UP-%TT%00306_R-%TT%0030601" RefId="%AID%_UP-%TT%00306" />
+              <ParameterRef Id="%AID%_UP-%TT%00307_R-%TT%0030701" RefId="%AID%_UP-%TT%00307" />
+              <ParameterRef Id="%AID%_UP-%TT%00308_R-%TT%0030801" RefId="%AID%_UP-%TT%00308" />
+              <ParameterRef Id="%AID%_UP-%TT%00309_R-%TT%0030901" RefId="%AID%_UP-%TT%00309" />
+              <ParameterRef Id="%AID%_UP-%TT%00310_R-%TT%0031001" RefId="%AID%_UP-%TT%00310" />
+              <ParameterRef Id="%AID%_UP-%TT%00311_R-%TT%0031101" RefId="%AID%_UP-%TT%00311" />
+              <ParameterRef Id="%AID%_UP-%TT%00312_R-%TT%0031201" RefId="%AID%_UP-%TT%00312" />
+              <ParameterRef Id="%AID%_UP-%TT%00313_R-%TT%0031301" RefId="%AID%_UP-%TT%00313" />
+              <ParameterRef Id="%AID%_UP-%TT%00314_R-%TT%0031401" RefId="%AID%_UP-%TT%00314" />
+              <ParameterRef Id="%AID%_UP-%TT%00315_R-%TT%0031501" RefId="%AID%_UP-%TT%00315" />
+              <ParameterRef Id="%AID%_UP-%TT%00316_R-%TT%0031601" RefId="%AID%_UP-%TT%00316" />
+              <ParameterRef Id="%AID%_UP-%TT%00317_R-%TT%0031701" RefId="%AID%_UP-%TT%00317" />
+              <ParameterRef Id="%AID%_UP-%TT%00318_R-%TT%0031801" RefId="%AID%_UP-%TT%00318" />
+              <ParameterRef Id="%AID%_UP-%TT%00319_R-%TT%0031901" RefId="%AID%_UP-%TT%00319" />
+              <ParameterRef Id="%AID%_UP-%TT%00320_R-%TT%0032001" RefId="%AID%_UP-%TT%00320" />
+              <ParameterRef Id="%AID%_UP-%TT%00321_R-%TT%0032101" RefId="%AID%_UP-%TT%00321" />
+              <ParameterRef Id="%AID%_UP-%TT%00322_R-%TT%0032201" RefId="%AID%_UP-%TT%00322" />
+              <ParameterRef Id="%AID%_UP-%TT%00323_R-%TT%0032301" RefId="%AID%_UP-%TT%00323" />
+              <ParameterRef Id="%AID%_UP-%TT%00324_R-%TT%0032401" RefId="%AID%_UP-%TT%00324" />
+              <ParameterRef Id="%AID%_UP-%TT%00325_R-%TT%0032501" RefId="%AID%_UP-%TT%00325" />
+              <ParameterRef Id="%AID%_UP-%TT%00326_R-%TT%0032601" RefId="%AID%_UP-%TT%00326" />
+              <ParameterRef Id="%AID%_UP-%TT%00327_R-%TT%0032701" RefId="%AID%_UP-%TT%00327" />
+              <ParameterRef Id="%AID%_UP-%TT%00328_R-%TT%0032801" RefId="%AID%_UP-%TT%00328" />
+              <ParameterRef Id="%AID%_UP-%TT%00329_R-%TT%0032901" RefId="%AID%_UP-%TT%00329" />
+              <ParameterRef Id="%AID%_UP-%TT%00330_R-%TT%0033001" RefId="%AID%_UP-%TT%00330" />
+              <ParameterRef Id="%AID%_UP-%TT%00331_R-%TT%0033101" RefId="%AID%_UP-%TT%00331" />
+              <ParameterRef Id="%AID%_UP-%TT%00332_R-%TT%0033201" RefId="%AID%_UP-%TT%00332" />
+              <ParameterRef Id="%AID%_UP-%TT%00333_R-%TT%0033301" RefId="%AID%_UP-%TT%00333" />
+              <ParameterRef Id="%AID%_UP-%TT%00334_R-%TT%0033401" RefId="%AID%_UP-%TT%00334" />
+              <ParameterRef Id="%AID%_UP-%TT%00335_R-%TT%0033501" RefId="%AID%_UP-%TT%00335" />
+              <ParameterRef Id="%AID%_UP-%TT%00336_R-%TT%0033601" RefId="%AID%_UP-%TT%00336" />
+              <ParameterRef Id="%AID%_UP-%TT%00337_R-%TT%0033701" RefId="%AID%_UP-%TT%00337" />
+              <ParameterRef Id="%AID%_UP-%TT%00338_R-%TT%0033801" RefId="%AID%_UP-%TT%00338" />
+              <ParameterRef Id="%AID%_UP-%TT%00339_R-%TT%0033901" RefId="%AID%_UP-%TT%00339" />
+              <ParameterRef Id="%AID%_UP-%TT%00340_R-%TT%0034001" RefId="%AID%_UP-%TT%00340" />
+              <ParameterRef Id="%AID%_UP-%TT%00341_R-%TT%0034101" RefId="%AID%_UP-%TT%00341" />
+              <ParameterRef Id="%AID%_UP-%TT%00342_R-%TT%0034201" RefId="%AID%_UP-%TT%00342" />
+              <ParameterRef Id="%AID%_UP-%TT%00343_R-%TT%0034301" RefId="%AID%_UP-%TT%00343" />
+              <ParameterRef Id="%AID%_UP-%TT%00344_R-%TT%0034401" RefId="%AID%_UP-%TT%00344" />
+              <ParameterRef Id="%AID%_UP-%TT%00345_R-%TT%0034501" RefId="%AID%_UP-%TT%00345" />
+              <ParameterRef Id="%AID%_UP-%TT%00346_R-%TT%0034601" RefId="%AID%_UP-%TT%00346" />
+              <ParameterRef Id="%AID%_UP-%TT%00347_R-%TT%0034701" RefId="%AID%_UP-%TT%00347" />
+              <ParameterRef Id="%AID%_UP-%TT%00348_R-%TT%0034801" RefId="%AID%_UP-%TT%00348" />
+              <ParameterRef Id="%AID%_UP-%TT%00349_R-%TT%0034901" RefId="%AID%_UP-%TT%00349" />
+              <ParameterRef Id="%AID%_UP-%TT%00350_R-%TT%0035001" RefId="%AID%_UP-%TT%00350" />
+              <ParameterRef Id="%AID%_UP-%TT%00351_R-%TT%0035101" RefId="%AID%_UP-%TT%00351" />
+              <ParameterRef Id="%AID%_UP-%TT%00352_R-%TT%0035201" RefId="%AID%_UP-%TT%00352" />
+              <ParameterRef Id="%AID%_UP-%TT%00353_R-%TT%0035301" RefId="%AID%_UP-%TT%00353" />
+              <ParameterRef Id="%AID%_UP-%TT%00354_R-%TT%0035401" RefId="%AID%_UP-%TT%00354" />
+              <ParameterRef Id="%AID%_UP-%TT%00355_R-%TT%0035501" RefId="%AID%_UP-%TT%00355" />
+              <ParameterRef Id="%AID%_UP-%TT%00356_R-%TT%0035601" RefId="%AID%_UP-%TT%00356" />
+              <ParameterRef Id="%AID%_UP-%TT%00357_R-%TT%0035701" RefId="%AID%_UP-%TT%00357" />
+              <ParameterRef Id="%AID%_UP-%TT%00358_R-%TT%0035801" RefId="%AID%_UP-%TT%00358" />
+              <ParameterRef Id="%AID%_UP-%TT%00359_R-%TT%0035901" RefId="%AID%_UP-%TT%00359" />
+              <ParameterRef Id="%AID%_UP-%TT%00360_R-%TT%0036001" RefId="%AID%_UP-%TT%00360" />
+              <ParameterRef Id="%AID%_UP-%TT%00361_R-%TT%0036101" RefId="%AID%_UP-%TT%00361" />
+              <ParameterRef Id="%AID%_UP-%TT%00362_R-%TT%0036201" RefId="%AID%_UP-%TT%00362" />
+              <ParameterRef Id="%AID%_UP-%TT%00363_R-%TT%0036301" RefId="%AID%_UP-%TT%00363" />
+              <ParameterRef Id="%AID%_UP-%TT%00364_R-%TT%0036401" RefId="%AID%_UP-%TT%00364" />
+              <ParameterRef Id="%AID%_UP-%TT%00365_R-%TT%0036501" RefId="%AID%_UP-%TT%00365" />
+              <ParameterRef Id="%AID%_UP-%TT%00366_R-%TT%0036601" RefId="%AID%_UP-%TT%00366" />
+              <ParameterRef Id="%AID%_UP-%TT%00367_R-%TT%0036701" RefId="%AID%_UP-%TT%00367" />
+              <ParameterRef Id="%AID%_UP-%TT%00368_R-%TT%0036801" RefId="%AID%_UP-%TT%00368" />
+              <ParameterRef Id="%AID%_UP-%TT%00369_R-%TT%0036901" RefId="%AID%_UP-%TT%00369" />
+              <ParameterRef Id="%AID%_UP-%TT%00370_R-%TT%0037001" RefId="%AID%_UP-%TT%00370" />
+              <ParameterRef Id="%AID%_UP-%TT%00371_R-%TT%0037101" RefId="%AID%_UP-%TT%00371" />
+              <ParameterRef Id="%AID%_UP-%TT%00372_R-%TT%0037201" RefId="%AID%_UP-%TT%00372" />
+              <ParameterRef Id="%AID%_UP-%TT%00373_R-%TT%0037301" RefId="%AID%_UP-%TT%00373" />
+              <ParameterRef Id="%AID%_UP-%TT%00374_R-%TT%0037401" RefId="%AID%_UP-%TT%00374" />
+              <ParameterRef Id="%AID%_UP-%TT%00375_R-%TT%0037501" RefId="%AID%_UP-%TT%00375" />
+              <ParameterRef Id="%AID%_UP-%TT%00376_R-%TT%0037601" RefId="%AID%_UP-%TT%00376" />
+              <ParameterRef Id="%AID%_UP-%TT%00377_R-%TT%0037701" RefId="%AID%_UP-%TT%00377" />
+              <ParameterRef Id="%AID%_UP-%TT%00378_R-%TT%0037801" RefId="%AID%_UP-%TT%00378" />
+              <ParameterRef Id="%AID%_UP-%TT%00379_R-%TT%0037901" RefId="%AID%_UP-%TT%00379" />
+              <ParameterRef Id="%AID%_UP-%TT%00380_R-%TT%0038001" RefId="%AID%_UP-%TT%00380" />
+              <ParameterRef Id="%AID%_UP-%TT%00381_R-%TT%0038101" RefId="%AID%_UP-%TT%00381" />
+              <ParameterRef Id="%AID%_UP-%TT%00382_R-%TT%0038201" RefId="%AID%_UP-%TT%00382" />
+              <ParameterRef Id="%AID%_UP-%TT%00383_R-%TT%0038301" RefId="%AID%_UP-%TT%00383" />
+              <ParameterRef Id="%AID%_UP-%TT%00384_R-%TT%0038401" RefId="%AID%_UP-%TT%00384" />
+              <ParameterRef Id="%AID%_UP-%TT%00385_R-%TT%0038501" RefId="%AID%_UP-%TT%00385" />
+              <ParameterRef Id="%AID%_UP-%TT%00386_R-%TT%0038601" RefId="%AID%_UP-%TT%00386" />
+              <ParameterRef Id="%AID%_UP-%TT%00387_R-%TT%0038701" RefId="%AID%_UP-%TT%00387" />
+              <ParameterRef Id="%AID%_UP-%TT%00388_R-%TT%0038801" RefId="%AID%_UP-%TT%00388" />
+              <ParameterRef Id="%AID%_UP-%TT%00389_R-%TT%0038901" RefId="%AID%_UP-%TT%00389" />
+              <ParameterRef Id="%AID%_UP-%TT%00390_R-%TT%0039001" RefId="%AID%_UP-%TT%00390" />
+              <ParameterRef Id="%AID%_UP-%TT%00391_R-%TT%0039101" RefId="%AID%_UP-%TT%00391" />
+              <ParameterRef Id="%AID%_UP-%TT%00392_R-%TT%0039201" RefId="%AID%_UP-%TT%00392" />
+              <ParameterRef Id="%AID%_UP-%TT%00393_R-%TT%0039301" RefId="%AID%_UP-%TT%00393" />
+              <ParameterRef Id="%AID%_UP-%TT%00394_R-%TT%0039401" RefId="%AID%_UP-%TT%00394" />
+              <ParameterRef Id="%AID%_UP-%TT%00395_R-%TT%0039501" RefId="%AID%_UP-%TT%00395" />
+              <ParameterRef Id="%AID%_UP-%TT%00396_R-%TT%0039601" RefId="%AID%_UP-%TT%00396" />
+              <ParameterRef Id="%AID%_UP-%TT%00397_R-%TT%0039701" RefId="%AID%_UP-%TT%00397" />
+              <ParameterRef Id="%AID%_UP-%TT%00398_R-%TT%0039801" RefId="%AID%_UP-%TT%00398" />
+              <ParameterRef Id="%AID%_UP-%TT%00399_R-%TT%0039901" RefId="%AID%_UP-%TT%00399" />
+              <ParameterRef Id="%AID%_UP-%TT%00400_R-%TT%0040001" RefId="%AID%_UP-%TT%00400" />
+              <ParameterRef Id="%AID%_UP-%TT%00401_R-%TT%0040101" RefId="%AID%_UP-%TT%00401" />
+              <ParameterRef Id="%AID%_UP-%TT%00402_R-%TT%0040201" RefId="%AID%_UP-%TT%00402" />
+              <ParameterRef Id="%AID%_UP-%TT%00403_R-%TT%0040301" RefId="%AID%_UP-%TT%00403" />
+              <ParameterRef Id="%AID%_UP-%TT%00404_R-%TT%0040401" RefId="%AID%_UP-%TT%00404" />
+              <ParameterRef Id="%AID%_UP-%TT%00405_R-%TT%0040501" RefId="%AID%_UP-%TT%00405" />
+              <ParameterRef Id="%AID%_UP-%TT%00406_R-%TT%0040601" RefId="%AID%_UP-%TT%00406" />
+              <ParameterRef Id="%AID%_UP-%TT%00407_R-%TT%0040701" RefId="%AID%_UP-%TT%00407" />
+              <ParameterRef Id="%AID%_UP-%TT%00408_R-%TT%0040801" RefId="%AID%_UP-%TT%00408" />
+              <ParameterRef Id="%AID%_UP-%TT%00409_R-%TT%0040901" RefId="%AID%_UP-%TT%00409" />
+              <ParameterRef Id="%AID%_UP-%TT%00410_R-%TT%0041001" RefId="%AID%_UP-%TT%00410" />
+              <ParameterRef Id="%AID%_UP-%TT%00411_R-%TT%0041101" RefId="%AID%_UP-%TT%00411" />
+              <ParameterRef Id="%AID%_UP-%TT%00412_R-%TT%0041201" RefId="%AID%_UP-%TT%00412" />
+              <ParameterRef Id="%AID%_UP-%TT%00413_R-%TT%0041301" RefId="%AID%_UP-%TT%00413" />
+              <ParameterRef Id="%AID%_UP-%TT%00414_R-%TT%0041401" RefId="%AID%_UP-%TT%00414" />
+              <ParameterRef Id="%AID%_UP-%TT%00415_R-%TT%0041501" RefId="%AID%_UP-%TT%00415" />
+              <ParameterRef Id="%AID%_UP-%TT%00416_R-%TT%0041601" RefId="%AID%_UP-%TT%00416" />
+              <ParameterRef Id="%AID%_UP-%TT%00417_R-%TT%0041701" RefId="%AID%_UP-%TT%00417" />
+              <ParameterRef Id="%AID%_UP-%TT%00418_R-%TT%0041801" RefId="%AID%_UP-%TT%00418" />
+              <ParameterRef Id="%AID%_UP-%TT%00419_R-%TT%0041901" RefId="%AID%_UP-%TT%00419" />
+              <ParameterRef Id="%AID%_UP-%TT%00420_R-%TT%0042001" RefId="%AID%_UP-%TT%00420" />
+              <ParameterRef Id="%AID%_UP-%TT%00421_R-%TT%0042101" RefId="%AID%_UP-%TT%00421" />
+              <ParameterRef Id="%AID%_UP-%TT%00422_R-%TT%0042201" RefId="%AID%_UP-%TT%00422" />
+              <ParameterRef Id="%AID%_UP-%TT%00423_R-%TT%0042301" RefId="%AID%_UP-%TT%00423" />
+              <ParameterRef Id="%AID%_UP-%TT%00424_R-%TT%0042401" RefId="%AID%_UP-%TT%00424" />
+              <ParameterRef Id="%AID%_UP-%TT%00425_R-%TT%0042501" RefId="%AID%_UP-%TT%00425" />
+              <ParameterRef Id="%AID%_UP-%TT%00426_R-%TT%0042601" RefId="%AID%_UP-%TT%00426" />
+              <ParameterRef Id="%AID%_UP-%TT%00427_R-%TT%0042701" RefId="%AID%_UP-%TT%00427" />
+              <ParameterRef Id="%AID%_UP-%TT%00428_R-%TT%0042801" RefId="%AID%_UP-%TT%00428" />
+              <ParameterRef Id="%AID%_UP-%TT%00429_R-%TT%0042901" RefId="%AID%_UP-%TT%00429" />
+              <ParameterRef Id="%AID%_UP-%TT%00430_R-%TT%0043001" RefId="%AID%_UP-%TT%00430" />
+              <ParameterRef Id="%AID%_UP-%TT%00431_R-%TT%0043101" RefId="%AID%_UP-%TT%00431" />
+              <ParameterRef Id="%AID%_UP-%TT%00432_R-%TT%0043201" RefId="%AID%_UP-%TT%00432" />
+              <ParameterRef Id="%AID%_UP-%TT%00433_R-%TT%0043301" RefId="%AID%_UP-%TT%00433" />
+              <ParameterRef Id="%AID%_UP-%TT%00434_R-%TT%0043401" RefId="%AID%_UP-%TT%00434" />
+              <ParameterRef Id="%AID%_UP-%TT%00435_R-%TT%0043501" RefId="%AID%_UP-%TT%00435" />
+              <ParameterRef Id="%AID%_UP-%TT%00436_R-%TT%0043601" RefId="%AID%_UP-%TT%00436" />
+              <ParameterRef Id="%AID%_UP-%TT%00437_R-%TT%0043701" RefId="%AID%_UP-%TT%00437" />
+              <ParameterRef Id="%AID%_UP-%TT%00438_R-%TT%0043801" RefId="%AID%_UP-%TT%00438" />
+              <ParameterRef Id="%AID%_UP-%TT%00439_R-%TT%0043901" RefId="%AID%_UP-%TT%00439" />
+              <ParameterRef Id="%AID%_UP-%TT%00440_R-%TT%0044001" RefId="%AID%_UP-%TT%00440" />
+              <ParameterRef Id="%AID%_UP-%TT%00441_R-%TT%0044101" RefId="%AID%_UP-%TT%00441" />
+              <ParameterRef Id="%AID%_UP-%TT%00442_R-%TT%0044201" RefId="%AID%_UP-%TT%00442" />
+              <ParameterRef Id="%AID%_UP-%TT%00443_R-%TT%0044301" RefId="%AID%_UP-%TT%00443" />
+              <ParameterRef Id="%AID%_UP-%TT%00444_R-%TT%0044401" RefId="%AID%_UP-%TT%00444" />
+              <ParameterRef Id="%AID%_UP-%TT%00445_R-%TT%0044501" RefId="%AID%_UP-%TT%00445" />
+              <ParameterRef Id="%AID%_UP-%TT%00446_R-%TT%0044601" RefId="%AID%_UP-%TT%00446" />
+              <ParameterRef Id="%AID%_UP-%TT%00447_R-%TT%0044701" RefId="%AID%_UP-%TT%00447" />
+              <ParameterRef Id="%AID%_UP-%TT%00448_R-%TT%0044801" RefId="%AID%_UP-%TT%00448" />
+              <ParameterRef Id="%AID%_UP-%TT%00449_R-%TT%0044901" RefId="%AID%_UP-%TT%00449" />
+              <ParameterRef Id="%AID%_UP-%TT%00450_R-%TT%0045001" RefId="%AID%_UP-%TT%00450" />
+              <ParameterRef Id="%AID%_UP-%TT%00451_R-%TT%0045101" RefId="%AID%_UP-%TT%00451" />
+              <ParameterRef Id="%AID%_UP-%TT%00452_R-%TT%0045201" RefId="%AID%_UP-%TT%00452" />
+              <ParameterRef Id="%AID%_UP-%TT%00453_R-%TT%0045301" RefId="%AID%_UP-%TT%00453" />
+              <ParameterRef Id="%AID%_UP-%TT%00454_R-%TT%0045401" RefId="%AID%_UP-%TT%00454" />
+              <ParameterRef Id="%AID%_UP-%TT%00455_R-%TT%0045501" RefId="%AID%_UP-%TT%00455" />
+              <ParameterRef Id="%AID%_UP-%TT%00456_R-%TT%0045601" RefId="%AID%_UP-%TT%00456" />
+              <ParameterRef Id="%AID%_UP-%TT%00457_R-%TT%0045701" RefId="%AID%_UP-%TT%00457" />
+              <ParameterRef Id="%AID%_UP-%TT%00458_R-%TT%0045801" RefId="%AID%_UP-%TT%00458" />
+              <ParameterRef Id="%AID%_UP-%TT%00459_R-%TT%0045901" RefId="%AID%_UP-%TT%00459" />
+              <ParameterRef Id="%AID%_UP-%TT%00460_R-%TT%0046001" RefId="%AID%_UP-%TT%00460" />
+              <ParameterRef Id="%AID%_UP-%TT%00461_R-%TT%0046101" RefId="%AID%_UP-%TT%00461" />
+              <ParameterRef Id="%AID%_UP-%TT%00462_R-%TT%0046201" RefId="%AID%_UP-%TT%00462" />
+              <ParameterRef Id="%AID%_UP-%TT%00463_R-%TT%0046301" RefId="%AID%_UP-%TT%00463" />
+              <ParameterRef Id="%AID%_UP-%TT%00464_R-%TT%0046401" RefId="%AID%_UP-%TT%00464" />
+              <ParameterRef Id="%AID%_UP-%TT%00465_R-%TT%0046501" RefId="%AID%_UP-%TT%00465" />
+              <ParameterRef Id="%AID%_UP-%TT%00466_R-%TT%0046601" RefId="%AID%_UP-%TT%00466" />
+              <ParameterRef Id="%AID%_UP-%TT%00467_R-%TT%0046701" RefId="%AID%_UP-%TT%00467" />
+              <ParameterRef Id="%AID%_UP-%TT%00468_R-%TT%0046801" RefId="%AID%_UP-%TT%00468" />
+              <ParameterRef Id="%AID%_UP-%TT%00469_R-%TT%0046901" RefId="%AID%_UP-%TT%00469" />
+              <ParameterRef Id="%AID%_UP-%TT%00470_R-%TT%0047001" RefId="%AID%_UP-%TT%00470" />
+              <ParameterRef Id="%AID%_UP-%TT%00471_R-%TT%0047101" RefId="%AID%_UP-%TT%00471" />
+              <ParameterRef Id="%AID%_UP-%TT%00472_R-%TT%0047201" RefId="%AID%_UP-%TT%00472" />
+              <ParameterRef Id="%AID%_UP-%TT%00473_R-%TT%0047301" RefId="%AID%_UP-%TT%00473" />
+              <ParameterRef Id="%AID%_UP-%TT%00474_R-%TT%0047401" RefId="%AID%_UP-%TT%00474" />
+              <ParameterRef Id="%AID%_UP-%TT%00475_R-%TT%0047501" RefId="%AID%_UP-%TT%00475" />
+              <ParameterRef Id="%AID%_UP-%TT%00476_R-%TT%0047601" RefId="%AID%_UP-%TT%00476" />
+              <ParameterRef Id="%AID%_UP-%TT%00477_R-%TT%0047701" RefId="%AID%_UP-%TT%00477" />
+              <ParameterRef Id="%AID%_UP-%TT%00478_R-%TT%0047801" RefId="%AID%_UP-%TT%00478" />
+              <ParameterRef Id="%AID%_UP-%TT%00479_R-%TT%0047901" RefId="%AID%_UP-%TT%00479" />
+              <ParameterRef Id="%AID%_UP-%TT%00480_R-%TT%0048001" RefId="%AID%_UP-%TT%00480" />
+              <ParameterRef Id="%AID%_UP-%TT%00481_R-%TT%0048101" RefId="%AID%_UP-%TT%00481" />
+              <ParameterRef Id="%AID%_UP-%TT%00482_R-%TT%0048201" RefId="%AID%_UP-%TT%00482" />
+              <ParameterRef Id="%AID%_UP-%TT%00483_R-%TT%0048301" RefId="%AID%_UP-%TT%00483" />
+              <ParameterRef Id="%AID%_UP-%TT%00484_R-%TT%0048401" RefId="%AID%_UP-%TT%00484" />
+              <ParameterRef Id="%AID%_UP-%TT%00485_R-%TT%0048501" RefId="%AID%_UP-%TT%00485" />
+              <ParameterRef Id="%AID%_UP-%TT%00486_R-%TT%0048601" RefId="%AID%_UP-%TT%00486" />
+              <ParameterRef Id="%AID%_UP-%TT%00487_R-%TT%0048701" RefId="%AID%_UP-%TT%00487" />
+              <ParameterRef Id="%AID%_UP-%TT%00488_R-%TT%0048801" RefId="%AID%_UP-%TT%00488" />
+              <ParameterRef Id="%AID%_UP-%TT%00489_R-%TT%0048901" RefId="%AID%_UP-%TT%00489" />
+              <ParameterRef Id="%AID%_UP-%TT%00490_R-%TT%0049001" RefId="%AID%_UP-%TT%00490" />
+              <ParameterRef Id="%AID%_UP-%TT%00491_R-%TT%0049101" RefId="%AID%_UP-%TT%00491" />
+              <ParameterRef Id="%AID%_UP-%TT%00492_R-%TT%0049201" RefId="%AID%_UP-%TT%00492" />
+              <ParameterRef Id="%AID%_UP-%TT%00493_R-%TT%0049301" RefId="%AID%_UP-%TT%00493" />
+              <ParameterRef Id="%AID%_UP-%TT%00494_R-%TT%0049401" RefId="%AID%_UP-%TT%00494" />
+              <ParameterRef Id="%AID%_UP-%TT%00495_R-%TT%0049501" RefId="%AID%_UP-%TT%00495" />
+              <ParameterRef Id="%AID%_UP-%TT%00496_R-%TT%0049601" RefId="%AID%_UP-%TT%00496" />
+              <ParameterRef Id="%AID%_UP-%TT%00497_R-%TT%0049701" RefId="%AID%_UP-%TT%00497" />
+              <ParameterRef Id="%AID%_UP-%TT%00498_R-%TT%0049801" RefId="%AID%_UP-%TT%00498" />
+              <ParameterRef Id="%AID%_UP-%TT%00499_R-%TT%0049901" RefId="%AID%_UP-%TT%00499" />
+              <ParameterRef Id="%AID%_UP-%TT%00500_R-%TT%0050001" RefId="%AID%_UP-%TT%00500" />
+              <ParameterRef Id="%AID%_UP-%TT%00501_R-%TT%0050101" RefId="%AID%_UP-%TT%00501" />
+              <ParameterRef Id="%AID%_UP-%TT%00502_R-%TT%0050201" RefId="%AID%_UP-%TT%00502" />
+              <ParameterRef Id="%AID%_UP-%TT%00503_R-%TT%0050301" RefId="%AID%_UP-%TT%00503" />
+              <ParameterRef Id="%AID%_UP-%TT%00504_R-%TT%0050401" RefId="%AID%_UP-%TT%00504" />
+              <ParameterRef Id="%AID%_UP-%TT%00505_R-%TT%0050501" RefId="%AID%_UP-%TT%00505" />
+              <ParameterRef Id="%AID%_UP-%TT%00506_R-%TT%0050601" RefId="%AID%_UP-%TT%00506" />
+              <ParameterRef Id="%AID%_UP-%TT%00507_R-%TT%0050701" RefId="%AID%_UP-%TT%00507" />
+              <ParameterRef Id="%AID%_UP-%TT%00508_R-%TT%0050801" RefId="%AID%_UP-%TT%00508" />
+              <ParameterRef Id="%AID%_UP-%TT%00509_R-%TT%0050901" RefId="%AID%_UP-%TT%00509" />
+              <ParameterRef Id="%AID%_UP-%TT%00510_R-%TT%0051001" RefId="%AID%_UP-%TT%00510" />
+              <ParameterRef Id="%AID%_UP-%TT%00511_R-%TT%0051101" RefId="%AID%_UP-%TT%00511" />
+              <ParameterRef Id="%AID%_UP-%TT%00512_R-%TT%0051201" RefId="%AID%_UP-%TT%00512" />
+              <ParameterRef Id="%AID%_UP-%TT%00513_R-%TT%0051301" RefId="%AID%_UP-%TT%00513" />
+              <ParameterRef Id="%AID%_UP-%TT%00514_R-%TT%0051401" RefId="%AID%_UP-%TT%00514" />
+              <ParameterRef Id="%AID%_UP-%TT%00515_R-%TT%0051501" RefId="%AID%_UP-%TT%00515" />
+              <ParameterRef Id="%AID%_UP-%TT%00516_R-%TT%0051601" RefId="%AID%_UP-%TT%00516" />
+              <ParameterRef Id="%AID%_UP-%TT%00517_R-%TT%0051701" RefId="%AID%_UP-%TT%00517" />
+              <ParameterRef Id="%AID%_UP-%TT%00518_R-%TT%0051801" RefId="%AID%_UP-%TT%00518" />
+              <ParameterRef Id="%AID%_UP-%TT%00519_R-%TT%0051901" RefId="%AID%_UP-%TT%00519" />
+              <ParameterRef Id="%AID%_UP-%TT%00520_R-%TT%0052001" RefId="%AID%_UP-%TT%00520" />
+              <ParameterRef Id="%AID%_UP-%TT%00521_R-%TT%0052101" RefId="%AID%_UP-%TT%00521" />
+              <ParameterRef Id="%AID%_UP-%TT%00522_R-%TT%0052201" RefId="%AID%_UP-%TT%00522" />
+              <ParameterRef Id="%AID%_UP-%TT%00523_R-%TT%0052301" RefId="%AID%_UP-%TT%00523" />
+              <ParameterRef Id="%AID%_UP-%TT%00524_R-%TT%0052401" RefId="%AID%_UP-%TT%00524" />
+              <ParameterRef Id="%AID%_UP-%TT%00525_R-%TT%0052501" RefId="%AID%_UP-%TT%00525" />
+              <ParameterRef Id="%AID%_UP-%TT%00526_R-%TT%0052601" RefId="%AID%_UP-%TT%00526" />
+              <ParameterRef Id="%AID%_UP-%TT%00527_R-%TT%0052701" RefId="%AID%_UP-%TT%00527" />
+              <ParameterRef Id="%AID%_UP-%TT%00528_R-%TT%0052801" RefId="%AID%_UP-%TT%00528" />
+              <ParameterRef Id="%AID%_UP-%TT%00529_R-%TT%0052901" RefId="%AID%_UP-%TT%00529" />
+              <ParameterRef Id="%AID%_UP-%TT%00530_R-%TT%0053001" RefId="%AID%_UP-%TT%00530" />
+              <ParameterRef Id="%AID%_UP-%TT%00531_R-%TT%0053101" RefId="%AID%_UP-%TT%00531" />
+              <ParameterRef Id="%AID%_UP-%TT%00532_R-%TT%0053201" RefId="%AID%_UP-%TT%00532" />
+              <ParameterRef Id="%AID%_UP-%TT%00533_R-%TT%0053301" RefId="%AID%_UP-%TT%00533" />
+              <ParameterRef Id="%AID%_UP-%TT%00534_R-%TT%0053401" RefId="%AID%_UP-%TT%00534" />
+              <ParameterRef Id="%AID%_UP-%TT%00535_R-%TT%0053501" RefId="%AID%_UP-%TT%00535" />
+              <ParameterRef Id="%AID%_UP-%TT%00536_R-%TT%0053601" RefId="%AID%_UP-%TT%00536" />
+              <ParameterRef Id="%AID%_UP-%TT%00537_R-%TT%0053701" RefId="%AID%_UP-%TT%00537" />
+              <ParameterRef Id="%AID%_UP-%TT%00538_R-%TT%0053801" RefId="%AID%_UP-%TT%00538" />
+              <ParameterRef Id="%AID%_UP-%TT%00539_R-%TT%0053901" RefId="%AID%_UP-%TT%00539" />
+              <ParameterRef Id="%AID%_UP-%TT%00540_R-%TT%0054001" RefId="%AID%_UP-%TT%00540" />
+              <ParameterRef Id="%AID%_UP-%TT%00541_R-%TT%0054101" RefId="%AID%_UP-%TT%00541" />
+              <ParameterRef Id="%AID%_UP-%TT%00542_R-%TT%0054201" RefId="%AID%_UP-%TT%00542" />
+              <ParameterRef Id="%AID%_UP-%TT%00543_R-%TT%0054301" RefId="%AID%_UP-%TT%00543" />
+              <ParameterRef Id="%AID%_UP-%TT%00544_R-%TT%0054401" RefId="%AID%_UP-%TT%00544" />
+              <ParameterRef Id="%AID%_UP-%TT%00545_R-%TT%0054501" RefId="%AID%_UP-%TT%00545" />
+              <ParameterRef Id="%AID%_UP-%TT%00546_R-%TT%0054601" RefId="%AID%_UP-%TT%00546" />
+              <ParameterRef Id="%AID%_UP-%TT%00547_R-%TT%0054701" RefId="%AID%_UP-%TT%00547" />
+              <ParameterRef Id="%AID%_UP-%TT%00548_R-%TT%0054801" RefId="%AID%_UP-%TT%00548" />
+              <ParameterRef Id="%AID%_UP-%TT%00549_R-%TT%0054901" RefId="%AID%_UP-%TT%00549" />
+              <ParameterRef Id="%AID%_UP-%TT%00550_R-%TT%0055001" RefId="%AID%_UP-%TT%00550" />
+              <ParameterRef Id="%AID%_UP-%TT%00551_R-%TT%0055101" RefId="%AID%_UP-%TT%00551" />
+              <ParameterRef Id="%AID%_UP-%TT%00552_R-%TT%0055201" RefId="%AID%_UP-%TT%00552" />
+              <ParameterRef Id="%AID%_UP-%TT%00553_R-%TT%0055301" RefId="%AID%_UP-%TT%00553" />
+              <ParameterRef Id="%AID%_UP-%TT%00554_R-%TT%0055401" RefId="%AID%_UP-%TT%00554" />
+              <ParameterRef Id="%AID%_UP-%TT%00555_R-%TT%0055501" RefId="%AID%_UP-%TT%00555" />
+              <ParameterRef Id="%AID%_UP-%TT%00556_R-%TT%0055601" RefId="%AID%_UP-%TT%00556" />
+              <ParameterRef Id="%AID%_UP-%TT%00557_R-%TT%0055701" RefId="%AID%_UP-%TT%00557" />
+              <ParameterRef Id="%AID%_UP-%TT%00558_R-%TT%0055801" RefId="%AID%_UP-%TT%00558" />
+              <ParameterRef Id="%AID%_UP-%TT%00559_R-%TT%0055901" RefId="%AID%_UP-%TT%00559" />
+              <ParameterRef Id="%AID%_UP-%TT%00560_R-%TT%0056001" RefId="%AID%_UP-%TT%00560" />
+              <ParameterRef Id="%AID%_UP-%TT%00561_R-%TT%0056101" RefId="%AID%_UP-%TT%00561" />
+              <ParameterRef Id="%AID%_UP-%TT%00562_R-%TT%0056201" RefId="%AID%_UP-%TT%00562" />
+              <ParameterRef Id="%AID%_UP-%TT%00563_R-%TT%0056301" RefId="%AID%_UP-%TT%00563" />
+              <ParameterRef Id="%AID%_UP-%TT%00564_R-%TT%0056401" RefId="%AID%_UP-%TT%00564" />
+              <ParameterRef Id="%AID%_UP-%TT%00565_R-%TT%0056501" RefId="%AID%_UP-%TT%00565" />
+              <ParameterRef Id="%AID%_UP-%TT%00566_R-%TT%0056601" RefId="%AID%_UP-%TT%00566" />
+              <ParameterRef Id="%AID%_UP-%TT%00567_R-%TT%0056701" RefId="%AID%_UP-%TT%00567" />
+              <ParameterRef Id="%AID%_UP-%TT%00568_R-%TT%0056801" RefId="%AID%_UP-%TT%00568" />
+              <ParameterRef Id="%AID%_UP-%TT%00569_R-%TT%0056901" RefId="%AID%_UP-%TT%00569" />
+              <ParameterRef Id="%AID%_UP-%TT%00570_R-%TT%0057001" RefId="%AID%_UP-%TT%00570" />
+              <ParameterRef Id="%AID%_UP-%TT%00571_R-%TT%0057101" RefId="%AID%_UP-%TT%00571" />
+              <ParameterRef Id="%AID%_UP-%TT%00572_R-%TT%0057201" RefId="%AID%_UP-%TT%00572" />
+              <ParameterRef Id="%AID%_UP-%TT%00573_R-%TT%0057301" RefId="%AID%_UP-%TT%00573" />
+              <ParameterRef Id="%AID%_UP-%TT%00574_R-%TT%0057401" RefId="%AID%_UP-%TT%00574" />
+              <ParameterRef Id="%AID%_UP-%TT%00575_R-%TT%0057501" RefId="%AID%_UP-%TT%00575" />
+              <ParameterRef Id="%AID%_UP-%TT%00576_R-%TT%0057601" RefId="%AID%_UP-%TT%00576" />
+              <ParameterRef Id="%AID%_UP-%TT%00577_R-%TT%0057701" RefId="%AID%_UP-%TT%00577" />
+              <ParameterRef Id="%AID%_UP-%TT%00578_R-%TT%0057801" RefId="%AID%_UP-%TT%00578" />
+              <ParameterRef Id="%AID%_UP-%TT%00579_R-%TT%0057901" RefId="%AID%_UP-%TT%00579" />
+              <ParameterRef Id="%AID%_UP-%TT%00580_R-%TT%0058001" RefId="%AID%_UP-%TT%00580" />
+              <ParameterRef Id="%AID%_UP-%TT%00581_R-%TT%0058101" RefId="%AID%_UP-%TT%00581" />
+              <ParameterRef Id="%AID%_UP-%TT%00582_R-%TT%0058201" RefId="%AID%_UP-%TT%00582" />
+              <ParameterRef Id="%AID%_UP-%TT%00583_R-%TT%0058301" RefId="%AID%_UP-%TT%00583" />
+              <ParameterRef Id="%AID%_UP-%TT%00584_R-%TT%0058401" RefId="%AID%_UP-%TT%00584" />
+              <ParameterRef Id="%AID%_UP-%TT%00585_R-%TT%0058501" RefId="%AID%_UP-%TT%00585" />
+              <ParameterRef Id="%AID%_UP-%TT%00586_R-%TT%0058601" RefId="%AID%_UP-%TT%00586" />
+              <ParameterRef Id="%AID%_UP-%TT%00587_R-%TT%0058701" RefId="%AID%_UP-%TT%00587" />
+              <ParameterRef Id="%AID%_UP-%TT%00588_R-%TT%0058801" RefId="%AID%_UP-%TT%00588" />
+              <ParameterRef Id="%AID%_UP-%TT%00589_R-%TT%0058901" RefId="%AID%_UP-%TT%00589" />
+              <ParameterRef Id="%AID%_UP-%TT%00590_R-%TT%0059001" RefId="%AID%_UP-%TT%00590" />
+              <ParameterRef Id="%AID%_UP-%TT%00591_R-%TT%0059101" RefId="%AID%_UP-%TT%00591" />
+              <ParameterRef Id="%AID%_UP-%TT%00592_R-%TT%0059201" RefId="%AID%_UP-%TT%00592" />
+              <ParameterRef Id="%AID%_UP-%TT%00593_R-%TT%0059301" RefId="%AID%_UP-%TT%00593" />
+              <ParameterRef Id="%AID%_UP-%TT%00594_R-%TT%0059401" RefId="%AID%_UP-%TT%00594" />
+              <ParameterRef Id="%AID%_UP-%TT%00595_R-%TT%0059501" RefId="%AID%_UP-%TT%00595" />
+              <ParameterRef Id="%AID%_UP-%TT%00596_R-%TT%0059601" RefId="%AID%_UP-%TT%00596" />
+              <ParameterRef Id="%AID%_UP-%TT%00597_R-%TT%0059701" RefId="%AID%_UP-%TT%00597" />
+              <ParameterRef Id="%AID%_UP-%TT%00598_R-%TT%0059801" RefId="%AID%_UP-%TT%00598" />
+              <ParameterRef Id="%AID%_UP-%TT%00599_R-%TT%0059901" RefId="%AID%_UP-%TT%00599" />
+              <ParameterRef Id="%AID%_UP-%TT%00600_R-%TT%0060001" RefId="%AID%_UP-%TT%00600" />
+              <ParameterRef Id="%AID%_UP-%TT%00601_R-%TT%0060101" RefId="%AID%_UP-%TT%00601" />
+              <ParameterRef Id="%AID%_UP-%TT%00602_R-%TT%0060201" RefId="%AID%_UP-%TT%00602" />
+              <ParameterRef Id="%AID%_UP-%TT%00603_R-%TT%0060301" RefId="%AID%_UP-%TT%00603" />
+              <ParameterRef Id="%AID%_UP-%TT%00604_R-%TT%0060401" RefId="%AID%_UP-%TT%00604" />
+              <ParameterRef Id="%AID%_UP-%TT%00605_R-%TT%0060501" RefId="%AID%_UP-%TT%00605" />
+              <ParameterRef Id="%AID%_UP-%TT%00606_R-%TT%0060601" RefId="%AID%_UP-%TT%00606" />
+              <ParameterRef Id="%AID%_UP-%TT%00607_R-%TT%0060701" RefId="%AID%_UP-%TT%00607" />
+              <ParameterRef Id="%AID%_UP-%TT%00608_R-%TT%0060801" RefId="%AID%_UP-%TT%00608" />
+              <ParameterRef Id="%AID%_UP-%TT%00609_R-%TT%0060901" RefId="%AID%_UP-%TT%00609" />
+              <ParameterRef Id="%AID%_UP-%TT%00610_R-%TT%0061001" RefId="%AID%_UP-%TT%00610" />
+              <ParameterRef Id="%AID%_UP-%TT%00611_R-%TT%0061101" RefId="%AID%_UP-%TT%00611" />
+              <ParameterRef Id="%AID%_UP-%TT%00612_R-%TT%0061201" RefId="%AID%_UP-%TT%00612" />
+              <ParameterRef Id="%AID%_UP-%TT%00613_R-%TT%0061301" RefId="%AID%_UP-%TT%00613" />
+              <ParameterRef Id="%AID%_UP-%TT%00614_R-%TT%0061401" RefId="%AID%_UP-%TT%00614" />
+              <ParameterRef Id="%AID%_UP-%TT%00615_R-%TT%0061501" RefId="%AID%_UP-%TT%00615" />
+              <ParameterRef Id="%AID%_UP-%TT%00616_R-%TT%0061601" RefId="%AID%_UP-%TT%00616" />
+              <ParameterRef Id="%AID%_UP-%TT%00617_R-%TT%0061701" RefId="%AID%_UP-%TT%00617" />
+              <ParameterRef Id="%AID%_UP-%TT%00618_R-%TT%0061801" RefId="%AID%_UP-%TT%00618" />
+              <ParameterRef Id="%AID%_UP-%TT%00619_R-%TT%0061901" RefId="%AID%_UP-%TT%00619" />
+              <ParameterRef Id="%AID%_UP-%TT%00620_R-%TT%0062001" RefId="%AID%_UP-%TT%00620" />
+              <ParameterRef Id="%AID%_UP-%TT%00621_R-%TT%0062101" RefId="%AID%_UP-%TT%00621" />
+              <ParameterRef Id="%AID%_UP-%TT%00622_R-%TT%0062201" RefId="%AID%_UP-%TT%00622" />
+              <ParameterRef Id="%AID%_UP-%TT%00623_R-%TT%0062301" RefId="%AID%_UP-%TT%00623" />
+              <ParameterRef Id="%AID%_UP-%TT%00624_R-%TT%0062401" RefId="%AID%_UP-%TT%00624" />
+              <ParameterRef Id="%AID%_UP-%TT%00625_R-%TT%0062501" RefId="%AID%_UP-%TT%00625" />
+              <ParameterRef Id="%AID%_UP-%TT%00626_R-%TT%0062601" RefId="%AID%_UP-%TT%00626" />
+              <ParameterRef Id="%AID%_UP-%TT%00627_R-%TT%0062701" RefId="%AID%_UP-%TT%00627" />
+              <ParameterRef Id="%AID%_UP-%TT%00628_R-%TT%0062801" RefId="%AID%_UP-%TT%00628" />
+              <ParameterRef Id="%AID%_UP-%TT%00629_R-%TT%0062901" RefId="%AID%_UP-%TT%00629" />
+              <ParameterRef Id="%AID%_UP-%TT%00630_R-%TT%0063001" RefId="%AID%_UP-%TT%00630" />
+              <ParameterRef Id="%AID%_UP-%TT%00631_R-%TT%0063101" RefId="%AID%_UP-%TT%00631" />
+              <ParameterRef Id="%AID%_UP-%TT%00632_R-%TT%0063201" RefId="%AID%_UP-%TT%00632" />
+              <ParameterRef Id="%AID%_UP-%TT%00633_R-%TT%0063301" RefId="%AID%_UP-%TT%00633" />
+              <ParameterRef Id="%AID%_UP-%TT%00634_R-%TT%0063401" RefId="%AID%_UP-%TT%00634" />
+              <ParameterRef Id="%AID%_UP-%TT%00635_R-%TT%0063501" RefId="%AID%_UP-%TT%00635" />
+              <ParameterRef Id="%AID%_UP-%TT%00636_R-%TT%0063601" RefId="%AID%_UP-%TT%00636" />
+              <ParameterRef Id="%AID%_UP-%TT%00637_R-%TT%0063701" RefId="%AID%_UP-%TT%00637" />
+              <ParameterRef Id="%AID%_UP-%TT%00638_R-%TT%0063801" RefId="%AID%_UP-%TT%00638" />
+              <ParameterRef Id="%AID%_UP-%TT%00639_R-%TT%0063901" RefId="%AID%_UP-%TT%00639" />
+              <ParameterRef Id="%AID%_UP-%TT%00640_R-%TT%0064001" RefId="%AID%_UP-%TT%00640" />
+              <ParameterRef Id="%AID%_UP-%TT%00641_R-%TT%0064101" RefId="%AID%_UP-%TT%00641" />
+              <ParameterRef Id="%AID%_UP-%TT%00642_R-%TT%0064201" RefId="%AID%_UP-%TT%00642" />
+              <ParameterRef Id="%AID%_UP-%TT%00643_R-%TT%0064301" RefId="%AID%_UP-%TT%00643" />
+              <ParameterRef Id="%AID%_UP-%TT%00644_R-%TT%0064401" RefId="%AID%_UP-%TT%00644" />
+              <ParameterRef Id="%AID%_UP-%TT%00645_R-%TT%0064501" RefId="%AID%_UP-%TT%00645" />
+              <ParameterRef Id="%AID%_UP-%TT%00646_R-%TT%0064601" RefId="%AID%_UP-%TT%00646" />
+              <ParameterRef Id="%AID%_UP-%TT%00647_R-%TT%0064701" RefId="%AID%_UP-%TT%00647" />
+              <ParameterRef Id="%AID%_UP-%TT%00648_R-%TT%0064801" RefId="%AID%_UP-%TT%00648" />
+              <ParameterRef Id="%AID%_UP-%TT%00649_R-%TT%0064901" RefId="%AID%_UP-%TT%00649" />
+              <ParameterRef Id="%AID%_UP-%TT%00650_R-%TT%0065001" RefId="%AID%_UP-%TT%00650" />
+              <ParameterRef Id="%AID%_UP-%TT%00651_R-%TT%0065101" RefId="%AID%_UP-%TT%00651" />
+              <ParameterRef Id="%AID%_UP-%TT%00652_R-%TT%0065201" RefId="%AID%_UP-%TT%00652" />
+              <ParameterRef Id="%AID%_UP-%TT%00653_R-%TT%0065301" RefId="%AID%_UP-%TT%00653" />
+              <ParameterRef Id="%AID%_UP-%TT%00654_R-%TT%0065401" RefId="%AID%_UP-%TT%00654" />
+              <ParameterRef Id="%AID%_UP-%TT%00655_R-%TT%0065501" RefId="%AID%_UP-%TT%00655" />
+              <ParameterRef Id="%AID%_UP-%TT%00656_R-%TT%0065601" RefId="%AID%_UP-%TT%00656" />
+              <ParameterRef Id="%AID%_UP-%TT%00657_R-%TT%0065701" RefId="%AID%_UP-%TT%00657" />
+              <ParameterRef Id="%AID%_UP-%TT%00658_R-%TT%0065801" RefId="%AID%_UP-%TT%00658" />
+              <ParameterRef Id="%AID%_UP-%TT%00659_R-%TT%0065901" RefId="%AID%_UP-%TT%00659" />
+              <ParameterRef Id="%AID%_UP-%TT%00660_R-%TT%0066001" RefId="%AID%_UP-%TT%00660" />
+              <ParameterRef Id="%AID%_UP-%TT%00661_R-%TT%0066101" RefId="%AID%_UP-%TT%00661" />
+              <ParameterRef Id="%AID%_UP-%TT%00662_R-%TT%0066201" RefId="%AID%_UP-%TT%00662" />
+              <ParameterRef Id="%AID%_UP-%TT%00663_R-%TT%0066301" RefId="%AID%_UP-%TT%00663" />
+              <ParameterRef Id="%AID%_UP-%TT%00664_R-%TT%0066401" RefId="%AID%_UP-%TT%00664" />
+              <ParameterRef Id="%AID%_UP-%TT%00665_R-%TT%0066501" RefId="%AID%_UP-%TT%00665" />
+              <ParameterRef Id="%AID%_UP-%TT%00666_R-%TT%0066601" RefId="%AID%_UP-%TT%00666" />
+              <ParameterRef Id="%AID%_UP-%TT%00667_R-%TT%0066701" RefId="%AID%_UP-%TT%00667" />
+              <ParameterRef Id="%AID%_UP-%TT%00668_R-%TT%0066801" RefId="%AID%_UP-%TT%00668" />
+              <ParameterRef Id="%AID%_UP-%TT%00669_R-%TT%0066901" RefId="%AID%_UP-%TT%00669" />
+              <ParameterRef Id="%AID%_UP-%TT%00670_R-%TT%0067001" RefId="%AID%_UP-%TT%00670" />
+              <ParameterRef Id="%AID%_UP-%TT%00671_R-%TT%0067101" RefId="%AID%_UP-%TT%00671" />
+              <ParameterRef Id="%AID%_UP-%TT%00672_R-%TT%0067201" RefId="%AID%_UP-%TT%00672" />
+              <ParameterRef Id="%AID%_UP-%TT%00673_R-%TT%0067301" RefId="%AID%_UP-%TT%00673" />
+              <ParameterRef Id="%AID%_UP-%TT%00674_R-%TT%0067401" RefId="%AID%_UP-%TT%00674" />
+              <ParameterRef Id="%AID%_UP-%TT%00675_R-%TT%0067501" RefId="%AID%_UP-%TT%00675" />
+              <ParameterRef Id="%AID%_UP-%TT%00676_R-%TT%0067601" RefId="%AID%_UP-%TT%00676" />
+              <ParameterRef Id="%AID%_UP-%TT%00677_R-%TT%0067701" RefId="%AID%_UP-%TT%00677" />
+              <ParameterRef Id="%AID%_UP-%TT%00678_R-%TT%0067801" RefId="%AID%_UP-%TT%00678" />
+              <ParameterRef Id="%AID%_UP-%TT%00679_R-%TT%0067901" RefId="%AID%_UP-%TT%00679" />
+              <ParameterRef Id="%AID%_UP-%TT%00680_R-%TT%0068001" RefId="%AID%_UP-%TT%00680" />
+              <ParameterRef Id="%AID%_UP-%TT%00681_R-%TT%0068101" RefId="%AID%_UP-%TT%00681" />
+              <ParameterRef Id="%AID%_UP-%TT%00682_R-%TT%0068201" RefId="%AID%_UP-%TT%00682" />
+              <ParameterRef Id="%AID%_UP-%TT%00683_R-%TT%0068301" RefId="%AID%_UP-%TT%00683" />
+              <ParameterRef Id="%AID%_UP-%TT%00684_R-%TT%0068401" RefId="%AID%_UP-%TT%00684" />
+              <ParameterRef Id="%AID%_UP-%TT%00685_R-%TT%0068501" RefId="%AID%_UP-%TT%00685" />
+              <ParameterRef Id="%AID%_UP-%TT%00686_R-%TT%0068601" RefId="%AID%_UP-%TT%00686" />
+              <ParameterRef Id="%AID%_UP-%TT%00687_R-%TT%0068701" RefId="%AID%_UP-%TT%00687" />
+              <ParameterRef Id="%AID%_UP-%TT%00688_R-%TT%0068801" RefId="%AID%_UP-%TT%00688" />
+              <ParameterRef Id="%AID%_UP-%TT%00689_R-%TT%0068901" RefId="%AID%_UP-%TT%00689" />
+              <ParameterRef Id="%AID%_UP-%TT%00690_R-%TT%0069001" RefId="%AID%_UP-%TT%00690" />
+              <ParameterRef Id="%AID%_UP-%TT%00691_R-%TT%0069101" RefId="%AID%_UP-%TT%00691" />
+              <ParameterRef Id="%AID%_UP-%TT%00692_R-%TT%0069201" RefId="%AID%_UP-%TT%00692" />
+              <ParameterRef Id="%AID%_UP-%TT%00693_R-%TT%0069301" RefId="%AID%_UP-%TT%00693" />
+              <ParameterRef Id="%AID%_UP-%TT%00694_R-%TT%0069401" RefId="%AID%_UP-%TT%00694" />
+              <ParameterRef Id="%AID%_UP-%TT%00695_R-%TT%0069501" RefId="%AID%_UP-%TT%00695" />
+              <ParameterRef Id="%AID%_UP-%TT%00696_R-%TT%0069601" RefId="%AID%_UP-%TT%00696" />
+              <ParameterRef Id="%AID%_UP-%TT%00697_R-%TT%0069701" RefId="%AID%_UP-%TT%00697" />
+              <ParameterRef Id="%AID%_UP-%TT%00698_R-%TT%0069801" RefId="%AID%_UP-%TT%00698" />
+              <ParameterRef Id="%AID%_UP-%TT%00699_R-%TT%0069901" RefId="%AID%_UP-%TT%00699" />
+              <ParameterRef Id="%AID%_UP-%TT%00700_R-%TT%0070001" RefId="%AID%_UP-%TT%00700" />
+              <ParameterRef Id="%AID%_UP-%TT%00701_R-%TT%0070101" RefId="%AID%_UP-%TT%00701" />
+              <ParameterRef Id="%AID%_UP-%TT%00702_R-%TT%0070201" RefId="%AID%_UP-%TT%00702" />
+              <ParameterRef Id="%AID%_UP-%TT%00703_R-%TT%0070301" RefId="%AID%_UP-%TT%00703" />
+              <ParameterRef Id="%AID%_UP-%TT%00704_R-%TT%0070401" RefId="%AID%_UP-%TT%00704" />
+              <ParameterRef Id="%AID%_UP-%TT%00705_R-%TT%0070501" RefId="%AID%_UP-%TT%00705" />
+              <ParameterRef Id="%AID%_UP-%TT%00706_R-%TT%0070601" RefId="%AID%_UP-%TT%00706" />
+              <ParameterRef Id="%AID%_UP-%TT%00707_R-%TT%0070701" RefId="%AID%_UP-%TT%00707" />
+              <ParameterRef Id="%AID%_UP-%TT%00708_R-%TT%0070801" RefId="%AID%_UP-%TT%00708" />
+              <ParameterRef Id="%AID%_UP-%TT%00709_R-%TT%0070901" RefId="%AID%_UP-%TT%00709" />
+              <ParameterRef Id="%AID%_UP-%TT%00710_R-%TT%0071001" RefId="%AID%_UP-%TT%00710" />
+              <ParameterRef Id="%AID%_UP-%TT%00711_R-%TT%0071101" RefId="%AID%_UP-%TT%00711" />
+              <ParameterRef Id="%AID%_UP-%TT%00712_R-%TT%0071201" RefId="%AID%_UP-%TT%00712" />
+              <ParameterRef Id="%AID%_UP-%TT%00713_R-%TT%0071301" RefId="%AID%_UP-%TT%00713" />
+              <ParameterRef Id="%AID%_UP-%TT%00714_R-%TT%0071401" RefId="%AID%_UP-%TT%00714" />
+              <ParameterRef Id="%AID%_UP-%TT%00715_R-%TT%0071501" RefId="%AID%_UP-%TT%00715" />
+              <ParameterRef Id="%AID%_UP-%TT%00716_R-%TT%0071601" RefId="%AID%_UP-%TT%00716" />
+              <ParameterRef Id="%AID%_UP-%TT%00717_R-%TT%0071701" RefId="%AID%_UP-%TT%00717" />
+              <ParameterRef Id="%AID%_UP-%TT%00718_R-%TT%0071801" RefId="%AID%_UP-%TT%00718" />
+              <ParameterRef Id="%AID%_UP-%TT%00719_R-%TT%0071901" RefId="%AID%_UP-%TT%00719" />
+              <ParameterRef Id="%AID%_UP-%TT%00720_R-%TT%0072001" RefId="%AID%_UP-%TT%00720" />
+              <ParameterRef Id="%AID%_UP-%TT%00721_R-%TT%0072101" RefId="%AID%_UP-%TT%00721" />
+              <ParameterRef Id="%AID%_UP-%TT%00722_R-%TT%0072201" RefId="%AID%_UP-%TT%00722" />
+              <ParameterRef Id="%AID%_UP-%TT%00723_R-%TT%0072301" RefId="%AID%_UP-%TT%00723" />
+              <ParameterRef Id="%AID%_UP-%TT%00724_R-%TT%0072401" RefId="%AID%_UP-%TT%00724" />
+              <ParameterRef Id="%AID%_UP-%TT%00725_R-%TT%0072501" RefId="%AID%_UP-%TT%00725" />
+              <ParameterRef Id="%AID%_UP-%TT%00726_R-%TT%0072601" RefId="%AID%_UP-%TT%00726" />
+              <ParameterRef Id="%AID%_UP-%TT%00727_R-%TT%0072701" RefId="%AID%_UP-%TT%00727" />
+              <ParameterRef Id="%AID%_UP-%TT%00728_R-%TT%0072801" RefId="%AID%_UP-%TT%00728" />
+              <ParameterRef Id="%AID%_UP-%TT%00729_R-%TT%0072901" RefId="%AID%_UP-%TT%00729" />
+              <ParameterRef Id="%AID%_UP-%TT%00730_R-%TT%0073001" RefId="%AID%_UP-%TT%00730" />
+              <ParameterRef Id="%AID%_UP-%TT%00731_R-%TT%0073101" RefId="%AID%_UP-%TT%00731" />
+              <ParameterRef Id="%AID%_UP-%TT%00732_R-%TT%0073201" RefId="%AID%_UP-%TT%00732" />
+              <ParameterRef Id="%AID%_UP-%TT%00733_R-%TT%0073301" RefId="%AID%_UP-%TT%00733" />
+              <ParameterRef Id="%AID%_UP-%TT%00734_R-%TT%0073401" RefId="%AID%_UP-%TT%00734" />
+              <ParameterRef Id="%AID%_UP-%TT%00735_R-%TT%0073501" RefId="%AID%_UP-%TT%00735" />
+              <ParameterRef Id="%AID%_UP-%TT%00736_R-%TT%0073601" RefId="%AID%_UP-%TT%00736" />
+              <ParameterRef Id="%AID%_UP-%TT%00737_R-%TT%0073701" RefId="%AID%_UP-%TT%00737" />
+              <ParameterRef Id="%AID%_UP-%TT%00738_R-%TT%0073801" RefId="%AID%_UP-%TT%00738" />
+              <ParameterRef Id="%AID%_UP-%TT%00739_R-%TT%0073901" RefId="%AID%_UP-%TT%00739" />
+              <ParameterRef Id="%AID%_UP-%TT%00740_R-%TT%0074001" RefId="%AID%_UP-%TT%00740" />
+              <ParameterRef Id="%AID%_UP-%TT%00741_R-%TT%0074101" RefId="%AID%_UP-%TT%00741" />
+              <ParameterRef Id="%AID%_UP-%TT%00742_R-%TT%0074201" RefId="%AID%_UP-%TT%00742" />
+              <ParameterRef Id="%AID%_UP-%TT%00743_R-%TT%0074301" RefId="%AID%_UP-%TT%00743" />
+              <ParameterRef Id="%AID%_UP-%TT%00744_R-%TT%0074401" RefId="%AID%_UP-%TT%00744" />
+              <ParameterRef Id="%AID%_UP-%TT%00745_R-%TT%0074501" RefId="%AID%_UP-%TT%00745" />
+              <ParameterRef Id="%AID%_UP-%TT%00746_R-%TT%0074601" RefId="%AID%_UP-%TT%00746" />
+              <ParameterRef Id="%AID%_UP-%TT%00747_R-%TT%0074701" RefId="%AID%_UP-%TT%00747" />
+            </ParameterRefs>
+          </Static>
+          <Dynamic>
+            <Channel>
+              <ParameterBlock Id="%AID%_PB-nnn" Name="SPVAssistant" Text="Assistent" Icon="loupe" HelpContext="SPV-Assistent">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Assistent" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Dieser Assistent ermittelt Transport, Seriennummer und Registerbelegung eines unbekannten Geräts und überträgt das Ergebnis in ein Gerät. Wird ein passendes Profil angeboten, ist er nicht nötig." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Er arbeitet nur, wenn das Gerät bereits mit der ETS programmiert wurde. Andernfalls erst programmieren, dann eine andere Seite wählen und hierher zurückkehren." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Solarman-Logger beantwortet nur einen Client zuverlässig. Home Assistant oder andere Abfragen für das Testgerät währenddessen abschalten." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Nichts davon verändert ein Gerät. Erst Schritt 4 ändert die Konfiguration - und auch die wird erst beim nächsten Download wirksam." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="1. Gerät" UIHint="Headline" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00001_R-%TT%0000101" HelpContext="SPV-Assistent" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00002_R-%TT%0000201" HelpContext="SPV-Assistent" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="SPV-Assistent" />
+                <Button Id="%AID%_B-%TT%00001" Text="Gerät analysieren" EventHandler="spvBtnAnalyse" EventHandlerOnline="ConnectionOriented" EventHandlerParameters="{ }" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="2. Erkannt" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="{{0:Noch nichts analysiert.}}" TextParameterRefId="%AID%_UP-%TT%00007_R-%TT%0000701" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="3. Register lesen" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Klick genügt: Der Suchlauf durchsucht selbstständig alle Registerbereiche, die von den bekannten Geräten belegt werden, und trägt jeden gefundenen Wert ein. Wo diese Bereiche liegen, muss man nicht wissen." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Er beginnt bei den niedrigen Adressen. Die gefundenen Register erscheinen laufend in der Tabelle — sobald deine dabei sind, kannst du abbrechen. Bei manchen Loggern dauert der vollständige Lauf einige Minuten, weil leere Bereiche in ein Zeitlimit laufen." UIHint="Information" />
+                <Button Id="%AID%_B-%TT%00005" Text="Belegte Register suchen" EventHandler="spvBtnScan" EventHandlerOnline="ConnectionOriented" EventHandlerParameters="{ }" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Nur bei Bedarf: einen bestimmten Bereich gezielt lesen, etwa um ein einzelnes Register nachzutragen." UIHint="Information" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00004_R-%TT%0000401" HelpContext="SPV-Assistent" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00005_R-%TT%0000501" HelpContext="SPV-Assistent" />
+                <Button Id="%AID%_B-%TT%00002" Text="Bereich lesen" EventHandler="spvBtnRead" EventHandlerOnline="ConnectionOriented" EventHandlerParameters="{ }" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="4. Bedeutung zuordnen" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Welches Register welcher Messwert ist, sagt kein Rohwert von selbst — das ist der eine Schritt, der Handarbeit bleibt. Trage die Bedeutung zu jeder Zeile ein, die auf den Bus soll." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Nur wo der Wertebereich eindeutig ist (Netzspannung, Netzfrequenz), schlägt der Suchlauf etwas vor. Solche Vorschläge sind geraten und zu prüfen." UIHint="Information" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Der abgelesene Wert ist freiwillig, aber der einzige Weg zu einer sicheren Umrechnung: ohne ihn kann 113 sowohl 11,3 A als auch 1,13 A bedeuten. Er muss aus demselben Moment stammen wie der Rohwert." UIHint="Information" />
+                <Button Id="%AID%_B-%TT%00003" Text="Skalierung ermitteln" EventHandler="spvBtnDeriveScale" EventHandlerParameters="{ }" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="{{0:}}" TextParameterRefId="%AID%_UP-%TT%00007_R-%TT%0000701" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Register 1 bis 16" UIHint="Headline" />
+                <ParameterBlock Id="%AID%_PB-%TT%ASTBL0" Name="AsstTbl0" Text="#" Inline="true" Layout="Table" HelpContext="SPV-Assistent">
+                  <Rows>
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-1" Name="R1" Text="1" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-2" Name="R2" Text="2" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-3" Name="R3" Text="3" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-4" Name="R4" Text="4" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-5" Name="R5" Text="5" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-6" Name="R6" Text="6" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-7" Name="R7" Text="7" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-8" Name="R8" Text="8" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-9" Name="R9" Text="9" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-10" Name="R10" Text="10" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-11" Name="R11" Text="11" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-12" Name="R12" Text="12" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-13" Name="R13" Text="13" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-14" Name="R14" Text="14" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-15" Name="R15" Text="15" />
+                    <Row Id="%AID%_PB-%TT%ASTBL0_R-16" Name="R16" Text="16" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-1" Name="C1" Text="Register" Width="14%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-2" Name="C2" Text="Rohwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-3" Name="C3" Text="Bedeutung" Width="22%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-4" Name="C4" Text="Sollwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-5" Name="C5" Text="Datentyp" Width="21%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-6" Name="C6" Text="Skal." Width="9%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL0_C-7" Name="C7" Text="Offset" Width="10%" />
+                  </Columns>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00300_R-%TT%0030001" Cell="1,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00301_R-%TT%0030101" Cell="1,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00302_R-%TT%0030201" Cell="1,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00306_R-%TT%0030601" Cell="1,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00303_R-%TT%0030301" Cell="1,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00304_R-%TT%0030401" Cell="1,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00305_R-%TT%0030501" Cell="1,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00307_R-%TT%0030701" Cell="2,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00308_R-%TT%0030801" Cell="2,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00309_R-%TT%0030901" Cell="2,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00313_R-%TT%0031301" Cell="2,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00310_R-%TT%0031001" Cell="2,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00311_R-%TT%0031101" Cell="2,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00312_R-%TT%0031201" Cell="2,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00314_R-%TT%0031401" Cell="3,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00315_R-%TT%0031501" Cell="3,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00316_R-%TT%0031601" Cell="3,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00320_R-%TT%0032001" Cell="3,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00317_R-%TT%0031701" Cell="3,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00318_R-%TT%0031801" Cell="3,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00319_R-%TT%0031901" Cell="3,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00321_R-%TT%0032101" Cell="4,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00322_R-%TT%0032201" Cell="4,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00323_R-%TT%0032301" Cell="4,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00327_R-%TT%0032701" Cell="4,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00324_R-%TT%0032401" Cell="4,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00325_R-%TT%0032501" Cell="4,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00326_R-%TT%0032601" Cell="4,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00328_R-%TT%0032801" Cell="5,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00329_R-%TT%0032901" Cell="5,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00330_R-%TT%0033001" Cell="5,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00334_R-%TT%0033401" Cell="5,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00331_R-%TT%0033101" Cell="5,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00332_R-%TT%0033201" Cell="5,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00333_R-%TT%0033301" Cell="5,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00335_R-%TT%0033501" Cell="6,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00336_R-%TT%0033601" Cell="6,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00337_R-%TT%0033701" Cell="6,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00341_R-%TT%0034101" Cell="6,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00338_R-%TT%0033801" Cell="6,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00339_R-%TT%0033901" Cell="6,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00340_R-%TT%0034001" Cell="6,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00342_R-%TT%0034201" Cell="7,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00343_R-%TT%0034301" Cell="7,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00344_R-%TT%0034401" Cell="7,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00348_R-%TT%0034801" Cell="7,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00345_R-%TT%0034501" Cell="7,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00346_R-%TT%0034601" Cell="7,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00347_R-%TT%0034701" Cell="7,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00349_R-%TT%0034901" Cell="8,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00350_R-%TT%0035001" Cell="8,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00351_R-%TT%0035101" Cell="8,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00355_R-%TT%0035501" Cell="8,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00352_R-%TT%0035201" Cell="8,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00353_R-%TT%0035301" Cell="8,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00354_R-%TT%0035401" Cell="8,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00356_R-%TT%0035601" Cell="9,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00357_R-%TT%0035701" Cell="9,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00358_R-%TT%0035801" Cell="9,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00362_R-%TT%0036201" Cell="9,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00359_R-%TT%0035901" Cell="9,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00360_R-%TT%0036001" Cell="9,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00361_R-%TT%0036101" Cell="9,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00363_R-%TT%0036301" Cell="10,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00364_R-%TT%0036401" Cell="10,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00365_R-%TT%0036501" Cell="10,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00369_R-%TT%0036901" Cell="10,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00366_R-%TT%0036601" Cell="10,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00367_R-%TT%0036701" Cell="10,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00368_R-%TT%0036801" Cell="10,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00370_R-%TT%0037001" Cell="11,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00371_R-%TT%0037101" Cell="11,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00372_R-%TT%0037201" Cell="11,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00376_R-%TT%0037601" Cell="11,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00373_R-%TT%0037301" Cell="11,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00374_R-%TT%0037401" Cell="11,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00375_R-%TT%0037501" Cell="11,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00377_R-%TT%0037701" Cell="12,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00378_R-%TT%0037801" Cell="12,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00379_R-%TT%0037901" Cell="12,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00383_R-%TT%0038301" Cell="12,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00380_R-%TT%0038001" Cell="12,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00381_R-%TT%0038101" Cell="12,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00382_R-%TT%0038201" Cell="12,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00384_R-%TT%0038401" Cell="13,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00385_R-%TT%0038501" Cell="13,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00386_R-%TT%0038601" Cell="13,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00390_R-%TT%0039001" Cell="13,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00387_R-%TT%0038701" Cell="13,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00388_R-%TT%0038801" Cell="13,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00389_R-%TT%0038901" Cell="13,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00391_R-%TT%0039101" Cell="14,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00392_R-%TT%0039201" Cell="14,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00393_R-%TT%0039301" Cell="14,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00397_R-%TT%0039701" Cell="14,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00394_R-%TT%0039401" Cell="14,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00395_R-%TT%0039501" Cell="14,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00396_R-%TT%0039601" Cell="14,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00398_R-%TT%0039801" Cell="15,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00399_R-%TT%0039901" Cell="15,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00400_R-%TT%0040001" Cell="15,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00404_R-%TT%0040401" Cell="15,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00401_R-%TT%0040101" Cell="15,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00402_R-%TT%0040201" Cell="15,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00403_R-%TT%0040301" Cell="15,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00405_R-%TT%0040501" Cell="16,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00406_R-%TT%0040601" Cell="16,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00407_R-%TT%0040701" Cell="16,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00411_R-%TT%0041101" Cell="16,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00408_R-%TT%0040801" Cell="16,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00409_R-%TT%0040901" Cell="16,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00410_R-%TT%0041001" Cell="16,7" />
+                </ParameterBlock>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Register 17 bis 32" UIHint="Headline" />
+                <ParameterBlock Id="%AID%_PB-%TT%ASTBL1" Name="AsstTbl1" Text="#" Inline="true" Layout="Table" HelpContext="SPV-Assistent">
+                  <Rows>
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-1" Name="R1" Text="17" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-2" Name="R2" Text="18" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-3" Name="R3" Text="19" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-4" Name="R4" Text="20" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-5" Name="R5" Text="21" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-6" Name="R6" Text="22" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-7" Name="R7" Text="23" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-8" Name="R8" Text="24" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-9" Name="R9" Text="25" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-10" Name="R10" Text="26" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-11" Name="R11" Text="27" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-12" Name="R12" Text="28" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-13" Name="R13" Text="29" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-14" Name="R14" Text="30" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-15" Name="R15" Text="31" />
+                    <Row Id="%AID%_PB-%TT%ASTBL1_R-16" Name="R16" Text="32" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-1" Name="C1" Text="Register" Width="14%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-2" Name="C2" Text="Rohwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-3" Name="C3" Text="Bedeutung" Width="22%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-4" Name="C4" Text="Sollwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-5" Name="C5" Text="Datentyp" Width="21%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-6" Name="C6" Text="Skal." Width="9%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL1_C-7" Name="C7" Text="Offset" Width="10%" />
+                  </Columns>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00412_R-%TT%0041201" Cell="1,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00413_R-%TT%0041301" Cell="1,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00414_R-%TT%0041401" Cell="1,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00418_R-%TT%0041801" Cell="1,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00415_R-%TT%0041501" Cell="1,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00416_R-%TT%0041601" Cell="1,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00417_R-%TT%0041701" Cell="1,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00419_R-%TT%0041901" Cell="2,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00420_R-%TT%0042001" Cell="2,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00421_R-%TT%0042101" Cell="2,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00425_R-%TT%0042501" Cell="2,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00422_R-%TT%0042201" Cell="2,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00423_R-%TT%0042301" Cell="2,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00424_R-%TT%0042401" Cell="2,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00426_R-%TT%0042601" Cell="3,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00427_R-%TT%0042701" Cell="3,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00428_R-%TT%0042801" Cell="3,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00432_R-%TT%0043201" Cell="3,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00429_R-%TT%0042901" Cell="3,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00430_R-%TT%0043001" Cell="3,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00431_R-%TT%0043101" Cell="3,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00433_R-%TT%0043301" Cell="4,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00434_R-%TT%0043401" Cell="4,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00435_R-%TT%0043501" Cell="4,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00439_R-%TT%0043901" Cell="4,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00436_R-%TT%0043601" Cell="4,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00437_R-%TT%0043701" Cell="4,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00438_R-%TT%0043801" Cell="4,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00440_R-%TT%0044001" Cell="5,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00441_R-%TT%0044101" Cell="5,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00442_R-%TT%0044201" Cell="5,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00446_R-%TT%0044601" Cell="5,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00443_R-%TT%0044301" Cell="5,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00444_R-%TT%0044401" Cell="5,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00445_R-%TT%0044501" Cell="5,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00447_R-%TT%0044701" Cell="6,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00448_R-%TT%0044801" Cell="6,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00449_R-%TT%0044901" Cell="6,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00453_R-%TT%0045301" Cell="6,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00450_R-%TT%0045001" Cell="6,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00451_R-%TT%0045101" Cell="6,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00452_R-%TT%0045201" Cell="6,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00454_R-%TT%0045401" Cell="7,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00455_R-%TT%0045501" Cell="7,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00456_R-%TT%0045601" Cell="7,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00460_R-%TT%0046001" Cell="7,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00457_R-%TT%0045701" Cell="7,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00458_R-%TT%0045801" Cell="7,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00459_R-%TT%0045901" Cell="7,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00461_R-%TT%0046101" Cell="8,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00462_R-%TT%0046201" Cell="8,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00463_R-%TT%0046301" Cell="8,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00467_R-%TT%0046701" Cell="8,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00464_R-%TT%0046401" Cell="8,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00465_R-%TT%0046501" Cell="8,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00466_R-%TT%0046601" Cell="8,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00468_R-%TT%0046801" Cell="9,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00469_R-%TT%0046901" Cell="9,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00470_R-%TT%0047001" Cell="9,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00474_R-%TT%0047401" Cell="9,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00471_R-%TT%0047101" Cell="9,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00472_R-%TT%0047201" Cell="9,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00473_R-%TT%0047301" Cell="9,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00475_R-%TT%0047501" Cell="10,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00476_R-%TT%0047601" Cell="10,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00477_R-%TT%0047701" Cell="10,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00481_R-%TT%0048101" Cell="10,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00478_R-%TT%0047801" Cell="10,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00479_R-%TT%0047901" Cell="10,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00480_R-%TT%0048001" Cell="10,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00482_R-%TT%0048201" Cell="11,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00483_R-%TT%0048301" Cell="11,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00484_R-%TT%0048401" Cell="11,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00488_R-%TT%0048801" Cell="11,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00485_R-%TT%0048501" Cell="11,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00486_R-%TT%0048601" Cell="11,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00487_R-%TT%0048701" Cell="11,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00489_R-%TT%0048901" Cell="12,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00490_R-%TT%0049001" Cell="12,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00491_R-%TT%0049101" Cell="12,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00495_R-%TT%0049501" Cell="12,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00492_R-%TT%0049201" Cell="12,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00493_R-%TT%0049301" Cell="12,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00494_R-%TT%0049401" Cell="12,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00496_R-%TT%0049601" Cell="13,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00497_R-%TT%0049701" Cell="13,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00498_R-%TT%0049801" Cell="13,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00502_R-%TT%0050201" Cell="13,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00499_R-%TT%0049901" Cell="13,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00500_R-%TT%0050001" Cell="13,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00501_R-%TT%0050101" Cell="13,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00503_R-%TT%0050301" Cell="14,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00504_R-%TT%0050401" Cell="14,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00505_R-%TT%0050501" Cell="14,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00509_R-%TT%0050901" Cell="14,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00506_R-%TT%0050601" Cell="14,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00507_R-%TT%0050701" Cell="14,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00508_R-%TT%0050801" Cell="14,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00510_R-%TT%0051001" Cell="15,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00511_R-%TT%0051101" Cell="15,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00512_R-%TT%0051201" Cell="15,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00516_R-%TT%0051601" Cell="15,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00513_R-%TT%0051301" Cell="15,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00514_R-%TT%0051401" Cell="15,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00515_R-%TT%0051501" Cell="15,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00517_R-%TT%0051701" Cell="16,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00518_R-%TT%0051801" Cell="16,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00519_R-%TT%0051901" Cell="16,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00523_R-%TT%0052301" Cell="16,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00520_R-%TT%0052001" Cell="16,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00521_R-%TT%0052101" Cell="16,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00522_R-%TT%0052201" Cell="16,7" />
+                </ParameterBlock>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Register 33 bis 48" UIHint="Headline" />
+                <ParameterBlock Id="%AID%_PB-%TT%ASTBL2" Name="AsstTbl2" Text="#" Inline="true" Layout="Table" HelpContext="SPV-Assistent">
+                  <Rows>
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-1" Name="R1" Text="33" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-2" Name="R2" Text="34" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-3" Name="R3" Text="35" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-4" Name="R4" Text="36" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-5" Name="R5" Text="37" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-6" Name="R6" Text="38" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-7" Name="R7" Text="39" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-8" Name="R8" Text="40" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-9" Name="R9" Text="41" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-10" Name="R10" Text="42" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-11" Name="R11" Text="43" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-12" Name="R12" Text="44" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-13" Name="R13" Text="45" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-14" Name="R14" Text="46" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-15" Name="R15" Text="47" />
+                    <Row Id="%AID%_PB-%TT%ASTBL2_R-16" Name="R16" Text="48" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-1" Name="C1" Text="Register" Width="14%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-2" Name="C2" Text="Rohwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-3" Name="C3" Text="Bedeutung" Width="22%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-4" Name="C4" Text="Sollwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-5" Name="C5" Text="Datentyp" Width="21%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-6" Name="C6" Text="Skal." Width="9%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL2_C-7" Name="C7" Text="Offset" Width="10%" />
+                  </Columns>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00524_R-%TT%0052401" Cell="1,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00525_R-%TT%0052501" Cell="1,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00526_R-%TT%0052601" Cell="1,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00530_R-%TT%0053001" Cell="1,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00527_R-%TT%0052701" Cell="1,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00528_R-%TT%0052801" Cell="1,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00529_R-%TT%0052901" Cell="1,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00531_R-%TT%0053101" Cell="2,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00532_R-%TT%0053201" Cell="2,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00533_R-%TT%0053301" Cell="2,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00537_R-%TT%0053701" Cell="2,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00534_R-%TT%0053401" Cell="2,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00535_R-%TT%0053501" Cell="2,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00536_R-%TT%0053601" Cell="2,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00538_R-%TT%0053801" Cell="3,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00539_R-%TT%0053901" Cell="3,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00540_R-%TT%0054001" Cell="3,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00544_R-%TT%0054401" Cell="3,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00541_R-%TT%0054101" Cell="3,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00542_R-%TT%0054201" Cell="3,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00543_R-%TT%0054301" Cell="3,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00545_R-%TT%0054501" Cell="4,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00546_R-%TT%0054601" Cell="4,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00547_R-%TT%0054701" Cell="4,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00551_R-%TT%0055101" Cell="4,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00548_R-%TT%0054801" Cell="4,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00549_R-%TT%0054901" Cell="4,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00550_R-%TT%0055001" Cell="4,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00552_R-%TT%0055201" Cell="5,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00553_R-%TT%0055301" Cell="5,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00554_R-%TT%0055401" Cell="5,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00558_R-%TT%0055801" Cell="5,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00555_R-%TT%0055501" Cell="5,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00556_R-%TT%0055601" Cell="5,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00557_R-%TT%0055701" Cell="5,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00559_R-%TT%0055901" Cell="6,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00560_R-%TT%0056001" Cell="6,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00561_R-%TT%0056101" Cell="6,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00565_R-%TT%0056501" Cell="6,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00562_R-%TT%0056201" Cell="6,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00563_R-%TT%0056301" Cell="6,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00564_R-%TT%0056401" Cell="6,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00566_R-%TT%0056601" Cell="7,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00567_R-%TT%0056701" Cell="7,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00568_R-%TT%0056801" Cell="7,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00572_R-%TT%0057201" Cell="7,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00569_R-%TT%0056901" Cell="7,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00570_R-%TT%0057001" Cell="7,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00571_R-%TT%0057101" Cell="7,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00573_R-%TT%0057301" Cell="8,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00574_R-%TT%0057401" Cell="8,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00575_R-%TT%0057501" Cell="8,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00579_R-%TT%0057901" Cell="8,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00576_R-%TT%0057601" Cell="8,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00577_R-%TT%0057701" Cell="8,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00578_R-%TT%0057801" Cell="8,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00580_R-%TT%0058001" Cell="9,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00581_R-%TT%0058101" Cell="9,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00582_R-%TT%0058201" Cell="9,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00586_R-%TT%0058601" Cell="9,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00583_R-%TT%0058301" Cell="9,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00584_R-%TT%0058401" Cell="9,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00585_R-%TT%0058501" Cell="9,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00587_R-%TT%0058701" Cell="10,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00588_R-%TT%0058801" Cell="10,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00589_R-%TT%0058901" Cell="10,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00593_R-%TT%0059301" Cell="10,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00590_R-%TT%0059001" Cell="10,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00591_R-%TT%0059101" Cell="10,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00592_R-%TT%0059201" Cell="10,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00594_R-%TT%0059401" Cell="11,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00595_R-%TT%0059501" Cell="11,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00596_R-%TT%0059601" Cell="11,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00600_R-%TT%0060001" Cell="11,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00597_R-%TT%0059701" Cell="11,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00598_R-%TT%0059801" Cell="11,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00599_R-%TT%0059901" Cell="11,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00601_R-%TT%0060101" Cell="12,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00602_R-%TT%0060201" Cell="12,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00603_R-%TT%0060301" Cell="12,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00607_R-%TT%0060701" Cell="12,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00604_R-%TT%0060401" Cell="12,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00605_R-%TT%0060501" Cell="12,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00606_R-%TT%0060601" Cell="12,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00608_R-%TT%0060801" Cell="13,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00609_R-%TT%0060901" Cell="13,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00610_R-%TT%0061001" Cell="13,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00614_R-%TT%0061401" Cell="13,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00611_R-%TT%0061101" Cell="13,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00612_R-%TT%0061201" Cell="13,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00613_R-%TT%0061301" Cell="13,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00615_R-%TT%0061501" Cell="14,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00616_R-%TT%0061601" Cell="14,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00617_R-%TT%0061701" Cell="14,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00621_R-%TT%0062101" Cell="14,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00618_R-%TT%0061801" Cell="14,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00619_R-%TT%0061901" Cell="14,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00620_R-%TT%0062001" Cell="14,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00622_R-%TT%0062201" Cell="15,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00623_R-%TT%0062301" Cell="15,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00624_R-%TT%0062401" Cell="15,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00628_R-%TT%0062801" Cell="15,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00625_R-%TT%0062501" Cell="15,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00626_R-%TT%0062601" Cell="15,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00627_R-%TT%0062701" Cell="15,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00629_R-%TT%0062901" Cell="16,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00630_R-%TT%0063001" Cell="16,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00631_R-%TT%0063101" Cell="16,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00635_R-%TT%0063501" Cell="16,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00632_R-%TT%0063201" Cell="16,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00633_R-%TT%0063301" Cell="16,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00634_R-%TT%0063401" Cell="16,7" />
+                </ParameterBlock>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Register 49 bis 64" UIHint="Headline" />
+                <ParameterBlock Id="%AID%_PB-%TT%ASTBL3" Name="AsstTbl3" Text="#" Inline="true" Layout="Table" HelpContext="SPV-Assistent">
+                  <Rows>
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-1" Name="R1" Text="49" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-2" Name="R2" Text="50" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-3" Name="R3" Text="51" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-4" Name="R4" Text="52" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-5" Name="R5" Text="53" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-6" Name="R6" Text="54" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-7" Name="R7" Text="55" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-8" Name="R8" Text="56" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-9" Name="R9" Text="57" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-10" Name="R10" Text="58" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-11" Name="R11" Text="59" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-12" Name="R12" Text="60" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-13" Name="R13" Text="61" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-14" Name="R14" Text="62" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-15" Name="R15" Text="63" />
+                    <Row Id="%AID%_PB-%TT%ASTBL3_R-16" Name="R16" Text="64" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-1" Name="C1" Text="Register" Width="14%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-2" Name="C2" Text="Rohwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-3" Name="C3" Text="Bedeutung" Width="22%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-4" Name="C4" Text="Sollwert" Width="12%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-5" Name="C5" Text="Datentyp" Width="21%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-6" Name="C6" Text="Skal." Width="9%" />
+                    <Column Id="%AID%_PB-%TT%ASTBL3_C-7" Name="C7" Text="Offset" Width="10%" />
+                  </Columns>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00636_R-%TT%0063601" Cell="1,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00637_R-%TT%0063701" Cell="1,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00638_R-%TT%0063801" Cell="1,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00642_R-%TT%0064201" Cell="1,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00639_R-%TT%0063901" Cell="1,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00640_R-%TT%0064001" Cell="1,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00641_R-%TT%0064101" Cell="1,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00643_R-%TT%0064301" Cell="2,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00644_R-%TT%0064401" Cell="2,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00645_R-%TT%0064501" Cell="2,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00649_R-%TT%0064901" Cell="2,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00646_R-%TT%0064601" Cell="2,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00647_R-%TT%0064701" Cell="2,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00648_R-%TT%0064801" Cell="2,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00650_R-%TT%0065001" Cell="3,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00651_R-%TT%0065101" Cell="3,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00652_R-%TT%0065201" Cell="3,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00656_R-%TT%0065601" Cell="3,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00653_R-%TT%0065301" Cell="3,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00654_R-%TT%0065401" Cell="3,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00655_R-%TT%0065501" Cell="3,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00657_R-%TT%0065701" Cell="4,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00658_R-%TT%0065801" Cell="4,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00659_R-%TT%0065901" Cell="4,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00663_R-%TT%0066301" Cell="4,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00660_R-%TT%0066001" Cell="4,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00661_R-%TT%0066101" Cell="4,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00662_R-%TT%0066201" Cell="4,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00664_R-%TT%0066401" Cell="5,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00665_R-%TT%0066501" Cell="5,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00666_R-%TT%0066601" Cell="5,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00670_R-%TT%0067001" Cell="5,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00667_R-%TT%0066701" Cell="5,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00668_R-%TT%0066801" Cell="5,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00669_R-%TT%0066901" Cell="5,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00671_R-%TT%0067101" Cell="6,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00672_R-%TT%0067201" Cell="6,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00673_R-%TT%0067301" Cell="6,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00677_R-%TT%0067701" Cell="6,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00674_R-%TT%0067401" Cell="6,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00675_R-%TT%0067501" Cell="6,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00676_R-%TT%0067601" Cell="6,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00678_R-%TT%0067801" Cell="7,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00679_R-%TT%0067901" Cell="7,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00680_R-%TT%0068001" Cell="7,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00684_R-%TT%0068401" Cell="7,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00681_R-%TT%0068101" Cell="7,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00682_R-%TT%0068201" Cell="7,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00683_R-%TT%0068301" Cell="7,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00685_R-%TT%0068501" Cell="8,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00686_R-%TT%0068601" Cell="8,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00687_R-%TT%0068701" Cell="8,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00691_R-%TT%0069101" Cell="8,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00688_R-%TT%0068801" Cell="8,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00689_R-%TT%0068901" Cell="8,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00690_R-%TT%0069001" Cell="8,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00692_R-%TT%0069201" Cell="9,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00693_R-%TT%0069301" Cell="9,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00694_R-%TT%0069401" Cell="9,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00698_R-%TT%0069801" Cell="9,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00695_R-%TT%0069501" Cell="9,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00696_R-%TT%0069601" Cell="9,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00697_R-%TT%0069701" Cell="9,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00699_R-%TT%0069901" Cell="10,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00700_R-%TT%0070001" Cell="10,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00701_R-%TT%0070101" Cell="10,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00705_R-%TT%0070501" Cell="10,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00702_R-%TT%0070201" Cell="10,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00703_R-%TT%0070301" Cell="10,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00704_R-%TT%0070401" Cell="10,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00706_R-%TT%0070601" Cell="11,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00707_R-%TT%0070701" Cell="11,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00708_R-%TT%0070801" Cell="11,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00712_R-%TT%0071201" Cell="11,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00709_R-%TT%0070901" Cell="11,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00710_R-%TT%0071001" Cell="11,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00711_R-%TT%0071101" Cell="11,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00713_R-%TT%0071301" Cell="12,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00714_R-%TT%0071401" Cell="12,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00715_R-%TT%0071501" Cell="12,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00719_R-%TT%0071901" Cell="12,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00716_R-%TT%0071601" Cell="12,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00717_R-%TT%0071701" Cell="12,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00718_R-%TT%0071801" Cell="12,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00720_R-%TT%0072001" Cell="13,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00721_R-%TT%0072101" Cell="13,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00722_R-%TT%0072201" Cell="13,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00726_R-%TT%0072601" Cell="13,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00723_R-%TT%0072301" Cell="13,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00724_R-%TT%0072401" Cell="13,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00725_R-%TT%0072501" Cell="13,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00727_R-%TT%0072701" Cell="14,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00728_R-%TT%0072801" Cell="14,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00729_R-%TT%0072901" Cell="14,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00733_R-%TT%0073301" Cell="14,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00730_R-%TT%0073001" Cell="14,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00731_R-%TT%0073101" Cell="14,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00732_R-%TT%0073201" Cell="14,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00734_R-%TT%0073401" Cell="15,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00735_R-%TT%0073501" Cell="15,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00736_R-%TT%0073601" Cell="15,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00740_R-%TT%0074001" Cell="15,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00737_R-%TT%0073701" Cell="15,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00738_R-%TT%0073801" Cell="15,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00739_R-%TT%0073901" Cell="15,7" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00741_R-%TT%0074101" Cell="16,1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00742_R-%TT%0074201" Cell="16,2" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00743_R-%TT%0074301" Cell="16,3" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00747_R-%TT%0074701" Cell="16,4" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00744_R-%TT%0074401" Cell="16,5" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00745_R-%TT%0074501" Cell="16,6" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00746_R-%TT%0074601" Cell="16,7" />
+                </ParameterBlock>
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="5. Übernehmen" UIHint="Headline" />
+                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="SPV-Assistent" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Übernommen wird alles von dieser Seite: IP-Adresse, Port, Slave-ID, Transport, Seriennummer und jede zugeordnete Zeile. Auf der Geräteseite ist nichts nachzutragen. Die bisherige Messwerttabelle des Geräts wird dabei vollständig überschrieben." UIHint="Information" />
+                <Button Id="%AID%_B-%TT%00004" Text="In Zielgerät übernehmen" EventHandler="spvBtnApply" EventHandlerParameters="{ }" />
+              </ParameterBlock>
+            </Channel>
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

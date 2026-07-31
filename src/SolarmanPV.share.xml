@@ -2,6 +2,14 @@
 <?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <op:config name="%SPV_NumChannelsDefault%" value="2" />
+  <!-- Hilfsfunktionen des Skripts: sie werden aus anderen Funktionen aufgerufen, nicht aus
+       einem EventHandler der XML. Ohne diese Ausnahmen meldet der Producer WARN 003. -->
+  <op:nowarn id="3" regex="spvSleep" />
+  <op:nowarn id="3" regex="spvSlotIndex" />
+  <op:nowarn id="3" regex="spvIp4" />
+  <op:nowarn id="3" regex="spvAwaitResult" />
+  <op:nowarn id="3" regex="spvReadBlock" />
+  <op:nowarn id="3" regex="spvClearTable" />
   <ManufacturerData>
     <Manufacturer>
       <ApplicationPrograms>
@@ -17,11 +25,15 @@
               <ParameterType Id="%AID%_PT-SPVString16" Name="SPVString16">
                 <TypeText SizeInBit="128" />
               </ParameterType>
+              <!-- Ergebnistext des Assistenten. Wird nur angezeigt, nie eingegeben. -->
+              <ParameterType Id="%AID%_PT-SPVString48" Name="SPVString48">
+                <TypeText SizeInBit="384" />
+              </ParameterType>
               <ParameterType Id="%AID%_PT-SPVPort" Name="SPVPort">
                 <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1" maxInclusive="65535" />
               </ParameterType>
               <!-- Transport: von aussen nicht unterscheidbar, beide laufen auf Port 8899 und
-                   Home Assistant zeigt fuer beide "TCP". Am Geraet ermittelt:
+                   Home Assistant zeigt fuer beide "TCP". Am Gerät ermittelt:
                    Deye SUN-M80G3 -> Solarman V5, Pylontech Force H3 -> reines Modbus TCP. -->
               <ParameterType Id="%AID%_PT-SPVTransport" Name="SPVTransport">
                 <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
@@ -29,14 +41,11 @@
                   <Enumeration Text="Modbus TCP"  Value="1" Id="%AID%_PT-SPVTransport_EN-1" />
                 </TypeRestriction>
               </ParameterType>
-              <!-- DropDown statt Radiobuttons: die Profilliste waechst mit jedem unterstuetzten
-                   Geraet, Radiobuttons wuerden die Seite schnell unbrauchbar machen. -->
-              <ParameterType Id="%AID%_PT-SPVProfile" Name="SPVProfile">
-                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
-                  <Enumeration Text="Deye Mikrowechselrichter" Value="0" Id="%AID%_PT-SPVProfile_EN-0" />
-                  <Enumeration Text="Pylontech Force"          Value="1" Id="%AID%_PT-SPVProfile_EN-1" />
-                </TypeRestriction>
-              </ParameterType>
+              <!-- PT-SPVProfile wird aus tools/profiles.py erzeugt, damit Auswahlliste und
+                   Profildaten im Skript nicht auseinanderlaufen koennen. DropDown statt
+                   Radiobuttons: die Liste waechst mit jedem unterstuetzten Gerät. -->
+              <op:include href="SolarmanPV.profiles.parts.xml" xpath="//ParameterTypes/*" prefix="SPV" />
+              <op:include href="SolarmanPV.assistant.parts.xml" xpath="//ParameterTypes/*" prefix="SPV" />
               <!-- Die Logger-Seriennummer ist zehnstellig und kann groesser sein als der
                    groesste vorzeichenbehaftete 32-Bit-Wert (Testgeraet 3912915352). Als
                    Zahlenfeld in ETS nicht zuverlaessig darstellbar, deshalb Textfeld;
@@ -56,18 +65,51 @@
               <ParameterType Id="%AID%_PT-SPVPercent" Name="SPVPercent">
                 <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
               </ParameterType>
+              <!-- Messwerttabelle: die Bedeutung jeder Zeile ist fest vergeben (tools/slots.py),
+                   konfigurierbar sind nur Herkunft und Umrechnung des Rohwerts. -->
+              <ParameterType Id="%AID%_PT-SPVRegister" Name="SPVRegister">
+                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="65535" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SPVDataType" Name="SPVDataType">
+                <TypeRestriction Base="Value" SizeInBit="3" UIHint="DropDown">
+                  <Enumeration Text="16 Bit ohne Vorzeichen"      Value="0" Id="%AID%_PT-SPVDataType_EN-0" />
+                  <Enumeration Text="16 Bit mit Vorzeichen"       Value="1" Id="%AID%_PT-SPVDataType_EN-1" />
+                  <Enumeration Text="32 Bit ohne Vorzeichen"      Value="2" Id="%AID%_PT-SPVDataType_EN-2" />
+                  <Enumeration Text="32 Bit mit Vorzeichen"       Value="3" Id="%AID%_PT-SPVDataType_EN-3" />
+                  <Enumeration Text="Produkt der zwei Vorgänger" Value="4" Id="%AID%_PT-SPVDataType_EN-4" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-SPVScale" Name="SPVScale">
+                <TypeRestriction Base="Value" SizeInBit="3" UIHint="DropDown">
+                  <Enumeration Text="x 1"     Value="0" Id="%AID%_PT-SPVScale_EN-0" />
+                  <Enumeration Text="x 0,1"   Value="1" Id="%AID%_PT-SPVScale_EN-1" />
+                  <Enumeration Text="x 0,01"  Value="2" Id="%AID%_PT-SPVScale_EN-2" />
+                  <Enumeration Text="x 0,001" Value="3" Id="%AID%_PT-SPVScale_EN-3" />
+                  <Enumeration Text="x 10"    Value="4" Id="%AID%_PT-SPVScale_EN-4" />
+                </TypeRestriction>
+              </ParameterType>
+              <!-- Nach der Skalierung abgezogen. Der Deye meldet die Temperatur als
+                   Rohwert/100 - 10, braucht hier also Offset 10. -->
+              <ParameterType Id="%AID%_PT-SPVOffset" Name="SPVOffset">
+                <TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-128" maxInclusive="127" />
+              </ParameterType>
             </ParameterTypes>
             <Parameters>
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00000" Name="SPVVisibleChannels" ParameterType="%AID%_PT-SPVNumChannels" Offset="0" BitOffset="0" Text="Aktive Geräte" Value="%SPV_NumChannelsDefault%" SuffixText=" von %N%" />
               </Union>
+              <op:include href="SolarmanPV.assistant.parts.xml" xpath="//Parameters/*" prefix="SPV" />
             </Parameters>
             <ParameterRefs>
               <ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
+              <op:include href="SolarmanPV.assistant.parts.xml" xpath="//ParameterRefs/*" prefix="SPV" />
             </ParameterRefs>
             <ComObjectTable />
             <ComObjectRefs />
+            <Script>
+              <op:include href="SolarmanPV.script.js" prefix="SPV" type="script" />
+            </Script>
           </Static>
           <Dynamic>
             <Channel Name="MainChannel%TT%" Text="SolarmanPV" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="white-balance-sunny">
@@ -80,6 +122,7 @@
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Geräteauswahl" UIHint="Headline" />
                 <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="SPV-Geraeteauswahl" />
               </ParameterBlock>
+              <op:include href="SolarmanPV.assistant.parts.xml" xpath="//Dynamic/Channel/*" prefix="SPV" />
               <op:include href="SolarmanPV.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SPV" IsInner="true" />
               <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
                 <when test="&lt;%N%">

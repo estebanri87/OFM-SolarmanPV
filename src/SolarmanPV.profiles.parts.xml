@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!-- ERZEUGT von tools/gen_profiles.py aus tools/profiles.py - nicht von Hand bearbeiten. -->
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer>
+      <ApplicationPrograms>
+        <ApplicationProgram>
+          <Static>
+            <ParameterTypes>
+              <ParameterType Id="%AID%_PT-SPVProfile" Name="SPVProfile">
+                <TypeRestriction Base="Value" SizeInBit="8" UIHint="DropDown">
+                  <!-- Wert 0 ist kein Sonderfall, sondern der Normalzustand nach dem
+                       Assistenten: dann gilt die Messwerttabelle so, wie sie dasteht.
+                       Der Eintrag benennt deshalb, was zutrifft, nicht was fehlt. -->
+                  <Enumeration Text="ohne Profil – eigene Messwerttabelle" Value="0" Id="%AID%_PT-SPVProfile_EN-0" />
+                  <Enumeration Text="Deye SUN-M80G3" Value="1" Id="%AID%_PT-SPVProfile_EN-1" />
+                  <Enumeration Text="Pylontech Force H1/H2/H3" Value="2" Id="%AID%_PT-SPVProfile_EN-2" />
+                  <Enumeration Text="Afore 2MPPT" Value="3" Id="%AID%_PT-SPVProfile_EN-3" />
+                  <Enumeration Text="Afore BNTXXXKTL-2MPPT" Value="4" Id="%AID%_PT-SPVProfile_EN-4" />
+                  <Enumeration Text="Afore HYBRID" Value="5" Id="%AID%_PT-SPVProfile_EN-5" />
+                  <Enumeration Text="ANENJI Hybrid" Value="6" Id="%AID%_PT-SPVProfile_EN-6" />
+                  <Enumeration Text="Astro-Energy TM-L series" Value="7" Id="%AID%_PT-SPVProfile_EN-7" />
+                  <Enumeration Text="CHINT CPS-SCETL" Value="8" Id="%AID%_PT-SPVProfile_EN-8" />
+                  <Enumeration Text="Deye SG0*LP1" Value="9" Id="%AID%_PT-SPVProfile_EN-9" />
+                  <Enumeration Text="Deye SG0*LP3 / SG0*HP3" Value="10" Id="%AID%_PT-SPVProfile_EN-10" />
+                  <Enumeration Text="Deye G0*" Value="11" Id="%AID%_PT-SPVProfile_EN-11" />
+                  <Enumeration Text="Hinen H5000" Value="12" Id="%AID%_PT-SPVProfile_EN-12" />
+                  <Enumeration Text="Invt XD-TL" Value="13" Id="%AID%_PT-SPVProfile_EN-13" />
+                  <Enumeration Text="KSTAR Hybrid Inverter" Value="14" Id="%AID%_PT-SPVProfile_EN-14" />
+                  <Enumeration Text="Maxge STRING" Value="15" Id="%AID%_PT-SPVProfile_EN-15" />
+                  <Enumeration Text="Megarevo R-3H" Value="16" Id="%AID%_PT-SPVProfile_EN-16" />
+                  <Enumeration Text="Renon IFL" Value="17" Id="%AID%_PT-SPVProfile_EN-17" />
+                  <Enumeration Text="Sofar G3 (sofar_g3)" Value="18" Id="%AID%_PT-SPVProfile_EN-18" />
+                  <Enumeration Text="Sofar G3 (sofar_g3hyd)" Value="19" Id="%AID%_PT-SPVProfile_EN-19" />
+                  <Enumeration Text="Sofar HYBRID" Value="20" Id="%AID%_PT-SPVProfile_EN-20" />
+                  <Enumeration Text="Sofar STRING" Value="21" Id="%AID%_PT-SPVProfile_EN-21" />
+                  <Enumeration Text="Solis 1P-5G" Value="22" Id="%AID%_PT-SPVProfile_EN-22" />
+                  <Enumeration Text="Solis 3P-4G" Value="23" Id="%AID%_PT-SPVProfile_EN-23" />
+                  <Enumeration Text="Solis 3P-5G" Value="24" Id="%AID%_PT-SPVProfile_EN-24" />
+                  <Enumeration Text="Solis HYBRID" Value="25" Id="%AID%_PT-SPVProfile_EN-25" />
+                  <Enumeration Text="Solis S6-GR1P" Value="26" Id="%AID%_PT-SPVProfile_EN-26" />
+                  <Enumeration Text="SRNE ASF" Value="27" Id="%AID%_PT-SPVProfile_EN-27" />
+                  <Enumeration Text="Swatten SIH-TH" Value="28" Id="%AID%_PT-SPVProfile_EN-28" />
+                  <Enumeration Text="Tsun TSOL-MS" Value="29" Id="%AID%_PT-SPVProfile_EN-29" />
+                </TypeRestriction>
+              </ParameterType>
+            </ParameterTypes>
+          </Static>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>
