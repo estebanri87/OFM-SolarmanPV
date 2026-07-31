@@ -18,11 +18,10 @@ const std::string SolarmanChannel::name()
 void SolarmanChannel::setup()
 {
     const uint8_t _channelIndex = this->_channelIndex; // fuer die Param-/KO-Makros
-    _profile = Spv::profileFor(ParamSPV_CHProfile);
     _pollIntervalS = ParamSPV_CHPollInterval;
 
     const SolarmanV5Client::Transport transport =
-        (ParamSPV_CHTransport == Spv::ModbusTcp) ? SolarmanV5Client::ModbusTcp : SolarmanV5Client::V5;
+        (ParamSPV_CHTransport == 1) ? SolarmanV5Client::ModbusTcp : SolarmanV5Client::V5;
 
     // Seriennummer als Text: sie ist zehnstellig und kann groesser als 2^31-1 sein, was ETS
     // als Zahlenfeld nicht zuverlaessig darstellt.
@@ -40,10 +39,95 @@ void SolarmanChannel::setup()
     // Modbus TCP kennt keine Seriennummer, dort ist nichts zu ermitteln.
     _serialKnown = (transport == SolarmanV5Client::ModbusTcp) || (serial != 0);
 
-    logDebugP("Kanal %d: %s, %s, %s:%d, Intervall %ds", _channelIndex + 1, _profile.name,
+    readTable();
+    buildBlocks();
+
+    logDebugP("Kanal %d: %s, %s:%d, Intervall %ds, %d Messwerte in %d Bloecken",
+              _channelIndex + 1,
               (transport == SolarmanV5Client::ModbusTcp) ? "Modbus TCP" : "Solarman V5",
               (ip != nullptr && ip[0]) ? ip : "(keine IP)", (int)ParamSPV_CHLoggerPort,
-              (int)_pollIntervalS);
+              (int)_pollIntervalS, (int)_activeCount, (int)_blockCount);
+}
+
+// Liest die Messwerttabelle aus dem Parameterspeicher. Die Zeilen liegen als Feld fester
+// Schrittweite hintereinander, deshalb reicht Adressrechnung statt 64 einzelner Makros.
+void SolarmanChannel::readTable()
+{
+    const uint8_t _channelIndex = this->_channelIndex;
+    _activeCount = 0;
+
+    for (uint8_t slot = 0; slot < Spv::SLOT_COUNT; slot++)
+    {
+        const uint16_t base = Spv::TABLE_OFFSET + (uint16_t)slot * Spv::ROW_BYTES;
+        const uint8_t flags = knx.paramByte(SPV_ParamCalcIndex(base + 2));
+        if ((flags & 0x02) == 0) // Bit 1 = "aktiv"
+            continue;
+
+        Row& row = _rows[_activeCount++];
+        row.slot = slot;
+        row.reg = knx.paramWord(SPV_ParamCalcIndex(base));
+        row.type = (uint8_t)((flags >> 5) & 0x07);
+        row.scale = Spv::SCALE[(flags >> 2) & 0x07];
+        row.offset = (int8_t)knx.paramByte(SPV_ParamCalcIndex(base + 3));
+    }
+}
+
+// Fasst die benoetigten Register zu moeglichst wenigen Leseblocken zusammen. Ohne das
+// entstuende je Messwert eine eigene Anfrage - bei 17 Werten also 17 statt zwei.
+void SolarmanChannel::buildBlocks()
+{
+    _blockCount = 0;
+
+    // Alle benoetigten Adressen einsammeln (32-Bit-Werte belegen zwei Register).
+    uint16_t needed[Spv::SLOT_COUNT * 2];
+    uint16_t count = 0;
+    for (uint8_t i = 0; i < _activeCount; i++)
+    {
+        if (_rows[i].type == Spv::TypeProduct)
+            continue; // wird gerechnet, nicht gelesen
+        needed[count++] = _rows[i].reg;
+        if (_rows[i].type == Spv::TypeU32 || _rows[i].type == Spv::TypeS32)
+            needed[count++] = (uint16_t)(_rows[i].reg + 1);
+    }
+    if (count == 0)
+        return;
+
+    // Aufsteigend sortieren (Einfuegesortieren genuegt: hoechstens 128 Eintraege, einmalig).
+    for (uint16_t i = 1; i < count; i++)
+    {
+        const uint16_t key = needed[i];
+        int16_t j = (int16_t)i - 1;
+        while (j >= 0 && needed[j] > key)
+        {
+            needed[j + 1] = needed[j];
+            j--;
+        }
+        needed[j + 1] = key;
+    }
+
+    for (uint16_t i = 0; i < count; i++)
+    {
+        if (i > 0 && needed[i] == needed[i - 1])
+            continue; // Doppelte ueberspringen
+
+        const bool fits = (_blockCount > 0) &&
+                          (needed[i] - _blockStart[_blockCount - 1]) < MAX_BLOCK_WORDS;
+        if (fits)
+        {
+            _blockWords[_blockCount - 1] = (uint8_t)(needed[i] - _blockStart[_blockCount - 1] + 1);
+            continue;
+        }
+
+        if (_blockCount >= MAX_BLOCKS)
+        {
+            logInfoP("Kanal %d: mehr als %d Leseblocke noetig, Register ab 0x%04X werden ignoriert",
+                     _channelIndex + 1, (int)MAX_BLOCKS, (unsigned)needed[i]);
+            return;
+        }
+        _blockStart[_blockCount] = needed[i];
+        _blockWords[_blockCount] = 1;
+        _blockCount++;
+    }
 }
 
 void SolarmanChannel::loop()
@@ -93,14 +177,13 @@ void SolarmanChannel::startNextRequest()
     }
 
     // Laufenden Lesezyklus fortsetzen.
-    if (_blockPhase != BLOCK_IDLE && _blockPhase < _profile.blockCount)
+    if (_blockPhase != BLOCK_IDLE && _blockPhase < _blockCount)
     {
-        const Spv::Block& b = _profile.blocks[_blockPhase];
-        _client.beginRead(3, b.start, b.count);
+        _client.beginRead(3, _blockStart[_blockPhase], _blockWords[_blockPhase]);
         return;
     }
 
-    if (_pollIntervalS == 0)
+    if (_pollIntervalS == 0 || _blockCount == 0)
         return;
     const uint32_t now = millis();
     if (_lastPollMs != 0 && (now - _lastPollMs) < (uint32_t)_pollIntervalS * 1000UL)
@@ -108,8 +191,7 @@ void SolarmanChannel::startNextRequest()
     _lastPollMs = now;
 
     _blockPhase = 0;
-    const Spv::Block& b = _profile.blocks[0];
-    _client.beginRead(3, b.start, b.count);
+    _client.beginRead(3, _blockStart[0], _blockWords[0]);
 }
 
 void SolarmanChannel::handleFinished()
@@ -156,10 +238,10 @@ void SolarmanChannel::handleFinished()
         return;
     }
 
-    if (_blockPhase != BLOCK_IDLE && _blockPhase < _profile.blockCount)
+    if (_blockPhase != BLOCK_IDLE && _blockPhase < _blockCount)
     {
         const uint8_t phase = _blockPhase;
-        if (ok && _client.registerCount() <= Spv::MAX_BLOCK_WORDS)
+        if (ok && _client.registerCount() <= MAX_BLOCK_WORDS)
         {
             for (uint16_t i = 0; i < _client.registerCount(); i++)
                 _raw[phase][i] = _client.registers()[i];
@@ -173,7 +255,7 @@ void SolarmanChannel::handleFinished()
         }
 
         _blockPhase = (uint8_t)(phase + 1);
-        if (_blockPhase >= _profile.blockCount)
+        if (_blockPhase >= _blockCount)
         {
             _blockPhase = BLOCK_IDLE;
             publishValues();
@@ -183,162 +265,107 @@ void SolarmanChannel::handleFinished()
 
 bool SolarmanChannel::rawWord(uint16_t reg, uint16_t& out) const
 {
-    for (uint8_t b = 0; b < _profile.blockCount; b++)
+    for (uint8_t b = 0; b < _blockCount; b++)
     {
         if (!_blockOk[b])
             continue;
-        const Spv::Block& blk = _profile.blocks[b];
-        if (reg >= blk.start && reg < (uint16_t)(blk.start + blk.count))
+        if (reg >= _blockStart[b] && reg < (uint16_t)(_blockStart[b] + _blockWords[b]))
         {
-            out = _raw[b][reg - blk.start];
+            out = _raw[b][reg - _blockStart[b]];
             return true;
         }
     }
     return false;
 }
 
-bool SolarmanChannel::valueOf(uint8_t index, float& out) const
+// Sucht die aktive Zeile zu einem Slot des Katalogs. Wird nur fuer berechnete Werte
+// gebraucht, deren Faktoren ueber die Slot-Nummer festgelegt sind.
+bool SolarmanChannel::valueOfSlot(uint8_t slot, float& out) const
 {
-    if (index >= _profile.count)
-        return false;
-    const Spv::Def& def = _profile.defs[index];
+    for (uint8_t i = 0; i < _activeCount; i++)
+        if (_rows[i].slot == slot)
+            return valueOfRow(i, out);
+    return false;
+}
 
-    // Berechneter Wert: Produkt der beiden vorangehenden Eintraege (Spannung * Strom).
-    if (def.words == 0)
+bool SolarmanChannel::valueOfRow(uint8_t rowIndex, float& out) const
+{
+    if (rowIndex >= _activeCount)
+        return false;
+    const Row& row = _rows[rowIndex];
+
+    // Berechneter Wert: Produkt der beiden im KATALOG vorangehenden Slots (Spannung * Strom).
+    // Bezug ist bewusst der Slot-Katalog und nicht die Reihenfolge der aktiven Zeilen: waehlt
+    // jemand die Spannung ab, waere sonst stillschweigend eine fremde Zeile der Faktor.
+    if (row.type == Spv::TypeProduct)
     {
-        if (index < 2)
+        if (row.slot < 2)
             return false;
         float u = 0.0f, i = 0.0f;
-        if (!valueOf((uint8_t)(index - 2), u) || !valueOf((uint8_t)(index - 1), i))
+        if (!valueOfSlot((uint8_t)(row.slot - 2), u) || !valueOfSlot((uint8_t)(row.slot - 1), i))
             return false;
         out = u * i;
         return true;
     }
 
     uint16_t low = 0;
-    if (!rawWord(def.reg, low))
+    if (!rawWord(row.reg, low))
         return false;
 
-    if (def.words == 1 && def.isSigned)
+    if (row.type == Spv::TypeS16)
     {
-        out = (float)(int16_t)low * def.scale - def.offset;
+        out = (float)(int16_t)low * row.scale - row.offset;
+        return true;
+    }
+    if (row.type == Spv::TypeU16)
+    {
+        out = (float)low * row.scale - row.offset;
         return true;
     }
 
-    uint32_t raw = low;
-    if (def.words == 2)
-    {
-        // 32 Bit, LOW-WORD ZUERST - bei beiden Geraeten am Objekt bestaetigt.
-        uint16_t high = 0;
-        if (!rawWord((uint16_t)(def.reg + 1), high))
-            return false;
-        raw |= ((uint32_t)high) << 16;
-    }
+    // 32 Bit, LOW-WORD ZUERST - bei beiden Geraeten am Objekt bestaetigt.
+    uint16_t high = 0;
+    if (!rawWord((uint16_t)(row.reg + 1), high))
+        return false;
+    const uint32_t raw = (uint32_t)low | (((uint32_t)high) << 16);
 
-    out = (float)raw * def.scale - def.offset;
+    if (row.type == Spv::TypeS32)
+        out = (float)(int32_t)raw * row.scale - row.offset;
+    else
+        out = (float)raw * row.scale - row.offset;
     return true;
 }
 
-bool SolarmanChannel::valueEnabled(uint8_t index) const
-{
-    const uint8_t _channelIndex = this->_channelIndex;
-    if (ParamSPV_CHProfile == Spv::PylontechForceId)
-    {
-        switch (index)
-        {
-            case PylontechForce::Soc:               return ParamSPV_CHEnPSoc;
-            case PylontechForce::Voltage:           return ParamSPV_CHEnPVoltage;
-            case PylontechForce::Current:           return ParamSPV_CHEnPCurrent;
-            case PylontechForce::Power:             return ParamSPV_CHEnPPower;
-            case PylontechForce::Temperature:       return ParamSPV_CHEnPTemperature;
-            case PylontechForce::Soh:               return ParamSPV_CHEnPSoh;
-            case PylontechForce::RemainingCapacity: return ParamSPV_CHEnPRemainingCapacity;
-            case PylontechForce::CycleTimes:        return ParamSPV_CHEnPCycleTimes;
-            case PylontechForce::TodayCharge:       return ParamSPV_CHEnPTodayCharge;
-            case PylontechForce::TodayDischarge:    return ParamSPV_CHEnPTodayDischarge;
-            case PylontechForce::TotalCharge:       return ParamSPV_CHEnPTotalCharge;
-            case PylontechForce::TotalDischarge:    return ParamSPV_CHEnPTotalDischarge;
-            default:                                return false;
-        }
-    }
-    switch (index)
-    {
-        case DeyeMicro::Power:         return ParamSPV_CHEnDPower;
-        case DeyeMicro::Today:         return ParamSPV_CHEnDToday;
-        case DeyeMicro::Total:         return ParamSPV_CHEnDTotal;
-        case DeyeMicro::GridVoltage:   return ParamSPV_CHEnDGridVoltage;
-        case DeyeMicro::GridCurrent:   return ParamSPV_CHEnDGridCurrent;
-        case DeyeMicro::GridFrequency: return ParamSPV_CHEnDGridFrequency;
-        case DeyeMicro::Temperature:   return ParamSPV_CHEnDTemperature;
-        case DeyeMicro::Pv1Voltage:    return ParamSPV_CHEnDPv1Voltage;
-        case DeyeMicro::Pv1Current:    return ParamSPV_CHEnDPv1Current;
-        case DeyeMicro::Pv1Power:      return ParamSPV_CHEnDPv1Power;
-        case DeyeMicro::Pv2Voltage:    return ParamSPV_CHEnDPv2Voltage;
-        case DeyeMicro::Pv2Current:    return ParamSPV_CHEnDPv2Current;
-        case DeyeMicro::Pv2Power:      return ParamSPV_CHEnDPv2Power;
-        case DeyeMicro::Today1:        return ParamSPV_CHEnDToday1;
-        case DeyeMicro::Today2:        return ParamSPV_CHEnDToday2;
-        case DeyeMicro::Total1:        return ParamSPV_CHEnDTotal1;
-        case DeyeMicro::Total2:        return ParamSPV_CHEnDTotal2;
-        default:                       return false;
-    }
-}
-
-void SolarmanChannel::sendValue(uint8_t index, float value)
+void SolarmanChannel::sendValue(uint8_t slot, float value)
 {
     const uint8_t _channelIndex = this->_channelIndex;
 
-    // Slot 1..17 entspricht Wertindex 0..16 - die Reihenfolge im Profil legt fest, welcher
-    // Messwert auf welchem KO landet. Die ETS zeigt dafuer den passenden Namen und DPT.
-    GroupObject* ko = nullptr;
-    switch (index)
-    {
-        case  0: ko = &KoSPV_CHValue01; break;
-        case  1: ko = &KoSPV_CHValue02; break;
-        case  2: ko = &KoSPV_CHValue03; break;
-        case  3: ko = &KoSPV_CHValue04; break;
-        case  4: ko = &KoSPV_CHValue05; break;
-        case  5: ko = &KoSPV_CHValue06; break;
-        case  6: ko = &KoSPV_CHValue07; break;
-        case  7: ko = &KoSPV_CHValue08; break;
-        case  8: ko = &KoSPV_CHValue09; break;
-        case  9: ko = &KoSPV_CHValue10; break;
-        case 10: ko = &KoSPV_CHValue11; break;
-        case 11: ko = &KoSPV_CHValue12; break;
-        case 12: ko = &KoSPV_CHValue13; break;
-        case 13: ko = &KoSPV_CHValue14; break;
-        case 14: ko = &KoSPV_CHValue15; break;
-        case 15: ko = &KoSPV_CHValue16; break;
-        case 16: ko = &KoSPV_CHValue17; break;
-        case 17: ko = &KoSPV_CHValue18; break;
-        case 18: ko = &KoSPV_CHValue19; break;
-        case 19: ko = &KoSPV_CHValue20; break;
-        case 20: ko = &KoSPV_CHValue21; break;
-        case 21: ko = &KoSPV_CHValue22; break;
-        case 22: ko = &KoSPV_CHValue23; break;
-        case 23: ko = &KoSPV_CHValue24; break;
-        default: return;
-    }
+    // KO 0 ist der Status, die Messwerte folgen in Katalogreihenfolge.
+    GroupObject& ko = knx.getGroupObject(SPV_KoCalcNumber(slot + 1));
+    const Spv::Slot& def = Spv::SLOTS[slot];
 
-    switch (_profile.defs[index].knx)
+    switch (def.encoding)
     {
-        case Spv::EnergyWh:
-            // Profil liefert kWh; als DPT 13.010 gehen Wh auf den Bus, sonst ginge die
+        case Spv::EncEnergyWh:
+            // Die Tabelle liefert kWh; als DPT 13.010 gehen Wh auf den Bus, sonst ginge die
             // Nachkommastelle des Tagesertrags verloren.
-            ko->value((int32_t)lroundf(value * 1000.0f), DPT_ActiveEnergy);
+            ko.value((int32_t)lroundf(value * 1000.0f), Dpt(def.dptMain, def.dptSub));
             break;
-        case Spv::Percent:
-            ko->value(value, DPT_Scaling);
+        case Spv::EncPercent:
+            ko.value(value, Dpt(def.dptMain, def.dptSub));
             break;
-        case Spv::Temp2:
-            ko->value(value, DPT_Value_Temp);
+        case Spv::EncTemp:
+            ko.value(value, Dpt(def.dptMain, def.dptSub));
             break;
-        case Spv::Counter16:
-            ko->value((uint16_t)lroundf(value), DPT_Value_2_Ucount);
+        case Spv::EncU16:
+            ko.value((uint16_t)lroundf(value), Dpt(def.dptMain, def.dptSub));
             break;
-        case Spv::Float32:
+        case Spv::EncU8:
+            ko.value((uint8_t)lroundf(value), Dpt(def.dptMain, def.dptSub));
+            break;
+        case Spv::EncFloat:
         default:
-            ko->value(value, DPT_Value_Power);
+            ko.value(value, Dpt(def.dptMain, def.dptSub));
             break;
     }
 }
@@ -350,28 +377,27 @@ void SolarmanChannel::publishValues()
     const uint8_t changePercent = ParamSPV_CHSendChangePercent;
     const bool cyclicDue = (cyclicMs != 0) && delayCheck(_lastCyclicMs, cyclicMs);
 
-    for (uint8_t i = 0; i < _profile.count && i < Spv::MAX_VALUES; i++)
+    for (uint8_t i = 0; i < _activeCount; i++)
     {
-        if (!valueEnabled(i))
-            continue;
         float value = 0.0f;
-        if (!valueOf(i, value))
+        if (!valueOfRow(i, value))
             continue;
 
-        bool send = !_sentOnce[i] || cyclicDue;
+        const uint8_t slot = _rows[i].slot;
+        bool send = !_sentOnce[slot] || cyclicDue;
         if (!send && changePercent != 0)
         {
-            const float reference = fabsf(_lastSent[i]);
-            const float delta = fabsf(value - _lastSent[i]);
+            const float reference = fabsf(_lastSent[slot]);
+            const float delta = fabsf(value - _lastSent[slot]);
             // Bezugsgroesse 0 -> jede Aenderung zaehlt, sonst gaebe es keine Prozentbasis.
             send = (reference < 0.001f) ? (delta > 0.0f) : ((delta / reference * 100.0f) >= changePercent);
         }
 
         if (send)
         {
-            sendValue(i, value);
-            _lastSent[i] = value;
-            _sentOnce[i] = true;
+            sendValue(slot, value);
+            _lastSent[slot] = value;
+            _sentOnce[slot] = true;
         }
     }
 

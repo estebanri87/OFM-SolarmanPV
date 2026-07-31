@@ -355,6 +355,18 @@ void SolarmanV5Client::parseModbusTcp()
         return;
     }
 
+    // Transaktionsnummer gegen die eigene Anfrage pruefen. OHNE diese Pruefung wird jede
+    // fremde Antwort passender Laenge akzeptiert: Fragt der Assistent eine nicht belegte
+    // Adresse ab (das Geraet antwortet mit Exception) und pollt gleichzeitig ein Kanal
+    // denselben Logger, landete dessen Antwort beim Assistenten - er zeigte dann echte
+    // Messwerte unter einer Adresse an, die das Geraet gar nicht kennt.
+    const uint16_t tid = (uint16_t)((_response[0] << 8) | _response[1]);
+    if (tid != _sequence)
+    {
+        _result = ErrRejected;
+        return;
+    }
+
     const uint8_t fc = _response[7];
     if (fc & 0x80)
     {
