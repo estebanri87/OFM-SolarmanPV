@@ -1,57 +1,30 @@
 # Changelog OFM-SolarmanPV
 
-## 0.2.0
+## 0.4.0 - 2026-09-25
 
-Alles bis einschließlich dieser Fassung ist noch nicht veröffentlicht; die Abschnitte sind
-chronologisch nach Entstehung geordnet.
-
-### Added
-- `SolarmanV5Client`: TCP-Client mit Solarman-V5-Framing, Modbus RTU (FC 3/4) und CRC-16.
-  Bewusst KNX-frei gehalten, damit die Übersetzungseinheit unabhängig testbar bleibt.
-- `discoverSerial()`: ermittelt die Logger-Seriennummer automatisch aus dem Antwort-Header.
-
-### Notes
-- Protokoll am realen Gerät verifiziert (Deye SUN-M80G3 mit integriertem Logger). Der
-  Frame-Aufbau wurde gegen einen Referenz-Testvektor byteweise gegengeprüft:
-  `a517001045010098593ae90200000000000000000000000000000103003b001035cbd215`
-  (SN `0xE93A5998`, Sequenz 1, Slave 1, FC 3, Start `0x003B`, Count 16).
-- Request- und Response-Payload sind **asymmetrisch** (15 bzw. 14 Byte vor dem RTU-Frame).
-- UDP-Discovery auf Port 48899 existiert bei diesem Logger nicht; die Seriennummer wird
-  stattdessen aus dem Antwort-Header gelesen.
-- Der Client ist als **nicht-blockierende Zustandsmaschine** auf rohen lwIP-Sockets
-  (`O_NONBLOCK`, `EINPROGRESS` + `select()` mit Timeout 0) umgesetzt. `poll()` kehrt immer
-  sofort zurück, damit der KNX-Stack sein Timing behält — ohne zusätzliche Abhängigkeit.
-- Nur IPv4-Literale, keine Hostnamen (Namensauflösung würde blockieren).
-- `SolarmanPVModule` (Phase 1): Modulrumpf mit ETS-Grundkonfiguration (IP, Port, Slave-ID,
-  Abfrageintervall, optionale Seriennummer), Status-KO „Wechselrichter erreichbar" und den
-  Diagnosebefehlen `spv` und `spvread`.
-- In OAM-NetworkService eingebunden: `ModuleType 28`, `KoSingleOffset 809`,
-  `openknx.addModule(11, …)`. Kompiliert für `release_REG1_LAN_TP_BASE`.
-
-### Changed (Kanalmodell)
-- Umbau auf ein **Kanalmodell**: ein Kanal = ein Gerät, 6 Kanäle. Transport (Solarman V5 /
-  Modbus TCP) und Geräteprofil werden je Kanal gewählt; die Gerätekonfiguration ist von der
-  `share.xml` in eine Kanalvorlage gewandert. **Verschiebt alle KO-Nummern** (jetzt 809–916,
-  18 KOs je Kanal).
-- Die 17 Messwert-KOs je Kanal sind profilabhängig belegt: `ComObjectRef` überschreibt Name,
-  `ObjectSize` und `DatapointType`, sodass Slot 1 beim Deye „Wirkleistung" (DPT 14.056) und
-  beim Pylontech „Ladezustand" (DPT 5.001) ist — ohne zusätzliche KO-Nummern.
-- `spvread` erwartet jetzt zusätzlich die Gerätenummer: `spvread <Gerät> <StartHex> [AnzahlHex]`.
+### Breaking
+- **Kanalauswahl nach OpenKNX-Standard.** Der Schieberegler „Aktive Geräte" und der Tab
+  „(mehr)" entfallen. Geräte werden auf der neuen Seite **Kanalauswahl** einzeln aktiviert
+  (neuer Parameter je Kanal, Parameterblock wächst von 364 auf 365 Byte).
+  **Bestehende Projekte: Applikation in der ETS aktualisieren, die genutzten Geräte in der
+  Kanalauswahl aktivieren und das Gerät neu programmieren.**
 
 ### Added
-- Profil **Pylontech Force H3** (12 Werte, Register ab 5120), am Gerät verifiziert.
-- Transport **Modbus TCP** (MBAP-Header) neben Solarman V5.
+- Seite **Kanalauswahl** (je Gerät eine Tabellenzeile: Kanal, Kanalaktivität,
+  Beschreibung). Deaktivierte Geräte erscheinen nicht im ETS-Baum und werden von der
+  Firmware nicht angelegt.
+- „In Zielgerät übernehmen" im Assistenten aktiviert ein deaktiviertes Zielgerät.
+- VS-Code-Task „OpenKNXproducer Documentation" (`.vscode/tasks.json`) erzeugt die
+  Hilfetexte aus der Applikationsbeschreibung.
 
-### Added (Doku und Ausbaureserve)
-- Applikationsbeschreibung mit 12 Hilfetexten, `createDoc.ps1` und `HelpContext`-Verweisen.
-  Die Verweise stehen im Template-Generator, damit sie eine Neugenerierung überleben.
-- Geräteprofil und Transportprotokoll werden als **Dropdown** dargestellt (`UIHint="DropDown"`),
-  da die Profilliste mit jedem unterstützten Gerät wächst.
-- **Ausbaureserve:** 24 Messwert-Slots je Kanal (statt 17) und fest reservierte Enable-Bits
-  für 10 Geräteprofile (Byte 56–85). Ein neues Profil verschiebt dadurch weder
-  Parameteradressen noch KO-Nummern — es braucht nur eine Registertabelle, einen Eintrag in
-  `profileFor()`, einen in der Generator-Profilliste und eine Enum-Zeile.
-  KO-Block je Kanal jetzt 25 (1 Status + 24 Messwerte), Obergrenze 958.
+### Changed
+- Geräte-Tab beginnt mit „Kanaldefinition"; das Feld „Bezeichnung" heißt jetzt
+  „Beschreibung".
+
+### Removed
+- Hilfetext „Geräteauswahl" (ersetzt durch die OpenKNX-Hilfe zur Kanalauswahl).
+
+## 0.3.0 - 2026-07-31
 
 ### Changed (Messwerttabelle statt einkompilierter Profile)
 
@@ -241,3 +214,56 @@ nutzt OFM-ConfigTransfer.
   Dateinamen transliteriert.
 - Die Hilfetexte enthalten **keine Markdown-Tabellen** mehr; die ETS stellt sie als rohe
   Pipe-Zeichen dar.
+
+## 0.2.0
+
+Alles bis einschließlich dieser Fassung ist noch nicht veröffentlicht; die Abschnitte sind
+chronologisch nach Entstehung geordnet.
+
+### Added
+- `SolarmanV5Client`: TCP-Client mit Solarman-V5-Framing, Modbus RTU (FC 3/4) und CRC-16.
+  Bewusst KNX-frei gehalten, damit die Übersetzungseinheit unabhängig testbar bleibt.
+- `discoverSerial()`: ermittelt die Logger-Seriennummer automatisch aus dem Antwort-Header.
+
+### Notes
+- Protokoll am realen Gerät verifiziert (Deye SUN-M80G3 mit integriertem Logger). Der
+  Frame-Aufbau wurde gegen einen Referenz-Testvektor byteweise gegengeprüft:
+  `a517001045010098593ae90200000000000000000000000000000103003b001035cbd215`
+  (SN `0xE93A5998`, Sequenz 1, Slave 1, FC 3, Start `0x003B`, Count 16).
+- Request- und Response-Payload sind **asymmetrisch** (15 bzw. 14 Byte vor dem RTU-Frame).
+- UDP-Discovery auf Port 48899 existiert bei diesem Logger nicht; die Seriennummer wird
+  stattdessen aus dem Antwort-Header gelesen.
+- Der Client ist als **nicht-blockierende Zustandsmaschine** auf rohen lwIP-Sockets
+  (`O_NONBLOCK`, `EINPROGRESS` + `select()` mit Timeout 0) umgesetzt. `poll()` kehrt immer
+  sofort zurück, damit der KNX-Stack sein Timing behält — ohne zusätzliche Abhängigkeit.
+- Nur IPv4-Literale, keine Hostnamen (Namensauflösung würde blockieren).
+- `SolarmanPVModule` (Phase 1): Modulrumpf mit ETS-Grundkonfiguration (IP, Port, Slave-ID,
+  Abfrageintervall, optionale Seriennummer), Status-KO „Wechselrichter erreichbar" und den
+  Diagnosebefehlen `spv` und `spvread`.
+- In OAM-NetworkService eingebunden: `ModuleType 28`, `KoSingleOffset 809`,
+  `openknx.addModule(11, …)`. Kompiliert für `release_REG1_LAN_TP_BASE`.
+
+### Changed (Kanalmodell)
+- Umbau auf ein **Kanalmodell**: ein Kanal = ein Gerät, 6 Kanäle. Transport (Solarman V5 /
+  Modbus TCP) und Geräteprofil werden je Kanal gewählt; die Gerätekonfiguration ist von der
+  `share.xml` in eine Kanalvorlage gewandert. **Verschiebt alle KO-Nummern** (jetzt 809–916,
+  18 KOs je Kanal).
+- Die 17 Messwert-KOs je Kanal sind profilabhängig belegt: `ComObjectRef` überschreibt Name,
+  `ObjectSize` und `DatapointType`, sodass Slot 1 beim Deye „Wirkleistung" (DPT 14.056) und
+  beim Pylontech „Ladezustand" (DPT 5.001) ist — ohne zusätzliche KO-Nummern.
+- `spvread` erwartet jetzt zusätzlich die Gerätenummer: `spvread <Gerät> <StartHex> [AnzahlHex]`.
+
+### Added
+- Profil **Pylontech Force H3** (12 Werte, Register ab 5120), am Gerät verifiziert.
+- Transport **Modbus TCP** (MBAP-Header) neben Solarman V5.
+
+### Added (Doku und Ausbaureserve)
+- Applikationsbeschreibung mit 12 Hilfetexten, `createDoc.ps1` und `HelpContext`-Verweisen.
+  Die Verweise stehen im Template-Generator, damit sie eine Neugenerierung überleben.
+- Geräteprofil und Transportprotokoll werden als **Dropdown** dargestellt (`UIHint="DropDown"`),
+  da die Profilliste mit jedem unterstützten Gerät wächst.
+- **Ausbaureserve:** 24 Messwert-Slots je Kanal (statt 17) und fest reservierte Enable-Bits
+  für 10 Geräteprofile (Byte 56–85). Ein neues Profil verschiebt dadurch weder
+  Parameteradressen noch KO-Nummern — es braucht nur eine Registertabelle, einen Eintrag in
+  `profileFor()`, einen in der Generator-Profilliste und eine Enum-Zeile.
+  KO-Block je Kanal jetzt 25 (1 Status + 24 Messwerte), Obergrenze 958.
