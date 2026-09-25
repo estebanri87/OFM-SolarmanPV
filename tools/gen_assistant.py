@@ -118,43 +118,43 @@ A('            </ParameterTypes>')
 A('            <Parameters>')
 A('              <Union SizeInBit="256">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, IP_OFFSET))
-A('                <Parameter Id="%s" Name="AsstIp" ParameterType="%sAID%s_PT-SPVString32" Offset="0" BitOffset="0" Text="IP-Adresse" Value="" />' % (gid(1), P, P))
+A('                <Parameter Id="%s" Name="AsstIp" ParameterType="%sAID%s_PT-SPVString32" Offset="0" BitOffset="0" Text="IP-Adresse" Value="" op:configTransfer="never" />' % (gid(1), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="16">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, PORT_OFFSET))
-A('                <Parameter Id="%s" Name="AsstPort" ParameterType="%sAID%s_PT-SPVPort" Offset="0" BitOffset="0" Text="Port" Value="8899" />' % (gid(2), P, P))
+A('                <Parameter Id="%s" Name="AsstPort" ParameterType="%sAID%s_PT-SPVPort" Offset="0" BitOffset="0" Text="Port" Value="8899" op:configTransfer="never" />' % (gid(2), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="8">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, SLAVE_OFFSET))
-A('                <Parameter Id="%s" Name="AsstSlaveId" ParameterType="%sAID%s_PT-SPVSlaveId" Offset="0" BitOffset="0" Text="Modbus-Slave-ID" Value="1" />' % (gid(3), P, P))
+A('                <Parameter Id="%s" Name="AsstSlaveId" ParameterType="%sAID%s_PT-SPVSlaveId" Offset="0" BitOffset="0" Text="Modbus-Slave-ID" Value="1" op:configTransfer="never" />' % (gid(3), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="16">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, STARTREG_OFFSET))
-A('                <Parameter Id="%s" Name="AsstStartReg" ParameterType="%sAID%s_PT-SPVRegister" Offset="0" BitOffset="0" Text="ab Register" Value="0" />' % (gid(4), P, P))
+A('                <Parameter Id="%s" Name="AsstStartReg" ParameterType="%sAID%s_PT-SPVRegister" Offset="0" BitOffset="0" Text="ab Register" Value="0" op:configTransfer="never" />' % (gid(4), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="8">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, COUNT_OFFSET))
-A('                <Parameter Id="%s" Name="AsstReadCount" ParameterType="%sAID%s_PT-SPVReadCount" Offset="0" BitOffset="0" Text="Anzahl Register" Value="16" />' % (gid(5), P, P))
+A('                <Parameter Id="%s" Name="AsstReadCount" ParameterType="%sAID%s_PT-SPVReadCount" Offset="0" BitOffset="0" Text="Anzahl Register" Value="16" op:configTransfer="never" />' % (gid(5), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="8">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, RESULT_TRANSPORT))
-A('                <Parameter Id="%s" Name="AsstTransport" ParameterType="%sAID%s_PT-SPVTransport" Offset="0" BitOffset="0" Text="erkannter Transport" Value="0" />' % (gid(6), P, P))
+A('                <Parameter Id="%s" Name="AsstTransport" ParameterType="%sAID%s_PT-SPVTransport" Offset="0" BitOffset="0" Text="erkannter Transport" Value="0" op:configTransfer="never" />' % (gid(6), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="8">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, TARGET_CHANNEL))
-A('                <Parameter Id="%s" Name="AsstTargetChannel" ParameterType="%sAID%s_PT-SPVTargetChannel" Offset="0" BitOffset="0" Text="Zielgerät" Value="1" />' % (gid(8), P, P))
+A('                <Parameter Id="%s" Name="AsstTargetChannel" ParameterType="%sAID%s_PT-SPVTargetChannel" Offset="0" BitOffset="0" Text="Zielgerät" Value="1" op:configTransfer="never" />' % (gid(8), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="8">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, ROW_COUNT))
-A('                <Parameter Id="%s" Name="AsstRowCount" ParameterType="%sAID%s_PT-SPVRowCount" Offset="0" BitOffset="0" Text="gelesene Zeilen" Value="0" />' % (gid(9), P, P))
+A('                <Parameter Id="%s" Name="AsstRowCount" ParameterType="%sAID%s_PT-SPVRowCount" Offset="0" BitOffset="0" Text="gelesene Zeilen" Value="0" op:configTransfer="never" />' % (gid(9), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="128">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, RESULT_SERIAL))
-A('                <Parameter Id="%s" Name="AsstSerial" ParameterType="%sAID%s_PT-SPVString16" Offset="0" BitOffset="0" Text="Seriennummer" Value="" />' % (gid(10), P, P))
+A('                <Parameter Id="%s" Name="AsstSerial" ParameterType="%sAID%s_PT-SPVString16" Offset="0" BitOffset="0" Text="Seriennummer" Value="" op:configTransfer="never" />' % (gid(10), P, P))
 A('              </Union>')
 A('              <Union SizeInBit="384">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, RESULT_TEXT))
-A('                <Parameter Id="%s" Name="AsstResultText" ParameterType="%sAID%s_PT-SPVString48" Offset="0" BitOffset="0" Text="Ergebnis" Value="" />' % (gid(7), P, P))
+A('                <Parameter Id="%s" Name="AsstResultText" ParameterType="%sAID%s_PT-SPVString48" Offset="0" BitOffset="0" Text="Ergebnis" Value="" op:configTransfer="never" />' % (gid(7), P, P))
 A('              </Union>')
 A('              <!-- Messtabelle, Byte %d-%d: %d Zeilen a %d Byte. Existiert nur EINMAL -->' % (TABLE_OFFSET, BLOCK_END - 1, len(SLOTS), ROW_BYTES))
 A('              <Union SizeInBit="%d">' % (len(SLOTS) * ROW_BYTES * 8))
@@ -162,19 +162,19 @@ A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID
 for r in range(len(SLOTS)):
     reg, raw, mean, typ, sca, off, ref = row_ids(r)
     b = r * ROW_BYTES
-    A('                <Parameter Id="%s" Name="AsstReg%02d" ParameterType="%sAID%s_PT-SPVRegister" Offset="%d" BitOffset="0" Text="Register" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstReg%02d" ParameterType="%sAID%s_PT-SPVRegister" Offset="%d" BitOffset="0" Text="Register" Value="0" op:configTransfer="never" />'
       % (gid(reg), r, P, P, b))
-    A('                <Parameter Id="%s" Name="AsstRaw%02d" ParameterType="%sAID%s_PT-SPVRawValue" Offset="%d" BitOffset="0" Text="Rohwert" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstRaw%02d" ParameterType="%sAID%s_PT-SPVRawValue" Offset="%d" BitOffset="0" Text="Rohwert" Value="0" op:configTransfer="never" />'
       % (gid(raw), r, P, P, b + 2))
-    A('                <Parameter Id="%s" Name="AsstMeaning%02d" ParameterType="%sAID%s_PT-SPVMeaning" Offset="%d" BitOffset="0" Text="Bedeutung" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstMeaning%02d" ParameterType="%sAID%s_PT-SPVMeaning" Offset="%d" BitOffset="0" Text="Bedeutung" Value="0" op:configTransfer="never" />'
       % (gid(mean), r, P, P, b + 4))
-    A('                <Parameter Id="%s" Name="AsstType%02d" ParameterType="%sAID%s_PT-SPVDataType" Offset="%d" BitOffset="0" Text="Datentyp" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstType%02d" ParameterType="%sAID%s_PT-SPVDataType" Offset="%d" BitOffset="0" Text="Datentyp" Value="0" op:configTransfer="never" />'
       % (gid(typ), r, P, P, b + 5))
-    A('                <Parameter Id="%s" Name="AsstScale%02d" ParameterType="%sAID%s_PT-SPVScale" Offset="%d" BitOffset="3" Text="Skalierung" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstScale%02d" ParameterType="%sAID%s_PT-SPVScale" Offset="%d" BitOffset="3" Text="Skalierung" Value="0" op:configTransfer="never" />'
       % (gid(sca), r, P, P, b + 5))
-    A('                <Parameter Id="%s" Name="AsstOffset%02d" ParameterType="%sAID%s_PT-SPVOffset" Offset="%d" BitOffset="0" Text="Offset" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstOffset%02d" ParameterType="%sAID%s_PT-SPVOffset" Offset="%d" BitOffset="0" Text="Offset" Value="0" op:configTransfer="never" />'
       % (gid(off), r, P, P, b + 6))
-    A('                <Parameter Id="%s" Name="AsstRef%02d" ParameterType="%sAID%s_PT-SPVReference" Offset="%d" BitOffset="0" Text="abgelesener Wert" Value="0" />'
+    A('                <Parameter Id="%s" Name="AsstRef%02d" ParameterType="%sAID%s_PT-SPVReference" Offset="%d" BitOffset="0" Text="abgelesener Wert" Value="0" op:configTransfer="never" />'
       % (gid(ref), r, P, P, b + 8))
 A('              </Union>')
 A('            </Parameters>')

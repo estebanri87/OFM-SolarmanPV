@@ -24,6 +24,12 @@
 ### Removed
 - Hilfetext „Geräteauswahl" (ersetzt durch die OpenKNX-Hilfe zur Kanalauswahl).
 
+### Fixed
+- **Konfigurationstransfer:** Der Export der Basiseinstellungen brach mit 458 Fehlern ab
+  (`[ERR@SPV_AsstIp] … Schlüssel nicht im Wörterbuch`). Die Parameter der Assistentenseite
+  sind reine Arbeitsdaten und werden jetzt per `op:configTransfer="never"` vom Transfer
+  ausgenommen.
+
 ## 0.3.0 - 2026-07-31
 
 ### Changed (Messwerttabelle statt einkompilierter Profile)
