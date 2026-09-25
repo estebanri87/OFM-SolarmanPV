@@ -435,6 +435,9 @@ function spvBtnApply(device, online, progress, context) {
         taken++;
     }
 
+    // Zielgeraet aktivieren, sonst bliebe die uebernommene Tabelle unsichtbar.
+    device.getParameterByName(prefix + "Active").value = 1;
+
     // Verbindungsdaten mitnehmen: gemessen wurde ja genau dieses Geraet.
     device.getParameterByName(prefix + "LoggerIp").value =
         device.getParameterByName("SPV_AsstIp").value;

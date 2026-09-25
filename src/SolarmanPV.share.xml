@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
-  <op:config name="%SPV_NumChannelsDefault%" value="2" />
   <!-- Hilfsfunktionen des Skripts: sie werden aus anderen Funktionen aufgerufen, nicht aus
        einem EventHandler der XML. Ohne diese Ausnahmen meldet der Producer WARN 003. -->
   <op:nowarn id="3" regex="spvSleep" />
@@ -16,8 +15,12 @@
         <ApplicationProgram>
           <Static>
             <ParameterTypes>
-              <ParameterType Id="%AID%_PT-SPVNumChannels" Name="SPVNumChannels">
-                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
+              <!-- Kanalauswahl: Gerät deaktiviert/aktiviert (1 Bit, ETS zeigt Radio-Buttons) -->
+              <ParameterType Id="%AID%_PT-SPVChannelActive" Name="SPVChannelActive">
+                <TypeRestriction Base="Value" SizeInBit="1">
+                  <Enumeration Text="Deaktiviert" Value="0" Id="%AID%_PT-SPVChannelActive_EN-0" />
+                  <Enumeration Text="Aktiviert"   Value="1" Id="%AID%_PT-SPVChannelActive_EN-1" />
+                </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-SPVString32" Name="SPVString32">
                 <TypeText SizeInBit="256" />
@@ -95,14 +98,9 @@
               </ParameterType>
             </ParameterTypes>
             <Parameters>
-              <Union SizeInBit="8">
-                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%00000" Name="SPVVisibleChannels" ParameterType="%AID%_PT-SPVNumChannels" Offset="0" BitOffset="0" Text="Aktive Geräte" Value="%SPV_NumChannelsDefault%" SuffixText=" von %N%" />
-              </Union>
               <op:include href="SolarmanPV.assistant.parts.xml" xpath="//Parameters/*" prefix="SPV" />
             </Parameters>
             <ParameterRefs>
-              <ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
               <op:include href="SolarmanPV.assistant.parts.xml" xpath="//ParameterRefs/*" prefix="SPV" />
             </ParameterRefs>
             <ComObjectTable />
@@ -118,20 +116,27 @@
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Ein Solarman-Logger verträgt nur einen Client. Läuft parallel eine andere Abfrage (etwa Home Assistant), liefert das Gerät unvollständige oder fremde Antworten." UIHint="Information" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Geräteauswahl" UIHint="Headline" />
-                <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="SPV-Geraeteauswahl" />
               </ParameterBlock>
               <op:include href="SolarmanPV.assistant.parts.xml" xpath="//Dynamic/Channel/*" prefix="SPV" />
-              <op:include href="SolarmanPV.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SPV" IsInner="true" />
-              <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-                <when test="&lt;%N%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="SPVAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Geräteauswahl" UIHint="Headline" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
-                  </ParameterBlock>
-                </when>
-              </choose>
+              <!-- Kanalauswahl: je Gerät eine einzeilige Tabelle (OpenKNX-Standard) -->
+              <ParameterBlock Id="%AID%_PB-nnn" Name="SPVChannelSelect" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="BASE-ChannelSelect">
+                <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Width="15%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Width="35%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Width="50%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" UIHint="Headline" Text="Kanal" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,2" UIHint="Headline" Text="Kanalaktivität" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,3" UIHint="Headline" Text="Beschreibung" />
+                </ParameterBlock>
+                <op:include href="SolarmanPV.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Settings']/*" type="template" prefix="SPV" IsInner="true" />
+              </ParameterBlock>
+              <!-- Geräte-Tabs (nur aktivierte Geräte) -->
+              <op:include href="SolarmanPV.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel']/*" type="template" prefix="SPV" IsInner="true" />
             </Channel>
           </Dynamic>
         </ApplicationProgram>

@@ -12,7 +12,9 @@ Das Modul liest Wechselrichter und Batteriespeicher, die einen **Solarman-Logger
 Keine Cloud, kein Konto, keine Abfragegrenzen — die Werte stehen im Sekundenbereich zur
 Verfügung und eignen sich damit auch für Überschussregelung und Laststeuerung.
 
-Je Kanal wird **ein Gerät** angebunden. Kanal und Gerät sind dasselbe.
+Je Kanal wird **ein Gerät** angebunden. Kanal und Gerät sind dasselbe. Geräte werden auf
+der Seite **Kanalauswahl** aktiviert; nur aktivierte Geräte erscheinen im ETS-Baum und
+werden von der Firmware abgefragt.
 
 ## Wichtige Hinweise
 
@@ -24,16 +26,10 @@ Je Kanal wird **ein Gerät** angebunden. Kanal und Gerät sind dasselbe.
 <!-- DOC -->
 ## Allgemein
 
-Auf dieser Seite wird nur festgelegt, wie viele Geräte angebunden werden. Die eigentliche
-Konfiguration erfolgt je Gerät auf einer eigenen Seite.
-
-<!-- DOCEND -->
-
-<!-- DOC -->
-## Geräteauswahl
-
-**Aktive Geräte** (0–6): Anzahl der eingeblendeten Geräteseiten. Jedes Gerät bekommt eine
-eigene Verbindung, ein eigenes Profil und einen eigenen Satz Kommunikationsobjekte.
+Die Seite zeigt die Modulversion und den Hinweis zum Logger-Betrieb. Welche Geräte
+angebunden werden, wird auf der Seite **Kanalauswahl** festgelegt: je Gerät „Deaktiviert"
+oder „Aktiviert" sowie eine Beschreibung. Jedes aktivierte Gerät bekommt eine eigene Seite
+mit eigener Verbindung, eigenem Profil und eigenem Satz Kommunikationsobjekte.
 
 <!-- DOCEND -->
 
@@ -114,7 +110,7 @@ des Ablesens gestiegener Wert führt zu einer Kombination, die zufällig passt �
 
 **5. Übernehmen.** Zielgerät wählen und übernehmen. Es wandert **alles** von dieser Seite in
 das Gerät: IP-Adresse, Port, Slave-ID, Transport, Seriennummer und jede zugeordnete Zeile. Auf
-der Geräteseite ist nichts nachzutragen. Dessen bisherige Messwerttabelle wird dabei
+der Geräteseite ist nichts nachzutragen; ein deaktiviertes Zielgerät wird dabei aktiviert. Dessen bisherige Messwerttabelle wird dabei
 **vollständig überschrieben**, und das Geräteprofil wird geleert — die Tabelle stammt nun aus
 der Messung, kein Profilname soll etwas anderes behaupten.
 

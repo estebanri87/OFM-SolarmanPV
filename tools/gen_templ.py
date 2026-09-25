@@ -30,7 +30,8 @@ TABLE_OFFSET = 57        # 64 Zeilen a 4 Byte
 ROW_BYTES = 4
 SEND_OFFSET = TABLE_OFFSET + len(SLOTS) * ROW_BYTES   # 313
 MSG_OFFSET = SEND_OFFSET + 3                          # 316: Meldungstext von "Profil laden"
-BLOCK_BYTES = MSG_OFFSET + 48
+ACTIVE_OFFSET = MSG_OFFSET + 48                       # 364: Kanal aktiviert (Kanalauswahl)
+BLOCK_BYTES = ACTIVE_OFFSET + 1
 
 # Parameternummern
 ROW_BASE = 200       # je Zeile 5 Parameter: Register, Datentyp, Skalierung, Offset, aktiv
@@ -80,7 +81,7 @@ A('        <ApplicationProgram>')
 A('          <Static>')
 A('            <Parameters>')
 A('              <!-- Ein Kanal = ein Gerät (Wechselrichter oder Batteriespeicher). -->')
-A('              <Parameter Id="%s" Name="Device%sName" ParameterType="%sAID%s_PT-Text40Byte" Text="Bezeichnung" Value="" />' % (NAME, CH, P, P))
+A('              <Parameter Id="%s" Name="Device%sName" ParameterType="%sAID%s_PT-Text40Byte" Text="Beschreibung" Value="" />' % (NAME, CH, P, P))
 A('              <!-- Nur IPv4-Literale: eine Namensaufloesung wuerde blockieren. -->')
 A('              <Union SizeInBit="256">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, IP_OFFSET))
@@ -153,10 +154,15 @@ A('              <Union SizeInBit="384">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, MSG_OFFSET))
 A('                <Parameter Id="%s" Name="CH%sProfileMsg" ParameterType="%sAID%s_PT-SPVString48" Offset="0" BitOffset="0" Text="Meldung" Value="" />' % (uid(53), CH, P, P))
 A('              </Union>')
+A('              <!-- Kanalauswahl: Gerät aktiviert (Byte %d) -->' % ACTIVE_OFFSET)
+A('              <Union SizeInBit="8">')
+A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, ACTIVE_OFFSET))
+A('                <Parameter Id="%s" Name="CH%sActive" ParameterType="%sAID%s_PT-SPVChannelActive" Offset="0" BitOffset="0" Text="Kanalaktivität" Value="0" />' % (uid(54), CH, P, P))
+A('              </Union>')
 A('            </Parameters>')
 A('            <ParameterRefs>')
 A('              <ParameterRef Id="%s" RefId="%s" />' % (NAMEREF, NAME))
-nums = list(range(1, 10)) + [50, 51, 52, 53]
+nums = list(range(1, 10)) + [50, 51, 52, 53, 54]
 for r in range(len(SLOTS)):
     nums += list(row_ids(r))
 for n in nums:
@@ -178,16 +184,33 @@ A('            </ComObjectRefs>')
 A('          </Static>')
 A('          <Dynamic>')
 A('            <ChannelIndependentBlock>')
-A('              <choose ParamRefId="%sAID%s_UP-%sTT%s00000_R-%sTT%s0000001">' % (P, P, P, P, P, P))
-A('                <when test="&gt;=%s">' % CH)
+# Block 1: eine Zeile der Kanalauswahl-Tabelle (eigene Inline-Tabelle je Kanal).
+A('              <ParameterBlock Id="%sAID%s_PB-nnn" Name="Settings">' % (P, P))
+A('                <ParameterBlock Id="%sAID%s_PB-nnn" Inline="true" Layout="Grid">' % (P, P))
+A('                  <Rows>')
+A('                    <Row Id="%sAID%s_PB-nnn_R-1" />' % (P, P))
+A('                  </Rows>')
+A('                  <Columns>')
+A('                    <Column Id="%sAID%s_PB-nnn_C-1" Width="15%s" />' % (P, P, P))
+A('                    <Column Id="%sAID%s_PB-nnn_C-2" Width="35%s" />' % (P, P, P))
+A('                    <Column Id="%sAID%s_PB-nnn_C-3" Width="50%s" />' % (P, P, P))
+A('                  </Columns>')
+A('                  <ParameterSeparator Id="%s" Cell="1,1" Text="Gerät %s" />' % (PS, CH))
+A('                  <ParameterRefRef RefId="%s" Cell="1,2" HelpContext="BASE-ChannelSelect" />' % uref(54))
+A('                  <ParameterRefRef RefId="%s" Cell="1,3" HelpContext="BASE-ChannelName" />' % NAMEREF)
+A('                </ParameterBlock>')
+A('              </ParameterBlock>')
+# Block 2: Geräte-Tab, nur fuer aktivierte Kanaele.
+A('              <ParameterBlock Id="%sAID%s_PB-nnn" Name="Channel">' % (P, P))
+A('              <choose ParamRefId="%s">' % uref(54))
+A('                <when test="=1">')
 A('                  <ParameterBlock Id="%sAID%s_PB-nnn" Name="f%sCC%sSPV" Text="Gerät %s: {{0: ...}}" TextParameterRefId="%s" Icon="white-balance-sunny" ShowInComObjectTree="true" HelpContext="SPV-Geraeteprofil">' % (P, P, P, P, CH, NAMEREF))
-A('                    <ParameterSeparator Id="%s" Text="Gerät %s" UIHint="Headline" />' % (PS, CH))
-A('                    <ParameterRefRef RefId="%s" />' % NAMEREF)
+A('                    <ParameterSeparator Id="%s" Text="Kanaldefinition" UIHint="Headline" />' % PS)
+A('                    <ParameterRefRef RefId="%s" HelpContext="BASE-ChannelName" />' % NAMEREF)
 A('                    <ParameterRefRef RefId="%s" HelpContext="SPV-Geraeteprofil" />' % uref(4))
 A('                    <Button Id="%sAID%s_B-%sTT%s%sCC%s001" Text="Profil in Tabelle übernehmen" EventHandler="spvBtnLoadProfile" EventHandlerParameters="{ &quot;channel&quot;:&quot;%s&quot; }" />'
   % (P, P, P, P, P, P, CH))
 A('                    <ParameterSeparator Id="%s" Text="{{0:}}" TextParameterRefId="%s" />' % (PS, uref(53)))
-A('                    <ParameterSeparator Id="%s" Text="" UIHint="HorizontalRuler" />' % PS)
 A('                    <ParameterSeparator Id="%s" Text="Verbindung" UIHint="Headline" />' % PS)
 HELP_CONN = {1: "SPV-Verbindung", 2: "SPV-Verbindung", 3: "SPV-Transportprotokoll", 7: "SPV-Verbindung"}
 for n in (1, 2, 3, 7):
@@ -257,6 +280,7 @@ assert slot_index == len(SLOTS)
 A('                  </ParameterBlock>')
 A('                </when>')
 A('              </choose>')
+A('              </ParameterBlock>')
 A('            </ChannelIndependentBlock>')
 A('          </Dynamic>')
 A('        </ApplicationProgram>')

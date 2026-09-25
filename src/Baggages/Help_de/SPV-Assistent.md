@@ -61,7 +61,7 @@ des Ablesens gestiegener Wert führt zu einer Kombination, die zufällig passt �
 
 **5. Übernehmen.** Zielgerät wählen und übernehmen. Es wandert **alles** von dieser Seite in
 das Gerät: IP-Adresse, Port, Slave-ID, Transport, Seriennummer und jede zugeordnete Zeile. Auf
-der Geräteseite ist nichts nachzutragen. Dessen bisherige Messwerttabelle wird dabei
+der Geräteseite ist nichts nachzutragen; ein deaktiviertes Zielgerät wird dabei aktiviert. Dessen bisherige Messwerttabelle wird dabei
 **vollständig überschrieben**, und das Geräteprofil wird geleert — die Tabelle stammt nun aus
 der Messung, kein Profilname soll etwas anderes behaupten.
 
