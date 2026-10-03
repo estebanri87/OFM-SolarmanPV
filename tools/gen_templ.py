@@ -176,9 +176,9 @@ for k, (name, label, dpt, size) in enumerate(SLOTS, start=1):
       % (oid(k), P, k, P, CH, name, size, dpt))
 A('            </ComObjectTable>')
 A('            <ComObjectRefs>')
-A('              <ComObjectRef Id="%s" RefId="%s" Text="{{0:Gerät %s}}: erreichbar" FunctionText="Gerät %s: Status" TextParameterRefId="%s" />' % (oref(0), oid(0), CH, CH, NAMEREF))
+A('              <ComObjectRef Id="%s" RefId="%s" Text="{{0:Solarman %s}}: erreichbar" FunctionText="Solarman %s: Ausgang, Status" TextParameterRefId="%s" />' % (oref(0), oid(0), CH, CH, NAMEREF))
 for k, (name, label, _, _) in enumerate(SLOTS, start=1):
-    A('              <ComObjectRef Id="%s" RefId="%s" Text="{{0:Gerät %s}}: %s" FunctionText="Gerät %s: %s" TextParameterRefId="%s" />'
+    A('              <ComObjectRef Id="%s" RefId="%s" Text="{{0:Solarman %s}}: %s" FunctionText="Solarman %s: Ausgang, %s" TextParameterRefId="%s" />'
       % (oref(k), oid(k), CH, label, CH, label, NAMEREF))
 A('            </ComObjectRefs>')
 A('          </Static>')

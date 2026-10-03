@@ -7,6 +7,10 @@
   bleibt vollständig parametriert, wird aber nicht abgefragt — hilfreich bei der Fehlersuche.
   Suspendierte Kanäle tragen im ETS-Baum ein **⛔** vor der Beschreibung.
 
+### Changed
+- Objektfunktionen zeigen Eingang/Ausgang: „Solarman %C%: Ausgang, Messwert“. Kanalobjekte heißen
+  „Solarman %C%“ statt „Gerät %C%“ (eindeutig neben anderen Modulen).
+
 ## 0.4.0 - 2026-09-25
 
 ### Breaking
