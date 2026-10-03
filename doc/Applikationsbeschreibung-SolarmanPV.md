@@ -145,6 +145,13 @@ ausfüllen oder vom Assistenten ermitteln. Eine Firmware-Änderung ist dafür ni
 
 <!-- DOCEND -->
 
+## Suspendiert
+
+Legt ein fertig parametriertes Gerät still: Der Kanal bleibt mit allen Einstellungen und
+Verknüpfungen erhalten, wird von der Firmware aber nicht angelegt und damit nicht abgefragt.
+Suspendierte Kanäle tragen im ETS-Baum ein ⛔ vor der Beschreibung. Ausführlich beschrieben ist
+der Parameter in der gemeinsamen Hilfeseite *Suspendiert*.
+
 <!-- DOC -->
 ## Verbindung
 

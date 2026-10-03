@@ -24,9 +24,9 @@ const std::string SolarmanPVModule::version()
 
 OpenKNX::Channel* SolarmanPVModule::createChannel(uint8_t _channelIndex /* in Makros verwendet */)
 {
-    // Nur aktivierte Geraete anlegen. Deaktivierte Kanaele sind in der ETS nicht sichtbar
-    // und haben keine gueltige Konfiguration.
-    if (!ParamSPV_CHActive)
+    // Nur aktivierte, nicht suspendierte Geraete anlegen. Deaktivierte Kanaele sind in der
+    // ETS nicht sichtbar und haben keine gueltige Konfiguration.
+    if (!ParamSPV_CHActive || ParamSPV_CHSuspended)
         return nullptr;
     return new SolarmanChannel(_channelIndex);
 }

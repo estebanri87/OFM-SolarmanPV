@@ -1,5 +1,12 @@
 # Changelog OFM-SolarmanPV
 
+## 0.5.0 - 2026-09-28
+
+### Added
+- Kanal-Parameter **Suspendiert** (Nein/Ja) im Kanaldefinitions-Block jedes Geräts. Das Gerät
+  bleibt vollständig parametriert, wird aber nicht abgefragt — hilfreich bei der Fehlersuche.
+  Suspendierte Kanäle tragen im ETS-Baum ein **⛔** vor der Beschreibung.
+
 ## 0.4.0 - 2026-09-25
 
 ### Breaking

@@ -10,6 +10,9 @@
             <Parameters>
               <!-- Ein Kanal = ein Gerät (Wechselrichter oder Batteriespeicher). -->
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Device%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+              <!-- Anzeigename für den Kanal-Tab: Beschreibung, der bei "Suspendiert = Ja"
+                   das Zeichen der Kanalauswahl vorangestellt wird. Nur in der ETS. -->
+              <Parameter Id="%AID%_P-%TT%%CC%998" Name="CH%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
               <!-- Nur IPv4-Literale: eine Namensaufloesung wuerde blockieren. -->
               <Union SizeInBit="256">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
@@ -389,10 +392,11 @@
                 <Memory CodeSegment="%MID%" Offset="316" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%053" Name="CH%C%ProfileMsg" ParameterType="%AID%_PT-SPVString48" Offset="0" BitOffset="0" Text="Meldung" Value="" />
               </Union>
-              <!-- Kanalauswahl: Gerät aktiviert (Byte 364) -->
+              <!-- Kanalauswahl: Gerät aktiviert, Suspendiert (Byte 364) -->
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="364" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%054" Name="CH%C%Active" ParameterType="%AID%_PT-SPVChannelActive" Offset="0" BitOffset="0" Text="Kanalaktivität" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%055" Name="CH%C%Suspended" ParameterType="%AID%_PT-Suspended" Offset="0" BitOffset="1" Text="Suspendiert" Value="0" />
               </Union>
             </Parameters>
             <ParameterRefs>
@@ -731,7 +735,24 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%517_R-%TT%%CC%51701" RefId="%AID%_UP-%TT%%CC%517" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%518_R-%TT%%CC%51801" RefId="%AID%_UP-%TT%%CC%518" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%519_R-%TT%%CC%51901" RefId="%AID%_UP-%TT%%CC%519" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%055_R-%TT%%CC%05501" RefId="%AID%_UP-%TT%%CC%055" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%998_R-%TT%%CC%99801" RefId="%AID%_P-%TT%%CC%998" />
             </ParameterRefs>
+
+            <ParameterCalculations>
+              <!-- Suspendierte Kanäle in der Baumansicht kennzeichnen -->
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%001" Language="JavaScript" Name="MarkInactive%CC%"
+                                    RLTransformationFunc="BASE_MarkInactiveChannel" RLTransformationParameters="{&quot;InactiveValue&quot;:1}"
+                                    LRTransformationFunc="BASE_Nop">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%998_R-%TT%%CC%99801" AliasName="TextOutput" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" AliasName="TextInput" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%055_R-%TT%%CC%05501" AliasName="InactiveControl" />
+                </RParameters>
+              </ParameterCalculation>
+            </ParameterCalculations>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%" Name="CH%C%Reachable" Text="" FunctionText="" ObjectSize="1 Bit" DatapointType="DPST-1-11" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- 64 Messwert-Slots mit fester Bedeutung; Name, Größe und DPT sind statisch. -->
@@ -888,12 +909,13 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="Channel">
               <choose ParamRefId="%AID%_UP-%TT%%CC%054_R-%TT%%CC%05401">
                 <when test="=1">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SPV" Text="Gerät %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="white-balance-sunny" ShowInComObjectTree="true" HelpContext="SPV-Geraeteprofil">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SPV" Text="Gerät %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%998_R-%TT%%CC%99801" Icon="white-balance-sunny" ShowInComObjectTree="true" HelpContext="SPV-Geraeteprofil">
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanaldefinition" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="BASE-ChannelName" />
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="SPV-Geraeteprofil" />
                     <Button Id="%AID%_B-%TT%%CC%001" Text="Profil in Tabelle übernehmen" EventHandler="spvBtnLoadProfile" EventHandlerParameters="{ &quot;channel&quot;:&quot;%C%&quot; }" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="{{0:}}" TextParameterRefId="%AID%_UP-%TT%%CC%053_R-%TT%%CC%05301" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%055_R-%TT%%CC%05501" HelpContext="BASE-ChannelSuspended" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Verbindung" UIHint="Headline" />
                     <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="SPV-Verbindung" />
                     <ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="SPV-Verbindung" />
