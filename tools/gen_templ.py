@@ -67,6 +67,10 @@ def row_ids(r):
 
 NAME = P + "AID" + P + "_P-" + P + "TT" + P + P + "CC" + P + "000"
 NAMEREF = NAME + "_R-" + P + "TT" + P + P + "CC" + P + "00001"
+# Anzeigename des Kanal-Tabs: Beschreibung mit vorangestelltem Zeichen bei "Suspendiert" (nur ETS)
+DISPLAY = P + "AID" + P + "_P-" + P + "TT" + P + P + "CC" + P + "998"
+DISPLAYREF = DISPLAY + "_R-" + P + "TT" + P + P + "CC" + P + "99801"
+SUSPENDED = 55
 
 L = []
 A = L.append
@@ -82,6 +86,9 @@ A('          <Static>')
 A('            <Parameters>')
 A('              <!-- Ein Kanal = ein Gerät (Wechselrichter oder Batteriespeicher). -->')
 A('              <Parameter Id="%s" Name="Device%sName" ParameterType="%sAID%s_PT-Text40Byte" Text="Beschreibung" Value="" />' % (NAME, CH, P, P))
+A('              <!-- Anzeigename für den Kanal-Tab: Beschreibung, der bei "Suspendiert = Ja"')
+A('                   das Zeichen der Kanalauswahl vorangestellt wird. Nur in der ETS. -->')
+A('              <Parameter Id="%s" Name="CH%sNameDisplay" ParameterType="%sAID%s_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />' % (DISPLAY, CH, P, P))
 A('              <!-- Nur IPv4-Literale: eine Namensaufloesung wuerde blockieren. -->')
 A('              <Union SizeInBit="256">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, IP_OFFSET))
@@ -154,10 +161,11 @@ A('              <Union SizeInBit="384">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, MSG_OFFSET))
 A('                <Parameter Id="%s" Name="CH%sProfileMsg" ParameterType="%sAID%s_PT-SPVString48" Offset="0" BitOffset="0" Text="Meldung" Value="" />' % (uid(53), CH, P, P))
 A('              </Union>')
-A('              <!-- Kanalauswahl: Gerät aktiviert (Byte %d) -->' % ACTIVE_OFFSET)
+A('              <!-- Kanalauswahl: Gerät aktiviert, Suspendiert (Byte %d) -->' % ACTIVE_OFFSET)
 A('              <Union SizeInBit="8">')
 A('                <Memory CodeSegment="%s" Offset="%d" BitOffset="0" />' % (MID, ACTIVE_OFFSET))
 A('                <Parameter Id="%s" Name="CH%sActive" ParameterType="%sAID%s_PT-SPVChannelActive" Offset="0" BitOffset="0" Text="Kanalaktivität" Value="0" />' % (uid(54), CH, P, P))
+A('                <Parameter Id="%s" Name="CH%sSuspended" ParameterType="%sAID%s_PT-Suspended" Offset="0" BitOffset="1" Text="Suspendiert" Value="0" />' % (uid(SUSPENDED), CH, P, P))
 A('              </Union>')
 A('            </Parameters>')
 A('            <ParameterRefs>')
@@ -167,7 +175,24 @@ for r in range(len(SLOTS)):
     nums += list(row_ids(r))
 for n in nums:
     A('              <ParameterRef Id="%s" RefId="%s" />' % (uref(n), uid(n)))
+A('              <ParameterRef Id="%s" RefId="%s" />' % (uref(SUSPENDED), uid(SUSPENDED)))
+A('              <ParameterRef Id="%s" RefId="%s" />' % (DISPLAYREF, DISPLAY))
 A('            </ParameterRefs>')
+A('')
+A('            <ParameterCalculations>')
+A('              <!-- Suspendierte Kanäle in der Baumansicht kennzeichnen -->')
+A('              <ParameterCalculation Id="%sAID%s_PC-%sTT%s%sCC%s001" Language="JavaScript" Name="MarkInactive%sCC%s"' % (P, P, P, P, P, P, P, P))
+A('                                    RLTransformationFunc="BASE_MarkInactiveChannel" RLTransformationParameters="{&quot;InactiveValue&quot;:1}"')
+A('                                    LRTransformationFunc="BASE_Nop">')
+A('                <LParameters>')
+A('                  <ParameterRefRef RefId="%s" AliasName="TextOutput" />' % DISPLAYREF)
+A('                </LParameters>')
+A('                <RParameters>')
+A('                  <ParameterRefRef RefId="%s" AliasName="TextInput" />' % NAMEREF)
+A('                  <ParameterRefRef RefId="%s" AliasName="InactiveControl" />' % uref(SUSPENDED))
+A('                </RParameters>')
+A('              </ParameterCalculation>')
+A('            </ParameterCalculations>')
 A('            <ComObjectTable>')
 A('              <ComObject Id="%s" Number="%sK0%s" Name="CH%sReachable" Text="" FunctionText="" ObjectSize="1 Bit" DatapointType="DPST-1-11" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />' % (oid(0), P, P, CH))
 A('              <!-- %d Messwert-Slots mit fester Bedeutung; Name, Größe und DPT sind statisch. -->' % len(SLOTS))
@@ -204,13 +229,14 @@ A('              </ParameterBlock>')
 A('              <ParameterBlock Id="%sAID%s_PB-nnn" Name="Channel">' % (P, P))
 A('              <choose ParamRefId="%s">' % uref(54))
 A('                <when test="=1">')
-A('                  <ParameterBlock Id="%sAID%s_PB-nnn" Name="f%sCC%sSPV" Text="Gerät %s: {{0: ...}}" TextParameterRefId="%s" Icon="white-balance-sunny" ShowInComObjectTree="true" HelpContext="SPV-Geraeteprofil">' % (P, P, P, P, CH, NAMEREF))
+A('                  <ParameterBlock Id="%sAID%s_PB-nnn" Name="f%sCC%sSPV" Text="Gerät %s: {{0: ...}}" TextParameterRefId="%s" Icon="white-balance-sunny" ShowInComObjectTree="true" HelpContext="SPV-Geraeteprofil">' % (P, P, P, P, CH, DISPLAYREF))
 A('                    <ParameterSeparator Id="%s" Text="Kanaldefinition" UIHint="Headline" />' % PS)
 A('                    <ParameterRefRef RefId="%s" HelpContext="BASE-ChannelName" />' % NAMEREF)
 A('                    <ParameterRefRef RefId="%s" HelpContext="SPV-Geraeteprofil" />' % uref(4))
 A('                    <Button Id="%sAID%s_B-%sTT%s%sCC%s001" Text="Profil in Tabelle übernehmen" EventHandler="spvBtnLoadProfile" EventHandlerParameters="{ &quot;channel&quot;:&quot;%s&quot; }" />'
   % (P, P, P, P, P, P, CH))
 A('                    <ParameterSeparator Id="%s" Text="{{0:}}" TextParameterRefId="%s" />' % (PS, uref(53)))
+A('                    <ParameterRefRef RefId="%s" HelpContext="BASE-ChannelSuspended" />' % uref(SUSPENDED))
 A('                    <ParameterSeparator Id="%s" Text="Verbindung" UIHint="Headline" />' % PS)
 HELP_CONN = {1: "SPV-Verbindung", 2: "SPV-Verbindung", 3: "SPV-Transportprotokoll", 7: "SPV-Verbindung"}
 for n in (1, 2, 3, 7):
